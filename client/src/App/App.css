@@ -1,0 +1,222 @@
+body {
+  font-family: sans-serif;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+  background: #9f9f9fa2;
+  
+  padding: 5px 0;
+  height: 30px; 
+}
+
+.footerLink{
+  color: black; 
+}
+
+#tag{
+	margin: 0px; 
+}
+
+.tags{
+  text-align: center;
+}
+
+.tags .btn{
+  margin: 10px; 
+}
+
+.active{
+  background: #720000;
+  color: white; 
+}
+
+.default:hover{
+  background: #d90000;
+  color: white; 
+}
+
+#articleContent{
+	margin-top: 15px; 
+}
+
+.searchBar{
+  text-align: center; 
+}
+
+.searchBar button:hover{
+  cursor: pointer; 
+}
+
+#home, #about {
+	margin-bottom: 50px; 
+}
+
+.articleLink {
+	margin: 0 0 2em 0;
+    padding: 0 0 2em 0;
+	border-bottom: 1px solid #ddd;
+}
+
+
+.footerLink:hover{
+  color: #720000; 
+  cursor: pointer; 
+}
+
+.footerLink i{
+  margin-right: 30px; 
+  font-size: 20px;
+}
+
+.AppLoader {
+	text-align: center;
+}
+
+.continueReading {
+  text-decoration: none;
+  color: #d90000;
+}
+
+.continueReading:hover{
+  color: #720000; 
+  cursor: pointer; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Droid Serif",serif;
+  color: #333;
+  font-weight: normal;
+  line-height: 1em;
+}
+
+h1 {
+ font-size: 2.5rem;
+}
+
+p, li{
+  font-size: 1.3125em;
+}
+
+li{
+  margin: .5em 0p;
+}
+
+p {
+  font-family: "Droid Sans",sans-serif;
+  color: #333;
+  line-height: 1.8em;
+  word-wrap: break-word;
+  margin: 1.5em 0;
+}
+
+
+/*
+Railscasts-like style (c) Visoft, Inc. (Damien White)
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #232323;
+  color: #e6e1dc;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #bc9458;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #c26230;
+}
+
+.hljs-string,
+.hljs-number,
+.hljs-regexp,
+.hljs-variable,
+.hljs-template-variable {
+  color: #a5c261;
+}
+
+.hljs-subst {
+  color: #519f50;
+}
+
+.hljs-tag,
+.hljs-name {
+  color: #e8bf6a;
+}
+
+.hljs-type {
+  color: #da4939;
+}
+
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-attr,
+.hljs-link {
+  color: #6d9cbe;
+}
+
+.hljs-params {
+  color: #d0d0ff;
+}
+
+.hljs-attribute {
+  color: #cda869;
+}
+
+.hljs-meta {
+  color: #9b859d;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #ffc66d;
+}
+
+.hljs-addition {
+  background-color: #144212;
+  color: #e6e1dc;
+  display: inline-block;
+  width: 100%;
+}
+
+.hljs-deletion {
+  background-color: #600;
+  color: #e6e1dc;
+  display: inline-block;
+  width: 100%;
+}
+
+.hljs-selector-class {
+  color: #9b703f;
+}
+
+.hljs-selector-id {
+  color: #8b98ab;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}
+pre{
+	margin: 0px; 
+}
