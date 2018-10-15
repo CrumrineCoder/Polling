@@ -31,10 +31,11 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 router.get('/', (req, res, next) => {
+  //
   console.log("ECH!");
   return Polls.find()
     .sort({ createdAt: 'descending' })
-    .then((polls) => res.json({ polls: polls.map(poll => polls.toJSON()) }))
+    .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
     .catch(next);
 });
 
