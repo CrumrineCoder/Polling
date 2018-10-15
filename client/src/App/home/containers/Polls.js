@@ -18,7 +18,7 @@ class Polls extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {filter: "", query: "" };
-		this.props.doPolls();
+		this.props.doPolls("");
 		this.changeFilter = this.changeFilter.bind(this);
 	}
 
@@ -42,6 +42,7 @@ class Polls extends Component {
 
 	render() {
 		let { polls } = this.props;
+		console.log("Polls", polls);
 		var isObject = polls.constructor === Object;
 		if (isObject) {
 			polls = [polls];
