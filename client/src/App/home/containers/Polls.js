@@ -74,7 +74,7 @@ class Polls extends Component {
 		} else {
 			pageContent = (
 				<ul className="polls">
-					{polls.map((poll, i) => <Poll update={this.update} key={i} {...poll} />)}
+					{polls.map((poll, i) => <PollMini update={this.update} key={i} {...poll} />)}
 				</ul>
 			)
 		}

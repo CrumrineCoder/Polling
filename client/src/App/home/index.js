@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import Articles from './containers/Articles';
+import Polls from './containers/Polls';
 //import './style.css';
 
 class Home extends Component {
@@ -9,7 +9,7 @@ class Home extends Component {
 		return (
 			<div id="home">
 				<Container>
-					<Articles />
+					<Polls />
 				</Container>
 			</div>
 		);

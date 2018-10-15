@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Article from '../components/Article';
+import Poll from '../components/Poll';
 import {
 	doPolls
 } from '../../actions/doPolls';
@@ -9,12 +9,12 @@ import { bindActionCreators } from 'redux'
 import $ from "jquery";
 import hljs from "highlightjs";
 
-class Articles extends Component {
+class Polls extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { article: this.props.id};
-		this.props.doPolls(this.state.article);
+		this.state = { poll: this.props.id};
+		this.props.doPolls(this.state.poll);
 	}
 
 	componentDidUpdate() {
