@@ -21,9 +21,12 @@ class Polls extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {filter: "", query: "" };
-		this.props.doPolls("");
 		this.changeFilter = this.changeFilter.bind(this);
 	}
+
+	componentDidMount() {
+		this.props.doPolls("");
+	  }
 
 	handleSearchBar = (queryValue) => {
 		this.setState({

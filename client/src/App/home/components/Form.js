@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 class Form extends Component {
 
@@ -13,11 +14,13 @@ class Form extends Component {
     }
 
     handleSubmit() {
+        const { onSubmit } = this.props;
         var { question } = this.state;
         //      if (!articleToEdit) {
         return axios.post('/api/polls', {
             question
         })
+            .then((res) => onSubmit(res.data))
             .then(() => this.setState({ question: '' }));
         //    }
         /*else {
@@ -38,7 +41,7 @@ class Form extends Component {
     render() {
         //    <button onClick={this.handleSearchChange}>Search</button>
         //value={this.state.inputValue}
-        const {question} = this.state;
+        const { question } = this.state;
         return (
             <div className="form">
                 <input
@@ -53,4 +56,12 @@ class Form extends Component {
     }
 }
 
-export default Form; 
+const mapStateToProps = state => ({
+    pollToEdit: state.home.pollToEdit,
+});
+
+const mapDispatchToProps = dispatch => ({
+    onSubmit: data => dispatch({ type: 'MAKE_POLL_START', data })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
