@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PollMini from '../components/PollMini';
 import Tags from '../components/Tag';
 import Search from '../components/Search';
+import Form from '../components/Form';
 
 import {
 	doPolls
@@ -86,6 +87,7 @@ class Polls extends Component {
 			<div className="pollsContainer">
 				<Search onSearch={this.handleSearchBar} />
 				<Tags onChangeFilter={this.changeFilter} />
+				<Form></Form>
 				{pageContent}
 			</div>
 		);
