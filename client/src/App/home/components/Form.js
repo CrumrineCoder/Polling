@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import {
+	makePoll
+} from '../actions/makePoll';
+import { bindActionCreators } from 'redux'
 
 class Form extends Component {
 
@@ -14,13 +18,12 @@ class Form extends Component {
     }
 
     handleSubmit() {
-        const { onSubmit } = this.props;
         var { question } = this.state;
         //      if (!articleToEdit) {
         return axios.post('/api/polls', {
             question
         })
-            .then((res) => onSubmit(res.data))
+            .then(this.props.makePoll())
             .then(() => this.setState({ question: '' }));
         //    }
         /*else {
@@ -60,8 +63,10 @@ const mapStateToProps = state => ({
     pollToEdit: state.home.pollToEdit,
 });
 
-const mapDispatchToProps = dispatch => ({
-    onSubmit: data => dispatch({ type: 'MAKE_POLL_START', data })
-});
+const mapDispatchToProps = (dispatch) => {
+	return bindActionCreators({
+		makePoll
+	}, dispatch)
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

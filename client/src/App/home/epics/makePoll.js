@@ -4,7 +4,7 @@ import { catchError, mergeMap, map } from 'rxjs/operators';
 
 import { MAKE_POLL_START } from '../actions/actionTypes';
 
-import { makePollFulfilled, makePollFailed } from '../actions/doPolls';
+import { makePollFulfilled, makePollFailed } from '../actions/makePoll';
 
 // Also now using v6 pipe operators
 //
