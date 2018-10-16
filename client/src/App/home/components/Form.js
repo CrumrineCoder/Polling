@@ -14,8 +14,8 @@ class Form extends Component {
         this.goToResults = this.goToResults.bind(this);
     }
 
-    goToResults() {
-        this.props.history.push('/api/polls/create'); // for react-router@3 it would be this.props.router.push('/some/location');
+    goToResults(id) {
+        this.props.history.push('/api/polls/' +id); // for react-router@3 it would be this.props.router.push('/some/location');
     }
 
     handleSubmit() {
@@ -24,7 +24,9 @@ class Form extends Component {
         return axios.post('/api/polls', {
             question
         })
-            .then(this.goToResults())
+            .then(response => {
+                this.goToResults(response.data.poll._id)
+            })
             .then(() => this.setState({ question: '' }));
         //    }
         /*else {
