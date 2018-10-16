@@ -15,7 +15,7 @@ class Form extends Component {
     }
 
     goToResults(id) {
-        this.props.history.push('/api/polls/' +id); // for react-router@3 it would be this.props.router.push('/some/location');
+        this.props.history.push("polls/" + id); // for react-router@3 it would be this.props.router.push('/some/location');
     }
 
     handleSubmit() {
