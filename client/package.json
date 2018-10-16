@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "dependencies": {
+    "axios": "*",
     "@babel/core": "^7.1.2",
     "body-parser": "*",
     "bootstrap": "^4.1.1",
