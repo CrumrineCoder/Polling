@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { connect } from 'react-redux';
-
-import {
-	doPolls
-} from '../actions/doPolls';
-
-import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 
 class Form extends Component {
 
@@ -17,6 +11,11 @@ class Form extends Component {
         };
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.goToResults = this.goToResults.bind(this);
+    }
+
+    goToResults() {
+        this.props.history.push('/api/polls/create'); // for react-router@3 it would be this.props.router.push('/some/location');
     }
 
     handleSubmit() {
@@ -25,7 +24,7 @@ class Form extends Component {
         return axios.post('/api/polls', {
             question
         })
-            .then(this.props.doPolls())
+            .then(this.goToResults())
             .then(() => this.setState({ question: '' }));
         //    }
         /*else {
@@ -61,15 +60,4 @@ class Form extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    pollToEdit: state.home.pollToEdit,
-});
-
-const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({
-		doPolls
-	}, dispatch)
-};
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default withRouter(Form);
