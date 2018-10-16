@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+
 import {
-	makePoll
-} from '../actions/makePoll';
+	doPolls
+} from '../actions/doPolls';
+
 import { bindActionCreators } from 'redux'
 
 class Form extends Component {
@@ -23,7 +25,7 @@ class Form extends Component {
         return axios.post('/api/polls', {
             question
         })
-            .then(this.props.makePoll())
+            .then(this.props.doPolls())
             .then(() => this.setState({ question: '' }));
         //    }
         /*else {
@@ -65,8 +67,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		makePoll
+		doPolls
 	}, dispatch)
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

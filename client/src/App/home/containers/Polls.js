@@ -25,6 +25,7 @@ class Polls extends Component {
 	}
 
 	componentDidMount() {
+		console.log("Mount");
 		this.props.doPolls("");
 	  }
 
