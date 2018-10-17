@@ -6,6 +6,7 @@ class Poll extends Component {
 		return (
 			<div>
 				<h1>{this.props.question}</h1>
+				{this.props.answers.map(answer => <div> {answer.text} </div>)} 
 			</div >
 		)
 	}
