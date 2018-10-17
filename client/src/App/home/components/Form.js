@@ -42,7 +42,7 @@ class Form extends Component {
     handleAnswerTextChange = (idx) => (evt) => {
         const newAnswers = this.state.answers.map((answer, sidx) => {
           if (idx !== sidx) return answer;
-          return { ...answer, name: evt.target.value };
+          return { ...answer, text: evt.target.value };
         });
     
         this.setState({ answers: newAnswers });
