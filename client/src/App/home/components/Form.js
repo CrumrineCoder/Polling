@@ -7,7 +7,7 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: '',  answers: [{ text: '', value: 0 }],
+            question: '', answers: [{ text: '', value: 0 }, { text: '', value: 0 }],
         };
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,12 +15,11 @@ class Form extends Component {
     }
 
     goToResults(id) {
-        this.props.history.push("polls/" + id); // for react-router@3 it would be this.props.router.push('/some/location');
+        this.props.history.push("polls/" + id);
     }
 
     handleSubmit() {
         var { question, answers } = this.state;
-        //      if (!articleToEdit) {
         return axios.post('/api/polls', {
             question, answers
         })
@@ -28,25 +27,17 @@ class Form extends Component {
                 this.goToResults(response.data.poll._id)
             })
             .then(() => this.setState({ question: '' }));
-        //    }
-        /*else {
-               return axios.patch(`http://localhost:5000/api/articles/${articleToEdit._id}`, {
-                   title,
-                   body,
-                   tag,
-               })
-                   .then((res) => onEdit(res.data))
-                   .then(() => this.setState({ title: '', body: EditorState.createEmpty(), tag: '' }));
-           }*/
     }
+    // For Answers
     handleAnswerTextChange = (idx) => (evt) => {
         const newAnswers = this.state.answers.map((answer, sidx) => {
-          if (idx !== sidx) return answer;
-          return { ...answer, text: evt.target.value };
+            if (idx !== sidx) return answer;
+            return { ...answer, text: evt.target.value };
         });
-    
+
         this.setState({ answers: newAnswers });
-      }
+    }
+    // For Question
     handleChangeField(key, event) {
         this.setState({
             [key]: event.target.value,
