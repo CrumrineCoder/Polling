@@ -88,7 +88,7 @@ class Form extends Component {
                     placeholder="Poll Question"
                 />
                 {this.state.answers.map((answer, idx) => (
-                    <div className="answer">
+                    <div className="answer" key={idx}>
                         <input
                             type="text"
                             placeholder={`Answer #${idx + 1}`}
