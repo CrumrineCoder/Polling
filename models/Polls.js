@@ -12,9 +12,8 @@ const PollSchema = new Schema({
     SeeResults: Boolean, 
     Captcha: Boolean
   },
-  answers: Object, 
-  userAnswers: Object, 
-  votes: [Object]
+  answers: [{text: String, value: Number}], 
+  userAnswers: [{text: String, value: Number}]
 }, { timestamps: true, minimize: false });
 
 PollSchema.index({"question": 1});

@@ -7,7 +7,7 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: '',  answers: [{ text: '' }],
+            question: '',  answers: [{ text: '', value: 0 }],
         };
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,10 +19,10 @@ class Form extends Component {
     }
 
     handleSubmit() {
-        var { question } = this.state;
+        var { question, answers } = this.state;
         //      if (!articleToEdit) {
         return axios.post('/api/polls', {
-            question
+            question, answers
         })
             .then(response => {
                 this.goToResults(response.data.poll._id)
@@ -54,7 +54,7 @@ class Form extends Component {
     }
     handleAddAnswer = () => {
         this.setState({
-            answers: this.state.answers.concat([{ text: '' }])
+            answers: this.state.answers.concat([{ text: '', value: 0 }])
         });
     }
 
