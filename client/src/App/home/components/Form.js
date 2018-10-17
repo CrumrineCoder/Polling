@@ -20,13 +20,34 @@ class Form extends Component {
 
     handleSubmit() {
         var { question, answers } = this.state;
-        return axios.post('/api/polls', {
-            question, answers
-        })
-            .then(response => {
-                this.goToResults(response.data.poll._id)
+
+        // Remove empty answers
+        answers = answers.filter(function (el) {
+            return el.text !== "";
+        });
+
+        // Remove duplicate answers
+        answers = answers.filter((answer, index, self) =>
+            index === self.findIndex((a) => (
+                a.text === answer.text 
+            ))
+        )
+
+        console.log("Answers", answers)
+        if (question === "") {
+            alert("You must supply a question.");
+        }
+        else if (answers.length < 2) {
+            alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
+        } else {
+            return axios.post('/api/polls', {
+                question, answers
             })
-            .then(() => this.setState({ question: '' }));
+                .then(response => {
+                    this.goToResults(response.data.poll._id)
+                })
+                .then(() => this.setState({ question: '' }));
+        }
     }
     // For Answers
     handleAnswerTextChange = (idx) => (evt) => {
