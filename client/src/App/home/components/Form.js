@@ -7,7 +7,7 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: ''
+            question: '',  answers: [{ text: '' }],
         };
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,9 +39,28 @@ class Form extends Component {
                    .then(() => this.setState({ title: '', body: EditorState.createEmpty(), tag: '' }));
            }*/
     }
+    handleAnswerTextChange = (idx) => (evt) => {
+        const newAnswers = this.state.answers.map((answer, sidx) => {
+          if (idx !== sidx) return answer;
+          return { ...answer, name: evt.target.value };
+        });
+    
+        this.setState({ answers: newAnswers });
+      }
     handleChangeField(key, event) {
         this.setState({
             [key]: event.target.value,
+        });
+    }
+    handleAddAnswer = () => {
+        this.setState({
+            answers: this.state.answers.concat([{ text: '' }])
+        });
+    }
+
+    handleRemoveAnswer = (idx) => () => {
+        this.setState({
+            answers: this.state.answers.filter((s, sidx) => idx !== sidx)
         });
     }
     render() {
@@ -56,6 +75,18 @@ class Form extends Component {
                     className="form-control my-3"
                     placeholder="Poll Question"
                 />
+                {this.state.answers.map((answer, idx) => (
+                    <div className="answer">
+                        <input
+                            type="text"
+                            placeholder={`Answer #${idx + 1}`}
+                            value={answer.text}
+                            onChange={this.handleAnswerTextChange(idx)}
+                        />
+                        <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small">-</button>
+                    </div>
+                ))}
+                <button type="button" onClick={this.handleAddAnswer} className="small">Add Answer</button>
                 <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
             </div>
         )
