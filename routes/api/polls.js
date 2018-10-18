@@ -1,83 +1,46 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 const Polls = mongoose.model('Polls');
+var ObjectId = require('mongodb').ObjectID;
 
 
 router.post('/', (req, res, next) => {
   const { body } = req;
-  console.log("HONK!");
-  console.log(body);
-/*
-  if (!body.question) {
-    return res.status(422).json({
-      errors: {
-        title: 'is required',
-      },
-    });
-  }
-
-  if (!body.tag) {
-    return res.status(422).json({
-      errors: {
-        tag: 'is required',
-      },
-    });
-  }
-*/
-
   const finalPoll = new Polls(body);
   return finalPoll.save()
     .then(() => res.json({ poll: finalPoll.toJSON() }))
     .catch(next);
 });
+
 router.get('/', (req, res, next) => {
-  //
-  console.log("ECH!");
+  console.log("Get all Polls");
   return Polls.find()
     .sort({ createdAt: 'descending' })
     .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
     .catch(next);
 });
 
+router.param('id', (req, res, next, id) => {
+
+  return Polls.findById(id, (err, poll) => {
+    if (err) {
+      return res.sendStatus(404);
+    } else if (poll) {
+      console.log("param", poll);
+      req.poll = poll;
+      return next();
+    }
+  }).catch(next);
+});
+
+router.get('/:id', (req, res, next) => {
+  console.log("GET", req.poll.toJSON());
+  return res.json({
+    polls: [req.poll.toJSON()],
+  });
+});
+
 /*
-router.post('/', (req, res, next) => {
-  const { body } = req;
-
-  console.log(body);
-
-  if (!body.title) {
-    return res.status(422).json({
-      errors: {
-        title: 'is required',
-      },
-    });
-  }
-
-  if (!body.tag) {
-    return res.status(422).json({
-      errors: {
-        tag: 'is required',
-      },
-    });
-  }
-
-
-  const finalArticle = new Articles(body);
-  return finalArticle.save()
-    .then(() => res.json({ article: finalArticle.toJSON() }))
-    .catch(next);
-});
-
-router.get('/', (req, res, next) => {
-  return Articles.find()
-    .sort({ createdAt: 'descending' })
-    .then((articles) => res.json({ articles: articles.map(article => article.toJSON()) }))
-    .catch(next);
-});
-
-
-
-
 router.param('id', (req, res, next, id) => {
 
   return Articles.findById(id, (err, article) => {
@@ -89,13 +52,6 @@ router.param('id', (req, res, next, id) => {
       return next();
     }
   }).catch(next);
-});
-
-router.get('/:id', (req, res, next) => {
-  console.log("GET", req.article.toJSON());
-  return res.json({
-    articles: [req.article.toJSON()],
-  });
 });
 
 router.patch('/:id', (req, res, next) => {

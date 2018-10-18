@@ -32,8 +32,7 @@ class Form extends Component {
                 a.text === answer.text 
             ))
         )
-
-        console.log("Answers", answers)
+        
         if (question === "") {
             alert("You must supply a question.");
         }
