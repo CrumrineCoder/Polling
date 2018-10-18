@@ -12,7 +12,7 @@ const fetchPolls = (action$, state$) =>
 	action$.pipe(
 		ofType(REQUEST_POLLS_START),
 		mergeMap(action => {
-			let apiUrl = `/api/polls/`;
+			let apiUrl = `/api/polls/${action.payload}`;
 			console.log("Fetch Polls");
 			return ajax
 				.getJSON(apiUrl)
