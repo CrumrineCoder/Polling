@@ -27,7 +27,7 @@ class Poll extends Component {
 		console.log(evt.target.value);
 		this.setState({ selected: evt.target.value});
 	}
-	
+
 
 	render() {
 		console.log("INNER POLLS", this.props)
@@ -40,11 +40,11 @@ class Poll extends Component {
 					return (
 						<div key={answer.text}>
 							<label>{answer.text}</label>
-							<input type="radio" checked={selected === answer.text} name="answer"   onChange={answer.state.handleOptionChange} value={answer.text} />
+							<input type="radio" checked={selected === answer.text} name="answer"   onChange={this.handleOptionChange} value={answer.text} />
 							
 						</div>
 					)
-				})
+				}, this)
 				}
 				<button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
 			</div>
