@@ -5,17 +5,20 @@ class Poll extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { selected: "" };
+		console.log("Bazinga", props); 
+		this.state = { selected: "", _id: ""};
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleSubmit() {
-		var { selected } = this.state;
-
-
+		var { selected, _id } = this.state;
+	//	var { selected } = this.state; 
+	    console.log(this.state); 
+		console.log(this.props); 
+	//	var {_id} = this.props; 
 		return axios.post('/api/polls/vote', {
-			selected
+			selected, _id
 		})
 			.then(response => {
 				this.goToResults(response.data.poll._id)
@@ -24,7 +27,7 @@ class Poll extends Component {
 
 	handleOptionChange(evt) {
 		console.log(evt.target.value);
-		this.setState({ selected: evt.target.value });
+		this.setState({ selected: evt.target.value, _id: evt.target.id });
 	}
 
 
@@ -39,7 +42,7 @@ class Poll extends Component {
 					return (
 						<div key={answer.text}>
 							<label>{answer.text}</label>
-							<input type="radio" checked={selected === answer.text} name="answer" onChange={this.handleOptionChange} value={answer.text} />
+							<input type="radio" checked={selected === answer.text} name="answer" onChange={this.handleOptionChange} value={answer.text} id={answer._id}/>
 						</div>
 					)
 				}, this)

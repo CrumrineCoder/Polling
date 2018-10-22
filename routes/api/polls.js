@@ -40,8 +40,29 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
-router.post("/vote", (req, res, next) =>{
-  console.log(req.body);
+router.post("/vote", (req, res, next) =>{ 
+/*  Polls.find({_id : user.name}, function (err, docs) {
+    if (docs.length){
+        cb('Name exists already',null);
+    }else{
+        user.save(function(err){
+            cb(err,user);
+        });
+    }
+}); */
+console.log(req.body);
+Polls.find({_id : ObjectId(req.body._id)}, function(err, docs){
+  if(docs.length){
+    console.log("Yes");
+    console.log(docs);
+  } else{
+    console.log("No");
+  }
+});
+
+ 
+  Polls.findOneAndUpdate({_id : ObjectId(req.body._id)}, {$inc : {'value' : 1}});
+  
 })
 
 /*

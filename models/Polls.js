@@ -29,6 +29,8 @@ PollSchema.methods.toJSON = function() {
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
   };
+
+  
 };
 
 mongoose.model('Polls', PollSchema);
