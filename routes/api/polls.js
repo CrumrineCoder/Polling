@@ -4,6 +4,7 @@ const Polls = mongoose.model('Polls');
 var ObjectId = require('mongodb').ObjectID;
 
 
+
 router.post('/', (req, res, next) => {
   const { body } = req;
   const finalPoll = new Polls(body);
@@ -50,18 +51,30 @@ router.post("/vote", (req, res, next) =>{
         });
     }
 }); */
-console.log(req.body);
-Polls.find({_id : ObjectId(req.body._id)}, function(err, docs){
+console.log(req.body); 
+Polls.aggregate([ 
+  { "$unwind" : '$parent'},
+  { "$match" : 
+      { "parent.child._id" : req.params.id } 
+  } 
+]); 
+Polls.find({"answers._id": ObjectId(req.body._id)}, function (err, kittens) {
+  if (err) return console.error(err);
+  console.log(kittens);
+})
+
+/*
+Polls.findById(ObjectId(req.body._id),  function(err, docs){
+  console.log(docs);
   if(docs.length){
     console.log("Yes");
-    console.log(docs);
   } else{
     console.log("No");
   }
 });
-
+*/
  
-  Polls.findOneAndUpdate({_id : ObjectId(req.body._id)}, {$inc : {'value' : 1}});
+ // Polls.findOneAndUpdate({_id : ObjectId("5bc8c2e00e16d13c10a287b0")}, {$inc : {'value' : 1}});
   
 })
 
