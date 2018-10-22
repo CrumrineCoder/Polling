@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const PollSchema = new Schema({
   question: String,
   user: String,
+  value: Number, 
   options: {
     MultipleAnswers: Boolean,
     UserAnswers: Boolean, 
