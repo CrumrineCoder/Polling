@@ -40,6 +40,10 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
+router.post("/vote", (req, res, next) =>{
+  console.log(req.body);
+})
+
 /*
 router.param('id', (req, res, next, id) => {
 

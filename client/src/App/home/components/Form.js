@@ -32,7 +32,7 @@ class Form extends Component {
                 a.text === answer.text 
             ))
         )
-        
+
         if (question === "") {
             alert("You must supply a question.");
         }
@@ -45,7 +45,6 @@ class Form extends Component {
                 .then(response => {
                     this.goToResults(response.data.poll._id)
                 })
-                .then(() => this.setState({ question: '' }));
         }
     }
     // For Answers

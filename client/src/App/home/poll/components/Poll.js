@@ -7,6 +7,7 @@ class Poll extends Component {
 		super(props);
 		this.state = { selected: "" };
 		this.handleOptionChange = this.handleOptionChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleSubmit() {
@@ -19,19 +20,17 @@ class Poll extends Component {
 			.then(response => {
 				this.goToResults(response.data.poll._id)
 			})
-			.then(() => this.setState({ question: '' }));
-
 	}
 
-	handleOptionChange(evt){
+	handleOptionChange(evt) {
 		console.log(evt.target.value);
-		this.setState({ selected: evt.target.value});
+		this.setState({ selected: evt.target.value });
 	}
 
 
 	render() {
 		console.log("INNER POLLS", this.props)
-		var {selected} = this.state
+		var { selected } = this.state
 		return (
 			<div>
 				<h1>{this.props.question}</h1>
@@ -40,8 +39,7 @@ class Poll extends Component {
 					return (
 						<div key={answer.text}>
 							<label>{answer.text}</label>
-							<input type="radio" checked={selected === answer.text} name="answer"   onChange={this.handleOptionChange} value={answer.text} />
-							
+							<input type="radio" checked={selected === answer.text} name="answer" onChange={this.handleOptionChange} value={answer.text} />
 						</div>
 					)
 				}, this)
