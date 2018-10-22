@@ -55,13 +55,15 @@ console.log(req.body);
 Polls.aggregate([ 
   { "$unwind" : '$parent'},
   { "$match" : 
-      { "parent.child._id" : req.params.id } 
+      { "answers._id": new mongoose.Types.ObjectId(req.body._id) } 
   } 
 ]); 
-Polls.find({"answers._id": ObjectId(req.body._id)}, function (err, kittens) {
+Polls.save({"answers._id": ObjectId(req.body._id)}, { $inc : { "value" : 1 }});
+
+/*function (err, kittens) {
   if (err) return console.error(err);
   console.log(kittens);
-})
+})*/
 
 /*
 Polls.findById(ObjectId(req.body._id),  function(err, docs){
