@@ -58,7 +58,7 @@ Polls.aggregate([
       { "answers._id": new mongoose.Types.ObjectId(req.body._id) } 
   } 
 ]); 
-Polls.save({"answers._id": ObjectId(req.body._id)}, { $inc : { "value" : 1 }});
+Polls.update({"answers._id": ObjectId(req.body._id)}, { $inc : { "value" : 1 }});
 
 /*function (err, kittens) {
   if (err) return console.error(err);
