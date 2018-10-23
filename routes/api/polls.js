@@ -51,8 +51,9 @@ router.post("/vote", (req, res, next) => {
     }
   ]);
   Polls.update({ "answers._id": ObjectId(req.body._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }).then(() => res.sendStatus(200))
-  .catch(next);
+    .catch(next);
 })
+
 
 /*
 router.param('id', (req, res, next, id) => {
