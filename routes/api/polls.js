@@ -56,10 +56,10 @@ router.post("/vote", (req, res, next) => {
     { "$unwind": '$parent' },
     {
       "$match":
-        { "answers._id": new mongoose.Types.ObjectId(req.body._id) }
+        { "answers._id": req.body._id }
     }
   ]);
-  Polls.update({ "answers._id": ObjectId(req.body._id) }, { $inc: { "value": 1 } }).then(doc => {
+  Polls.update({ "answers._id": ObjectId(req.body._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }).then(doc => {
     console.log(doc)
   })
     .catch(err => {
