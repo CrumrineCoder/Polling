@@ -6,8 +6,6 @@ import {
 	doPolls
 } from '../../actions/doPolls';
 import { bindActionCreators } from 'redux'
-import $ from "jquery";
-import hljs from "highlightjs";
 
 class Polls extends Component {
 
@@ -16,12 +14,6 @@ class Polls extends Component {
 		this.state = { poll: this.props.id};
 		console.log("FF", this.state.poll);	
 		this.props.doPolls(this.state.poll);
-	}
-
-	componentDidUpdate() {
-		$('pre code').each(function (i, block) {
-			hljs.highlightBlock(block);
-		});
 	}
 
 	render() {

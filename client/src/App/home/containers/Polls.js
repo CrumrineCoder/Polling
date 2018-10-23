@@ -13,8 +13,6 @@ import {
 
 
 import { bindActionCreators } from 'redux'
-import $ from "jquery";
-import hljs from "highlightjs"
 
 class Polls extends Component {
 
@@ -38,12 +36,6 @@ class Polls extends Component {
 	changeFilter(filter) {
 		this.setState({
 			filter: filter
-		});
-	}
-
-	componentDidUpdate() {
-		$('pre code').each(function (i, block) {
-			hljs.highlightBlock(block);
 		});
 	}
 
