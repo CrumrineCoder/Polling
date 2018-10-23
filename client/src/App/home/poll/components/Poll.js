@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 class Poll extends Component {
 
 	constructor(props) {
 		super(props);
 		console.log("Bazinga", props); 
-		this.state = { selected: "", _id: ""};
+		this.state = { selected: "", _id: ""	};
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.goToResults = this.goToResults.bind(this);
 	}
 
 	handleSubmit() {
 		var { selected, _id } = this.state;
+		var questionID = this.props._id; 
 	//	var { selected } = this.state; 
 	    console.log(this.state); 
 		console.log(this.props); 
@@ -20,10 +23,12 @@ class Poll extends Component {
 		return axios.post('/api/polls/vote', {
 			selected, _id
 		})
-			.then(response => {
-				this.goToResults(response.data.poll._id)
-			})
+			.then(this.goToResults(questionID))
 	}
+
+	goToResults(id) {
+        this.props.history.push("results/" + id);
+    }
 
 	handleOptionChange(evt) {
 		console.log(evt.target.value);
@@ -54,5 +59,4 @@ class Poll extends Component {
 
 }
 
-export default Poll;
-
+export default withRouter(Poll);
