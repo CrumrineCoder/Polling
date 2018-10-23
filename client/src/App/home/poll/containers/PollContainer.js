@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Poll from '../components/Poll';
+import Result from "../components/Result"; 
 import {
 	doPolls
 } from '../../actions/doPolls';
@@ -33,7 +34,7 @@ class Polls extends Component {
 		} else {
 			pageContent = (
 				<ul className="polls">
-					<Poll {...polls[0]} />
+					<Result {...polls[0]} />
 				</ul>
 			)
 		}
