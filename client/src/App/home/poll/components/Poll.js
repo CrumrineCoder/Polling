@@ -27,7 +27,7 @@ class Poll extends Component {
 	}
 
 	goToResults(id) {
-        this.props.history.push("results/" + id);
+        this.props.history.push( "/polls/results/" + id );
     }
 
 	handleOptionChange(evt) {
