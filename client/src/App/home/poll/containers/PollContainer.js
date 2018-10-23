@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Poll from '../components/Poll';
-import Result from "../components/Result"; 
+import Result from "../components/Result";
 import {
 	doPolls
 } from '../../actions/doPolls';
@@ -12,16 +12,16 @@ class Polls extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { poll: this.props.id};
-		console.log("FF", this.state.poll);	
+		this.state = { poll: this.props.id };
+		console.log("FF", this.state.poll);
 		this.props.doPolls(this.state.poll);
 	}
 
 	render() {
 		let { polls } = this.props;
 		var isObject = polls.constructor === Object;
-		if(isObject){
-			polls = [polls]; 
+		if (isObject) {
+			polls = [polls];
 		}
 		let pageContent = '';
 

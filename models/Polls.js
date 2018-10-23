@@ -13,8 +13,8 @@ const PollSchema = new Schema({
     SeeResults: Boolean, 
     Captcha: Boolean
   },
-  answers: [{text: String, value: Number}], 
-  userAnswers: [{text: String, value: Number}]
+  answers: [{text: String, value: Number, Users: [String]}], 
+  userAnswers: [{text: String, value: Number, Users: [String]}]
 }, { timestamps: true, minimize: false });
 
 PollSchema.index({"question": 1});
@@ -26,7 +26,6 @@ PollSchema.methods.toJSON = function() {
     options: this.options,
     answers: this.answers,
     userAnswers: this.userAnswers,
-    votes: this.votes,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
   };

@@ -5,13 +5,9 @@ import PollMini from '../components/PollMini';
 import Tags from '../components/Tag';
 import Search from '../components/Search';
 import Form from '../components/Form';
-
 import {
 	doPolls
 } from '../actions/doPolls';
-
-
-
 import { bindActionCreators } from 'redux'
 
 class Polls extends Component {
