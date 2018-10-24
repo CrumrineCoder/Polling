@@ -98,9 +98,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 
 export default (
-  
+  //  <AuthButton/>
   <Switch>  
-     <AuthButton/>
     <Route exact path="/" component={Home} />
     <Route path="/about" component={About} />
     <Route path="/login" component={Login} />
