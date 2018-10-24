@@ -49,6 +49,7 @@ class Login extends React.Component {
     redirectToReferrer: false
   }
   login = () => {
+    console.log("Hay");
     fakeAuth.authenticate(() => {
       console.log("HEYAYAYAY");
       this.setState(() => ({
@@ -65,7 +66,8 @@ class Login extends React.Component {
 
     return (
       <div>
-        Login
+        <p>You must log in to view the page</p>
+        <button onClick={this.login}>Log in</button>
       </div>
     )
   }
