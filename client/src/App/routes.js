@@ -5,6 +5,7 @@ import axios from "axios";
 // Import modules/routes
 import Home from "./home";
 import About from "./about";
+import Login from "./login";
 import PollShow from "./home/poll";
 import PageNotFound from "./common/components/PageNotFound";
 
@@ -55,6 +56,7 @@ export default (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route path="/about" component={About} />
+    <Route path="/login" component={Login}/>
     <PrivateRoute path="/polls/results/:id/" component={About} />
     <Route path="/polls/:id/" component={PollShow} />
     <Route component={PageNotFound} />
