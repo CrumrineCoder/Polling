@@ -19,7 +19,6 @@ class Polls extends Component {
 	}
 
 	componentDidMount() {
-		console.log("Mount");
 		this.props.doPolls("");
 	  }
 
@@ -37,7 +36,6 @@ class Polls extends Component {
 
 	render() {
 		let { polls } = this.props;
-		console.log("Polls", polls);
 		var isObject = polls.constructor === Object;
 		if (isObject) {
 			polls = [polls];
@@ -74,7 +72,6 @@ class Polls extends Component {
 				</ul>
 			)
 		}
-		//<h3>Articles</h3>
 		return (
 			<div className="pollsContainer">
 				<Search onSearch={this.handleSearchBar} />

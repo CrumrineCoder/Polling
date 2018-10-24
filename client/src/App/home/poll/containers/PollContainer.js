@@ -13,7 +13,6 @@ class Polls extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { poll: this.props.id };
-		console.log("FF", this.state.poll);
 		this.props.doPolls(this.state.poll);
 	}
 

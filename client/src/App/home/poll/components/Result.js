@@ -6,7 +6,6 @@ class Result extends Component {
 
 	constructor(props) {
 		super(props);
-		console.log("Bazinga", props); 
 		this.state = { selected: "", _id: ""	};
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,10 +15,6 @@ class Result extends Component {
 	handleSubmit() {
 		var { selected, _id } = this.state;
 		var questionID = this.props._id; 
-	//	var { selected } = this.state; 
-	    console.log(this.state); 
-		console.log(this.props); 
-	//	var {_id} = this.props; 
 		return axios.post('/api/polls/vote', {
 			selected, _id
 		})
@@ -31,20 +26,17 @@ class Result extends Component {
     }
 
 	handleOptionChange(evt) {
-		console.log(evt.target.value);
 		this.setState({ selected: evt.target.value, _id: evt.target.id });
 	}
 
 
 	render() {
-		console.log("INNER POLLS", this.props)
 		var { selected } = this.state
 		return (
 			<div>
 				<h1>{this.props.question}</h1>
                 <h2>Result</h2>
 				{this.props.answers.map(function (answer) {
-					console.log("Answer", answer)
 					return (
 						<div key={answer.text}>
 							<label>{answer.text}</label>

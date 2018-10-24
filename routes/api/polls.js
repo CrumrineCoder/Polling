@@ -3,8 +3,6 @@ const router = require('express').Router();
 const Polls = mongoose.model('Polls');
 var ObjectId = require('mongodb').ObjectID;
 
-
-
 router.post('/', (req, res, next) => {
   const { body } = req;
   const finalPoll = new Polls(body);
@@ -14,7 +12,6 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-  console.log("Get all Polls");
   return Polls.find()
     .sort({ createdAt: 'descending' })
     .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
@@ -27,7 +24,6 @@ router.param('id', (req, res, next, id) => {
     if (err) {
       return res.sendStatus(404);
     } else if (poll) {
-      console.log("param", poll);
       req.poll = poll;
       return next();
     }
@@ -35,14 +31,12 @@ router.param('id', (req, res, next, id) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  console.log("GET", req.poll.toJSON());
   return res.json({
     polls: [req.poll.toJSON()],
   });
 });
 
 router.post("/vote", (req, res, next) => {
-  console.log(req.body);
   Polls.aggregate([
     { "$unwind": '$parent' },
     {
