@@ -18,6 +18,7 @@ axios.get(URL, { headers: { Authorization: AuthString } })
      console.log('error ' + error);
   });
   */
+ /*
 
 var isAuth;
 function authenticate() {
@@ -27,12 +28,25 @@ function authenticate() {
 }
 isAuth = authenticate();
 console.log(isAuth);
+*/
+
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+      this.isAuthenticated = true
+      setTimeout(cb, 100)
+  },
+  signout(cb) {
+      this.isAuthenticated = false
+      setTimeout(cb, 100)
+  }
+}
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      isAuth === true ? <Component {...props} /> : <Redirect to="/login" />
+      fakeAuth.isAuthenticated === true ? <Component {...props} /> : <Redirect to="/login" />
     }
   />
 );
