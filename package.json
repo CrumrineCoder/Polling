@@ -17,10 +17,13 @@
     "dotenv": "*",
     "errorhandler": "*",
     "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
     "express-session": "*",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "*",
     "morgan": "*",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "path": "*",
     "react-scripts": "^2.0.4"
   }

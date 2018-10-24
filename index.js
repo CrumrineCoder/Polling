@@ -38,6 +38,8 @@ mongoose.set('debug', true);
 
 // Add models
 require('./models/Polls');
+require('./models/Users');
+require('./config/passport');
 // Add routes
 app.use(require('./routes'));
 
