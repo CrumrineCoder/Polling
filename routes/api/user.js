@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
 
-router.get("/auth", (req, rest, next) => {
+router.get("/auth", (req, res, next) => {
     const fakeAuth = {
         isAuthenticated: false,
         authenticate(cb) {
@@ -13,6 +13,7 @@ router.get("/auth", (req, rest, next) => {
             setTimeout(cb, 100)
         }
     }
+    console.log(fakeAuth); 
     res.json(fakeAuth);
 });
 
