@@ -49,19 +49,18 @@ class Login extends React.Component {
     redirectToReferrer: false
   }
   login = () => {
-    console.log("Hay");
     fakeAuth.authenticate(() => {
-      console.log("HEYAYAYAY");
       this.setState(() => ({
         redirectToReferrer: true
       }))
     })
   }
   render() {
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
     const { redirectToReferrer } = this.state
 
     if (redirectToReferrer === true) {
-      return <Redirect to='/' />
+      return <Redirect to={from} />
     }
 
     return (
@@ -77,7 +76,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      fakeAuth.isAuthenticated === true ? <Component {...props} /> : <Redirect to="/login" />
+      fakeAuth.isAuthenticated === true ? <Component {...props} /> : <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }} />
     }
   />
 );
