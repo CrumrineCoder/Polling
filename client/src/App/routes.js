@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router";
+import { withRouter } from 'react-router-dom';
 import axios from "axios";
 
 // Import modules/routes
@@ -32,7 +33,7 @@ console.log(isAuth);
 */
 
 const fakeAuth = {
-  isAuthenticated: false,
+  isAuthenticated: true,
   authenticate(cb) {
     console.log("YOU'VE  JUST BEEN AUTHENTICATED!")
     this.isAuthenticated = true;
@@ -72,6 +73,18 @@ class Login extends React.Component {
   }
 }
 
+const AuthButton = withRouter(({ history }) => (
+  fakeAuth.isAuthenticated ? (
+    <p>
+      Welcome! <button onClick={() => {
+        fakeAuth.signout(() => history.push('/'))
+      }}>Sign out</button>
+    </p>
+  ) : (
+    <p>You are not logged in.</p>
+  )
+))
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
@@ -85,7 +98,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 
 export default (
-  <Switch>
+  
+  <Switch>  
+     <AuthButton/>
     <Route exact path="/" component={Home} />
     <Route path="/about" component={About} />
     <Route path="/login" component={Login} />

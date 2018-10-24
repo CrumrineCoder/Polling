@@ -4,6 +4,8 @@ https://medium.freecodecamp.org/integrating-create-react-app-redux-react-router-
 https://medium.com/@rajaraodv/a-guide-for-building-a-react-redux-crud-app-7fe0b8943d0f
 https://dev.to/nburgess/creating-a-react-app-with-react-router-and-an-express-backend-33l3
 
+https://tylermcginnis.com/react-router-protected-routes-authentication/
+
 Home - Changelogs, Case Studies, Introspectives. 
 About - Who I am outside of my work, perhaps occasionally articles unrelated to WebDev. 
 

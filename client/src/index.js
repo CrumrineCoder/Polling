@@ -6,8 +6,10 @@ import './index.css';
 import App from './App/App';
 import registerServiceWorker from './registerServiceWorker';
 
+
 ReactDOM.render((
     <BrowserRouter>
+       
         <App/>
     </BrowserRouter>
 ), document.getElementById('root'));

@@ -18,7 +18,9 @@ class App extends Component {
         <ConnectedRouter history={history}>
           <div className="App">
             <Header />
+            
             <div className="wrap">
+         
               {routes}
             </div>
             <Footer />
