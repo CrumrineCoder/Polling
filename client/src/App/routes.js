@@ -7,7 +7,7 @@ import axios from "axios";
 import Home from "./home";
 import About from "./about";
 //import Login from "./login";
-import PollShow from "./home/poll";
+import PollShow from "./poll";
 import PageNotFound from "./common/components/PageNotFound";
 
 /*

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './store';
@@ -18,9 +17,7 @@ class App extends Component {
         <ConnectedRouter history={history}>
           <div className="App">
             <Header />
-            
             <div className="wrap">
-         
               {routes}
             </div>
             <Footer />

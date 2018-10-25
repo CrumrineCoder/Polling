@@ -10,7 +10,7 @@ import LoginForm from '../components/LoginForm';
 import Current from '../components/Current';
 import {
 	doPolls
-} from '../actions/doPolls';
+} from '../../actions/doPolls';
 import { bindActionCreators } from 'redux'
 
 class Polls extends Component {
