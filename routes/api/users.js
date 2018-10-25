@@ -36,6 +36,7 @@ router.post('/', auth.optional, (req, res, next) => {
 //POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
   const user = req.body;
+  console.log(user);
 
   if(!user.email) {
     return res.status(422).json({
@@ -57,7 +58,8 @@ router.post('/login', auth.optional, (req, res, next) => {
     if(err) {
       return next(err);
     }
-    console.log("passportUser", passportUser)
+    console.log("passportUser", passportUser);
+    console.log("info", info);
     if(passportUser) {
       const user = passportUser;
       user.token = passportUser.generateJWT();
