@@ -5,6 +5,7 @@ const session = require('express-session');
 const cors = require('cors');
 const errorHandler = require('errorhandler');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 require('dotenv').config();
 
@@ -23,6 +24,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(session({ secret: 'Barrett', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+// Init passport authentication 
+app.use(passport.initialize());
+// persistent login sessions 
+app.use(passport.session());
+
 
 if (!isProduction) {
 	app.use(errorHandler());
