@@ -10,9 +10,6 @@ require('dotenv').config();
 
 
 mongoose.promise = global.Promise;
-if (process.env.NODE_ENV !== 'production') {
-	console.log('Looks like we are in development mode!');
-}
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -32,7 +29,7 @@ if (!isProduction) {
 }
 
 const mLab = 'mongodb://' + process.env.dbUSER + ':' + process.env.dbPASS + process.env.dbHOST + '/' + process.env.dbNAME + '?authMode=scram-sha1';
-console.log(mLab);
+
 mongoose.connect(mLab);
 mongoose.set('debug', true);
 

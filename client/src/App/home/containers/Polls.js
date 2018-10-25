@@ -5,7 +5,9 @@ import PollMini from '../components/PollMini';
 import Tags from '../components/Tag';
 import Search from '../components/Search';
 import Form from '../components/Form';
+import RegisterForm from '../components/RegisterForm';
 import LoginForm from '../components/LoginForm';
+import Current from '../components/Current';
 import {
 	doPolls
 } from '../actions/doPolls';
@@ -77,7 +79,9 @@ class Polls extends Component {
 			<div className="pollsContainer">
 				<Search onSearch={this.handleSearchBar} />
 				<Tags onChangeFilter={this.changeFilter} />
+				<RegisterForm></RegisterForm>
 				<LoginForm></LoginForm>
+				<Current></Current>
 				<Form></Form>
 				{pageContent}
 			</div>

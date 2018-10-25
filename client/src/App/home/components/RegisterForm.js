@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom'
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
 
     constructor(props) {
         super(props);
@@ -16,17 +16,12 @@ class LoginForm extends Component {
     handleSubmit() {
         var { email, password } = this.state;
 
-/*
-.then(axios.post('/api/users/login', {
-            email, password
-        }))
-            .then(axios.get('/api/users/current'))
-            */
-        return axios.post('/api/users/login', {
+
+        return axios.post('/api/users', {
             email, password
         }).then(response => {
-                console.log(response.data);
-            })
+            console.log(response.data);
+        })
             .catch((error) => {
                 console.log('error ' + error);
             });
@@ -62,4 +57,4 @@ class LoginForm extends Component {
     }
 }
 
-export default withRouter(LoginForm);
+export default withRouter(RegisterForm);
