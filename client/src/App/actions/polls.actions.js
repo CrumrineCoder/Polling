@@ -1,4 +1,10 @@
-import { pollConstants} from "/actionTypes"; 
+import {
+    MAKE_POLL_START,
+    MAKE_POLL_SUCCESS,
+    MAKE_POLL_FAILED
+  } from '../constants/pollConstants'
+
+
 
 /*
 import { userConstants } from '../_constants';
