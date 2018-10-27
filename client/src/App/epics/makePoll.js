@@ -8,6 +8,8 @@ import { makePollFulfilled, makePollFailed } from '../actions/makePoll';
 
 // Also now using v6 pipe operators
 //
+
+
 const makePoll = (action$, state$) =>
 	action$.pipe(
 		ofType(MAKE_POLL_START),

@@ -1,16 +1,64 @@
-import {
+/*import {
     MAKE_POLL_START,
     MAKE_POLL_SUCCESS,
     MAKE_POLL_FAILED
   } from '../constants/pollConstants'
+*/
+
+import { pollConstants } from '../_constants';
+import { pollService } from '../_services';
+import { alertActions } from './';
+import { history } from '../_helpers';
+
+export const pollActions = {
+    createPoll,
+    getAll
+}
+
+function createPoll(){
+    return  dispatch  => {
+        dispatch(request(poll));
+
+        pollService.createPoll(poll)
+            .then(
+                poll => {
+                    dispatch(success());
+                    history.push("/results");
+                    dispatch(alertActions.success('Create Poll Successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            )
+    }
+    function request(poll) { return { type: pollConstants.POLL_REGISTER_REQUEST, poll } }
+    function success(poll) { return { type: pollConstants.POLL_REGISTER_SUCCESS, poll } }
+    function failure(error) { return { type: pollConstants.POLL_REGISTER_FAILURE, error } }
+}
+
+function getAll() {
+    return dispatch => {
+        dispatch(request());
+
+        pollService.getAll()
+            .then(
+                polls => dispatch(success(polls)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request() { return { type: pollConstants.GETALL_REQUEST } }
+    function success(polls) { return { type: pollConstants.GETALL_SUCCESS, polls } }
+    function failure(error) { return { type: pollConstants.GETALL_FAILURE, error } }
+}
+
+
 
 
 
 /*
-import { userConstants } from '../_constants';
-import { userService } from '../_services';
-import { alertActions } from './';
-import { history } from '../_helpers';
+
 
 export const userActions = {
     login,
@@ -47,28 +95,6 @@ function logout() {
     return { type: userConstants.LOGOUT };
 }
 
-function register(user) {
-    return dispatch => {
-        dispatch(request(user));
-
-        userService.register(user)
-            .then(
-                user => { 
-                    dispatch(success());
-                    history.push('/login');
-                    dispatch(alertActions.success('Registration successful'));
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
-    };
-
-    function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
-    function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
-}
 
 function getAll() {
     return dispatch => {
