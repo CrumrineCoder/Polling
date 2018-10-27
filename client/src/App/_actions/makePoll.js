@@ -2,7 +2,7 @@ import {
     MAKE_POLL_START,
     MAKE_POLL_SUCCESS,
     MAKE_POLL_FAILED
-  } from '../constants/pollConstants'
+  } from '../_constants/pollConstants'
   
   // start request
   export function makePoll(payload) {

@@ -2,7 +2,7 @@ import {
     REQUEST_POLLS_START,
     REQUEST_POLLS_SUCCESS,
     REQUEST_POLLS_FAILED
-  } from '../constants/pollConstants';
+  } from '../_constants/pollConstants';
   
   let initialState = {
     polls: [],

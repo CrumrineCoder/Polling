@@ -2,9 +2,9 @@ import { ajax } from 'rxjs/observable/dom/ajax';
 import { ofType } from 'redux-observable';
 import { catchError, mergeMap, map } from 'rxjs/operators';
 
-import { REQUEST_POLLS_START } from '../constants/pollConstants';
+import { REQUEST_POLLS_START } from '../_constants/pollConstants';
 
-import { doPollsFulfilled, doPollsFailed } from '../actions/doPolls';
+import { doPollsFulfilled, doPollsFailed } from '../_actions/doPolls';
 
 // Also now using v6 pipe operators
 //

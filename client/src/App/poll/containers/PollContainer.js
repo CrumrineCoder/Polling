@@ -5,7 +5,7 @@ import Poll from '../components/Poll';
 import Result from "../components/Result";
 import {
 	doPolls
-} from '../../actions/doPolls';
+} from '../../_actions/doPolls';
 import { bindActionCreators } from 'redux'
 
 class Polls extends Component {
