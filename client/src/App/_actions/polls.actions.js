@@ -5,17 +5,17 @@
   } from '../constants/pollConstants'
 */
 
-import { pollConstants } from '../_constants';
-import { pollService } from '../_services';
-import { alertActions } from './';
-import { history } from '../_helpers';
+import { pollConstants } from '../_constants/pollConstants.js';
+import { pollService } from '../_services/pollService.js';
+import { alertActions } from './alert.actions.js';
+import { history } from '../_helpers/history.js';
 
 export const pollActions = {
     createPoll,
     getAll
 }
 
-function createPoll(){
+function createPoll(poll){
     return  dispatch  => {
         dispatch(request(poll));
 

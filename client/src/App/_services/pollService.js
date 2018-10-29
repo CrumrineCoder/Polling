@@ -1,6 +1,6 @@
 
-import config from 'config';
-import { authHeader } from '../_helpers';
+//import config from 'config';
+import { authHeader } from '../_helpers/auth-header.js';
 
 export const pollService = {
     createPoll,
@@ -14,7 +14,7 @@ function createPoll(poll) {
         body: JSON.stringify(poll)
     };
 
-    return fetch(`${config.apiUrl}/polls/createPoll`, requestOptions).then(handleResponse);
+    return fetch(`/polls/createPoll`, requestOptions).then(handleResponse);
 }
 
 function getAll() {
@@ -23,7 +23,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/polls`, requestOptions).then(handleResponse);
+    return fetch(`/polls`, requestOptions).then(handleResponse);
 }
 
 
@@ -34,7 +34,8 @@ function handleResponse(response) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
               //  logout();
-                location.reload(true);
+           //     location.reload(true);
+                console.log("reload");
             }
 
             const error = (data && data.message) || response.statusText;

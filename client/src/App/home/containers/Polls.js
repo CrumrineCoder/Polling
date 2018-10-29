@@ -13,6 +13,8 @@ import {
 } from '../../_actions/doPolls';
 import { bindActionCreators } from 'redux'
 
+import { pollActions } from '../../_actions/polls.actions.js';
+
 class Polls extends Component {
 
 	constructor(props) {
