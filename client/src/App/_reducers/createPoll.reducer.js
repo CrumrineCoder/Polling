@@ -1,6 +1,6 @@
-import { pollConstants } from '../_constants';
+import { pollConstants } from '../_constants/pollConstants.js';
 
-export function createPoll(state = {}, action) {
+export default function createPoll(state = {}, action) {
   switch (action.type) {
     case pollConstants.POLL_REGISTER_REQUEST:
       return { creating: true };

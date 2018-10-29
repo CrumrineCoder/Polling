@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+
+import { pollActions } from '../../_actions/polls.actions.js';
 
 class RegisterForm extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            email: '', password: ''
+            email: '', password: '', submitted: false
         };
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,16 +17,17 @@ class RegisterForm extends Component {
 
     handleSubmit() {
         var { email, password } = this.state;
+        const { dispatch } = this.props;
+        this.setState({ submitted: true });
 
-
-        return axios.post('/api/users', {
+     /*   return axios.post('/api/users', {
             email, password
         }).then(response => {
             console.log(response.data);
         })
             .catch((error) => {
                 console.log('error ' + error);
-            });
+            }); */
     }
     // For Question
     handleChangeField(key, event) {

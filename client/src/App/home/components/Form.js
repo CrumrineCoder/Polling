@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { pollActions } from '../../_actions/polls.actions.js';
 
 class Form extends Component {
 
@@ -8,6 +10,7 @@ class Form extends Component {
         super(props);
         this.state = {
             question: '', answers: [{ text: '', value: 0 }, { text: '', value: 0 }],
+            submitted: false
         };
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,6 +23,8 @@ class Form extends Component {
 
     handleSubmit() {
         var { question, answers } = this.state;
+        const { dispatch } = this.props;
+     
 
         // Remove empty answers
         answers = answers.filter(function (el) {
@@ -39,12 +44,14 @@ class Form extends Component {
         else if (answers.length < 2) {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
         } else {
-            return axios.post('/api/polls', {
+            this.setState({ submitted: true });
+            dispatch(pollActions.createPoll(question));
+          /*  return axios.post('/api/polls', {
                 question, answers
             })
                 .then(response => {
                     this.goToResults(response.data.poll._id)
-                })
+                }) */
         }
     }
     // For Answers
@@ -103,4 +110,18 @@ class Form extends Component {
     }
 }
 
-export default withRouter(Form);
+/*
+export default withRouter(Form);*/
+
+function mapStateToProps(state) {
+    console.log("State", state); 
+    const { creating } = state.home.createPoll;
+    return {
+        creating
+    };
+}
+/*
+const connectedFormPage = connect(mapStateToProps)(Form);
+export default connectedFormPage;*/
+
+export default connect(mapStateToProps)(Form);
