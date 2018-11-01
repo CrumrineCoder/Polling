@@ -15,7 +15,7 @@ function createPoll(poll) {
         body: JSON.stringify(poll)
     };
 
-    return fetch(`/polls/createPoll`, requestOptions).then(handleResponse);
+    return fetch(`/api/polls/createPoll`, requestOptions).then(handleResponse);
 }
 
 function getAll() {

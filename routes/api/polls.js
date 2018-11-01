@@ -3,7 +3,7 @@ const router = require('express').Router();
 const Polls = mongoose.model('Polls');
 var ObjectId = require('mongodb').ObjectID;
 
-router.post('/', (req, res, next) => {
+router.post('/createPoll', (req, res, next) => {
   const { body } = req;
   const finalPoll = new Polls(body);
   return finalPoll.save()
