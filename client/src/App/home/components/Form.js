@@ -47,7 +47,7 @@ class Form extends Component {
             this.setState({ submitted: true });
             console.log("Dispatch", this.props);
          //is.props.createPoll(q)
-          dispatch(pollActions.createPoll({question}));
+          dispatch(pollActions.createPoll({question, answers}));
           /*  return axios.post('/api/polls', {
                 question, answers
             })
