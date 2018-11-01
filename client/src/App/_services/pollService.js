@@ -8,6 +8,7 @@ export const pollService = {
 }
 
 function createPoll(poll) {
+    console.log("TESTING POLL SERVICES");
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

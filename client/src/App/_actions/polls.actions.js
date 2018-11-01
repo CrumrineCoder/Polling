@@ -16,9 +16,11 @@ export const pollActions = {
 }
 
 function createPoll(poll){
+    console.log("TESTing poll actions");
+    console.log(poll);
     return  dispatch  => {
         dispatch(request(poll));
-
+        console.log("Continue?");
         pollService.createPoll(poll)
             .then(
                 poll => {
@@ -32,7 +34,7 @@ function createPoll(poll){
                 }
             )
     }
-    function request(poll) { return { type: pollConstants.POLL_REGISTER_REQUEST, poll } }
+    function request(poll) { console.log("REQUEST"); return { type: pollConstants.POLL_REGISTER_REQUEST, poll } }
     function success(poll) { return { type: pollConstants.POLL_REGISTER_SUCCESS, poll } }
     function failure(error) { return { type: pollConstants.POLL_REGISTER_FAILURE, error } }
 }

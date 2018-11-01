@@ -45,7 +45,9 @@ class Form extends Component {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
         } else {
             this.setState({ submitted: true });
-            dispatch(pollActions.createPoll(question));
+            console.log("Dispatch", this.props);
+         //is.props.createPoll(q)
+          dispatch(pollActions.createPoll({question}));
           /*  return axios.post('/api/polls', {
                 question, answers
             })
