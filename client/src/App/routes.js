@@ -1,7 +1,8 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router";
-import { withRouter } from 'react-router-dom';
-import axios from "axios";
+import { Route, Switch } from "react-router";
+//, Redirect
+//import { withRouter } from 'react-router-dom';
+//import axios from "axios";
 
 // Import modules/routes
 import Home from "./home";
@@ -30,7 +31,7 @@ function authenticate() {
 }
 isAuth = authenticate();
 console.log(isAuth);
-*/
+*//*
 
 const fakeAuth = {
   isAuthenticated: true,
@@ -96,14 +97,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     }
   />
 );
-
+*/
 export default (
   //  <AuthButton/>
+   // <PrivateRoute path="/polls/results/:id/" component={About} />
+   // <Route path="/login" component={Login} />
   <Switch>  
     <Route exact path="/" component={Home} />
     <Route path="/about" component={About} />
-    <Route path="/login" component={Login} />
-    <PrivateRoute path="/polls/results/:id/" component={About} />
     <Route path="/polls/:id/" component={PollShow} />
     <Route component={PageNotFound} />
   </Switch>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
-import { pollActions } from '../../_actions/polls.actions.js';
+//import { pollActions } from '../../_actions/polls.actions.js';
 
 class RegisterForm extends Component {
 
@@ -16,8 +16,8 @@ class RegisterForm extends Component {
     }
 
     handleSubmit() {
-        var { email, password } = this.state;
-        const { dispatch } = this.props;
+   //     var { email, password } = this.state;
+   //     const { dispatch } = this.props;
         this.setState({ submitted: true });
 
      /*   return axios.post('/api/users', {

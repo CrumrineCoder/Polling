@@ -15,7 +15,6 @@ const makePoll = (action$, state$) =>
 		ofType(MAKE_POLL_START),
 		mergeMap(action => {
             let apiUrl = `/api/polls/`;
-            console.log("BINGO BLAST");
 			return ajax
 				.getJSON(apiUrl)
 				.pipe(

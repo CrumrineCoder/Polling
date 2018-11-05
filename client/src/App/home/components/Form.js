@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { withRouter } from 'react-router-dom';
+//import axios from 'axios';
+//import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { pollActions } from '../../_actions/polls.actions.js';
 
@@ -45,7 +45,7 @@ class Form extends Component {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
         } else {
             this.setState({ submitted: true });
-            console.log("Dispatch", this.props);
+      //      console.log("Dispatch", this.props);
          //is.props.createPoll(q)
           dispatch(pollActions.createPoll({question, answers}));
           /*  return axios.post('/api/polls', {
@@ -116,7 +116,7 @@ class Form extends Component {
 export default withRouter(Form);*/
 
 function mapStateToProps(state) {
-    console.log("State", state); 
+   // console.log("State", state); 
     const { creating } = state.home.createPoll;
     return {
         creating

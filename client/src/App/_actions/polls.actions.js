@@ -16,11 +16,8 @@ export const pollActions = {
 }
 
 function createPoll(poll){
-    console.log("TESTing poll actions");
-    console.log(poll);
     return  dispatch  => {
         dispatch(request(poll));
-        console.log("Continue?");
         pollService.createPoll(poll)
             .then(
                 poll => {
