@@ -8,7 +8,7 @@
 import { pollConstants } from '../_constants/pollConstants.js';
 import { pollService } from '../_services/pollService.js';
 import { alertActions } from './alert.actions.js';
-import { history } from '../_helpers/history.js';
+import { history } from '../store.js';
 
 export const pollActions = {
     createPoll,
@@ -22,8 +22,8 @@ function createPoll(poll){
             .then(
                 poll => {
                     dispatch(success());
-                    this.props.history.push('/path')
-                 //   history.push("/results");
+         //           this.props.history.push('/path')
+                    history.push("/results");
                     dispatch(alertActions.success('Create Poll Successful'));
                 },
                 error => {
