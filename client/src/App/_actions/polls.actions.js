@@ -22,7 +22,8 @@ function createPoll(poll){
             .then(
                 poll => {
                     dispatch(success());
-                    history.push("/results");
+                    this.props.history.push('/path')
+                 //   history.push("/results");
                     dispatch(alertActions.success('Create Poll Successful'));
                 },
                 error => {
