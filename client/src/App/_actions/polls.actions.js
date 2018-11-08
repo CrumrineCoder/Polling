@@ -12,7 +12,8 @@ import { history } from '../store.js';
 
 export const pollActions = {
     createPoll,
-    getAll
+    getAll, 
+    votePoll
 }
 
 function createPoll(poll){
@@ -22,7 +23,7 @@ function createPoll(poll){
             .then(
                 poll => {
                     dispatch(success());
-                    history.push(poll.poll._id + "/results");
+                    history.push(poll.poll._id + "/vote");
                     dispatch(alertActions.success('Create Poll Successful'));
                 },
                 error => {
@@ -35,6 +36,27 @@ function createPoll(poll){
     function success(poll) { return { type: pollConstants.POLL_REGISTER_SUCCESS, poll } }
     function failure(error) { return { type: pollConstants.POLL_REGISTER_FAILURE, error } }
 }
+function votePoll(poll){
+    return  dispatch  => {
+        dispatch(request(poll));
+        pollService.createPoll(poll)
+            .then(
+                poll => {
+                    dispatch(success());
+                    //history.push(poll.poll._id + "/results");
+                    dispatch(alertActions.success('Create Poll Successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            )
+    }
+    function request(poll) { console.log("REQUEST"); return { type: pollConstants.POLL_REGISTER_REQUEST, poll } }
+    function success(poll) { return { type: pollConstants.POLL_REGISTER_SUCCESS, poll } }
+    function failure(error) { return { type: pollConstants.POLL_REGISTER_FAILURE, error } }
+}
+
 
 function getAll() {
     return dispatch => {

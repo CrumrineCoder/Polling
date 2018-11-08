@@ -105,7 +105,8 @@ export default (
   <Switch>  
     <Route exact path="/" component={Home} />
     <Route path="/about" component={About} />
-    <Route path="/polls/:id/" component={PollShow} />
+    <Route path="/:id/vote/" component={PollShow} />
+    <Route path="/:id/results/" component={About} />
     <Route component={PageNotFound} />
   </Switch>
 );

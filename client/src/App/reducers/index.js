@@ -4,9 +4,10 @@ import { combineReducers } from 'redux';
 // Placed in same directory
 import Polls from './applyPolls';
 import createPoll from "../_reducers/createPoll.reducer.js";
+import votePoll from "../_reducers/votePoll.reducer.js";
 
 const home = combineReducers({
-	Polls, createPoll
+	Polls, createPoll, votePoll
 });
 
 export default home;

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { pollActions } from '../../_actions/polls.actions.js';
 
 class Poll extends Component {
 
@@ -9,21 +11,23 @@ class Poll extends Component {
 		this.state = { selected: "", _id: "" };
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.goToResults = this.goToResults.bind(this);
+	
 	}
 
 	handleSubmit() {
 		var { selected, _id } = this.state;
 		var questionID = this.props._id;
-		return axios.post('/api/polls/vote', {
+		   const { dispatch } = this.props;
+		 dispatch(pollActions.votePoll({selected, _id}));
+		/*return axios.post('/api/polls/vote', {
 			selected, _id
 		})
-			.then(this.goToResults(questionID))
+			.then(this.goToResults(questionID)) */
 	}
 
-	goToResults(id) {
-		this.props.history.push("/polls/results/" + id);
-	}
+//	goToResults(id) {
+//		this.props.history.push("/polls/results/" + id);
+//	}
 
 	handleOptionChange(evt) {
 		this.setState({ selected: evt.target.value, _id: evt.target.id });
@@ -50,4 +54,17 @@ class Poll extends Component {
 	}
 }
 
-export default withRouter(Poll);
+
+function mapStateToProps(state) {
+   // console.log("State", state); 
+	const { voting } = state.home.votePoll;
+	console.log("Voting", voting)
+    return {
+        voting
+    };
+}
+
+export default connect(mapStateToProps)(Poll);
+
+
+//export default withRouter(Poll);

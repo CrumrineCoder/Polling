@@ -18,6 +18,18 @@ function createPoll(poll) {
     return fetch(`/api/polls/createPoll`, requestOptions).then(handleResponse);
 }
 
+
+function votePoll(poll) {
+    // console.log("TESTING POLL SERVICES");
+     const requestOptions = {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify(poll)
+     };
+ 
+     return fetch(`/api/polls/vote`, requestOptions).then(handleResponse);
+ }
+
 function getAll() {
     const requestOptions = {
         method: 'GET',
