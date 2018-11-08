@@ -8,6 +8,7 @@ https://tylermcginnis.com/react-router-protected-routes-authentication/
 https://auth0.com/docs/quickstart/spa/react/03-calling-an-api
 https://medium.freecodecamp.org/learn-how-to-handle-authentication-with-node-using-passport-js-4a56ed18e81e
 http://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example
+https://github.com/passport/express-4.x-local-example
 
 Home - Changelogs, Case Studies, Introspectives. 
 About - Who I am outside of my work, perhaps occasionally articles unrelated to WebDev. 
