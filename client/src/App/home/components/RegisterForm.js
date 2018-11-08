@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
-import { withRouter } from 'react-router-dom';
-
-//import { pollActions } from '../../_actions/polls.actions.js';
+import { connect } from 'react-redux';
+import { pollActions } from '../../_actions/polls.actions.js';
 
 class RegisterForm extends Component {
 
@@ -16,10 +14,10 @@ class RegisterForm extends Component {
     }
 
     handleSubmit() {
-   //     var { email, password } = this.state;
-   //     const { dispatch } = this.props;
+        var { email, password } = this.state;
+        const { dispatch } = this.props;
         this.setState({ submitted: true });
-
+        dispatch(pollActions.register({email, password}));
      /*   return axios.post('/api/users', {
             email, password
         }).then(response => {
@@ -37,8 +35,6 @@ class RegisterForm extends Component {
     }
 
     render() {
-        //    <button onClick={this.handleSearchChange}>Search</button>
-        //value={this.state.inputValue}
         const { email, password } = this.state;
         return (
             <div className="form">
@@ -60,4 +56,11 @@ class RegisterForm extends Component {
     }
 }
 
-export default withRouter(RegisterForm);
+function mapStateToProps(state) {
+    const { registration } = state.home.register;
+    return {
+        registration
+    };
+}
+
+export default connect(mapStateToProps)(RegisterForm);
