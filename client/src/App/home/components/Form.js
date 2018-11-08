@@ -116,8 +116,9 @@ class Form extends Component {
 export default withRouter(Form);*/
 
 function mapStateToProps(state) {
-   // console.log("State", state); 
+    console.log("State", state); 
     const { creating } = state.home.createPoll;
+    console.log("Creating", creating);
     return {
         creating
     };

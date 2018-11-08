@@ -56,7 +56,8 @@ class Poll extends Component {
 
 
 function mapStateToProps(state) {
-   // console.log("State", state); 
+	console.log("State", state.home);
+	console.log(state.home.votePoll); 
 	const { voting } = state.home.votePoll;
 	console.log("Voting", voting)
     return {

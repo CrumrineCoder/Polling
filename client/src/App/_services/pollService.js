@@ -4,7 +4,8 @@ import { authHeader } from '../_helpers/auth-header.js';
 
 export const pollService = {
     createPoll,
-    getAll
+    getAll, 
+    votePoll
 }
 
 function createPoll(poll) {
@@ -41,6 +42,7 @@ function getAll() {
 
 
 function handleResponse(response) {
+    console.log("Response is Handled"); 
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {

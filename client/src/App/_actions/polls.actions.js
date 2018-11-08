@@ -39,12 +39,12 @@ function createPoll(poll){
 function votePoll(poll){
     return  dispatch  => {
         dispatch(request(poll));
-        pollService.createPoll(poll)
+        pollService.votePoll(poll)
             .then(
                 poll => {
                     dispatch(success());
-                    //history.push(poll.poll._id + "/results");
-                    dispatch(alertActions.success('Create Poll Successful'));
+                    history.push("/results");
+                    dispatch(alertActions.success('Vote Poll Successful'));
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -52,9 +52,9 @@ function votePoll(poll){
                 }
             )
     }
-    function request(poll) { console.log("REQUEST"); return { type: pollConstants.POLL_REGISTER_REQUEST, poll } }
-    function success(poll) { return { type: pollConstants.POLL_REGISTER_SUCCESS, poll } }
-    function failure(error) { return { type: pollConstants.POLL_REGISTER_FAILURE, error } }
+    function request(poll) { console.log("REQUEST"); return { type: pollConstants.POLL_VOTE_REQUEST, poll } }
+    function success(poll) { return { type: pollConstants.POLL_VOTE_SUCCESS, poll } }
+    function failure(error) { return { type: pollConstants.POLL_VOTE_FAILURE, error } }
 }
 
 
