@@ -13,11 +13,11 @@ export const userActions = {
     login
 };
 
-function login(username, password) {
+function login(user) {
     return dispatch => {
-        dispatch(request({ username }));
-
-        userService.login(username, password)
+        dispatch(request(user));
+        console.log("User Actions", user)
+        userService.login(user)
             .then(
                 user => { 
                     dispatch(success(user));

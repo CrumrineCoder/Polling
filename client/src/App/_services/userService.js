@@ -13,12 +13,14 @@ export const userService = {
     login
 };
 
-function login(username, password) {
+function login(user) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({user })
     };
+
+    console.log("Login Body", requestOptions.body);
 
     return fetch(`api/users/login`, requestOptions)
         .then(handleResponse)

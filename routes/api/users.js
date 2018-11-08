@@ -35,10 +35,12 @@ router.post('/register', auth.optional, (req, res, next) => {
 
 //POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
-  const user = req.body;
-  console.log(user);
+  let user = req.body.user;
+  console.log("User Login Body", user);
+  console.log(user.email);
 
   if(!user.email) {
+    console.log("NO EMAIL!")
     return res.status(422).json({
       errors: {
         email: 'is required',
@@ -47,12 +49,15 @@ router.post('/login', auth.optional, (req, res, next) => {
   }
 
   if(!user.password) {
+    console.log("NO PASSWORD!");
     return res.status(422).json({
       errors: {
         password: 'is required',
       },
     });
   }
+
+  console.log("TO THE AUTHENTICATION!"); 
 
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
     if(err) {

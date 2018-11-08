@@ -18,14 +18,6 @@ class RegisterForm extends Component {
         const { dispatch } = this.props;
         this.setState({ submitted: true });
         dispatch(userActions.register({email, password}));
-     /*   return axios.post('/api/users', {
-            email, password
-        }).then(response => {
-            console.log(response.data);
-        })
-            .catch((error) => {
-                console.log('error ' + error);
-            }); */
     }
     // For Question
     handleChangeField(key, event) {
