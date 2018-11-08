@@ -9,9 +9,10 @@ export const userService = {
     getById,
     update,
     delete: _delete */
-    register
+    register,
+    login
 };
-/*
+
 function login(username, password) {
     const requestOptions = {
         method: 'POST',
@@ -19,7 +20,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return fetch(`api/users/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // login successful if there's a jwt token in the response
@@ -31,7 +32,7 @@ function login(username, password) {
             return user;
         });
 }
-
+/*
 function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');

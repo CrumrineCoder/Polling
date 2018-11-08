@@ -9,9 +9,10 @@ export const userActions = {
     register,
     getAll,
     delete: _delete */
-    register
+    register,
+    login
 };
-/*
+
 function login(username, password) {
     return dispatch => {
         dispatch(request({ username }));
@@ -20,7 +21,7 @@ function login(username, password) {
             .then(
                 user => { 
                     dispatch(success(user));
-                    history.push('/');
+                    history.push('/success');
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -33,7 +34,7 @@ function login(username, password) {
     function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
-
+/*
 function logout() {
     userService.logout();
     return { type: userConstants.LOGOUT };

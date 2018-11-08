@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { userActions } from '../../_actions/users.actions.js';
 
 class LoginForm extends Component {
 
@@ -15,21 +15,8 @@ class LoginForm extends Component {
 
     handleSubmit() {
         var { email, password } = this.state;
-
-/*
-.then(axios.post('/api/users/login', {
-            email, password
-        }))
-            .then(axios.get('/api/users/current'))
-            */
-        return axios.post('/api/users/login', {
-            email, password
-        }).then(response => {
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.log('error ' + error);
-            });
+        const { dispatch } = this.props;
+        dispatch(userActions.login({email, password}));
     }
     // For Question
     handleChangeField(key, event) {
@@ -62,4 +49,12 @@ class LoginForm extends Component {
     }
 }
 
-export default withRouter(LoginForm);
+function mapStateToProps(state) {
+    console.log(state.home); 
+    const { logging } = state.home.authenticate;
+    return {
+        logging
+    };
+}
+
+export default connect(mapStateToProps)(LoginForm);
