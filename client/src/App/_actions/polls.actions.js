@@ -37,11 +37,13 @@ function createPoll(poll){
     function failure(error) { return { type: pollConstants.POLL_REGISTER_FAILURE, error } }
 }
 function votePoll(poll){
+    console.log("SNACK AND BEANS!", poll); 
     return  dispatch  => {
         dispatch(request(poll));
         pollService.votePoll(poll)
             .then(
                 poll => {
+                    console.log(poll); 
                     dispatch(success());
                     history.push("/results");
                     dispatch(alertActions.success('Vote Poll Successful'));

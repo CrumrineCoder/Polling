@@ -44,8 +44,9 @@ router.post("/vote", (req, res, next) => {
         { "answers._id": req.body._id }
     }
   ]);
-  Polls.update({ "answers._id": ObjectId(req.body._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }).then(() => res.sendStatus(200))
-    .catch(next);
+  return Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function(err, doc){
+    res.json(doc); 
+  })
 })
 
 
