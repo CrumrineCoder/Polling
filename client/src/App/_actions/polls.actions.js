@@ -1,10 +1,3 @@
-/*import {
-    MAKE_POLL_START,
-    MAKE_POLL_SUCCESS,
-    MAKE_POLL_FAILED
-  } from '../constants/pollConstants'
-*/
-
 import { pollConstants } from '../_constants/pollConstants.js';
 import { pollService } from '../_services/pollService.js';
 import { alertActions } from './alert.actions.js';

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { pollActions } from '../../_actions/polls.actions.js';
 
@@ -16,18 +14,9 @@ class Poll extends Component {
 
 	handleSubmit() {
 		var { selected, _id } = this.state;
-		var questionID = this.props._id;
-		   const { dispatch } = this.props;
-		 dispatch(pollActions.votePoll({selected, _id}));
-		/*return axios.post('/api/polls/vote', {
-			selected, _id
-		})
-			.then(this.goToResults(questionID)) */
+		const { dispatch } = this.props;
+		dispatch(pollActions.votePoll({selected, _id}));
 	}
-
-//	goToResults(id) {
-//		this.props.history.push("/polls/results/" + id);
-//	}
 
 	handleOptionChange(evt) {
 		this.setState({ selected: evt.target.value, _id: evt.target.id });
@@ -56,16 +45,10 @@ class Poll extends Component {
 
 
 function mapStateToProps(state) {
-	console.log("State", state.home);
-	console.log(state.home.votePoll); 
 	const { voting } = state.home.votePoll;
-	console.log("Voting", voting)
     return {
         voting
     };
 }
 
 export default connect(mapStateToProps)(Poll);
-
-
-//export default withRouter(Poll);

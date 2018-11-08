@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
-//import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { pollActions } from '../../_actions/polls.actions.js';
 
@@ -45,15 +43,7 @@ class Form extends Component {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
         } else {
             this.setState({ submitted: true });
-      //      console.log("Dispatch", this.props);
-         //is.props.createPoll(q)
           dispatch(pollActions.createPoll({question, answers}));
-          /*  return axios.post('/api/polls', {
-                question, answers
-            })
-                .then(response => {
-                    this.goToResults(response.data.poll._id)
-                }) */
         }
     }
     // For Answers
@@ -83,8 +73,6 @@ class Form extends Component {
         });
     }
     render() {
-        //    <button onClick={this.handleSearchChange}>Search</button>
-        //value={this.state.inputValue}
         const { question } = this.state;
         return (
             <div className="form">
@@ -112,19 +100,11 @@ class Form extends Component {
     }
 }
 
-/*
-export default withRouter(Form);*/
-
 function mapStateToProps(state) {
-    console.log("State", state); 
     const { creating } = state.home.createPoll;
-    console.log("Creating", creating);
     return {
         creating
     };
 }
-/*
-const connectedFormPage = connect(mapStateToProps)(Form);
-export default connectedFormPage;*/
 
 export default connect(mapStateToProps)(Form);

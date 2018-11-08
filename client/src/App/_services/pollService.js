@@ -9,28 +9,22 @@ export const pollService = {
 }
 
 function createPoll(poll) {
-   // console.log("TESTING POLL SERVICES");
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
 
-    console.log(requestOptions.body);
-
     return fetch(`/api/polls/createPoll`, requestOptions).then(handleResponse);
 }
 
 
 function votePoll(poll) {
-    // console.log("TESTING POLL SERVICES");
      const requestOptions = {
          method: 'POST',
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(poll)
      };
-
-     console.log(requestOptions.body);
  
      return fetch(`/api/polls/vote`, requestOptions).then(handleResponse);
  }
@@ -46,11 +40,8 @@ function getAll() {
 
 
 function handleResponse(response) {
-    console.log("Response is Handled", response); 
     return response.text().then(text => {
-        console.log("HEY HERE'S THE FUCKING TEXT", text); 
         const data = text && JSON.parse(text);
-        console.log("WE'RE LOOKING FOR A DOCTOR  FOR THIS DATA", data)
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
