@@ -43,9 +43,9 @@ function votePoll(poll){
         pollService.votePoll(poll)
             .then(
                 poll => {
-                    console.log(poll); 
                     dispatch(success());
-                    history.push("/results");
+                    history.push("");
+                    history.push(poll._id + "/results/");
                     dispatch(alertActions.success('Vote Poll Successful'));
                 },
                 error => {
