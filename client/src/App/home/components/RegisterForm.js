@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { pollActions } from '../../_actions/polls.actions.js';
+import { userActions } from '../../_actions/users.actions.js';
 
 class RegisterForm extends Component {
 
@@ -17,7 +17,7 @@ class RegisterForm extends Component {
         var { email, password } = this.state;
         const { dispatch } = this.props;
         this.setState({ submitted: true });
-        dispatch(pollActions.register({email, password}));
+        dispatch(userActions.register({email, password}));
      /*   return axios.post('/api/users', {
             email, password
         }).then(response => {
@@ -57,6 +57,7 @@ class RegisterForm extends Component {
 }
 
 function mapStateToProps(state) {
+    console.log(state.home); 
     const { registration } = state.home.register;
     return {
         registration
