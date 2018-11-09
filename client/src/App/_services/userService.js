@@ -51,7 +51,7 @@ function getAll() {
         method: 'GET',
         headers: authHeader()
     };
-
+    console.log("headers", requestOptions.headers);
     return fetch(`api/users/current`, requestOptions).then(handleResponse);
 }
 /*
