@@ -1,5 +1,5 @@
 //import config from 'config';
-//import { authHeader } from '../_helpers';
+import { authHeader } from '../_helpers/auth-header.js';
 
 export const userService = {
    /* login,
@@ -10,7 +10,8 @@ export const userService = {
     update,
     delete: _delete */
     register,
-    login
+    login, 
+    getAll
 };
 
 function login(user) {
@@ -43,6 +44,7 @@ function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
 }
+*/
 
 function getAll() {
     const requestOptions = {
@@ -50,9 +52,9 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`api/users/current`, requestOptions).then(handleResponse);
 }
-
+/*
 function getById(id) {
     const requestOptions = {
         method: 'GET',
