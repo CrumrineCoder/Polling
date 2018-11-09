@@ -49,8 +49,7 @@ class LoginForm extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    console.log(state.home); 
+function mapStateToProps(state) { 
     const { logging } = state.home.authenticate;
     return {
         logging

@@ -49,7 +49,6 @@ class RegisterForm extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state.home); 
     const { registration } = state.home.register;
     return {
         registration

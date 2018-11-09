@@ -16,7 +16,6 @@ export const userActions = {
 function login(user) {
     return dispatch => {
         dispatch(request(user));
-        console.log("User Actions", user)
         userService.login(user)
             .then(
                 user => { 

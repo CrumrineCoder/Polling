@@ -25,12 +25,11 @@ function createPoll(poll){
                 }
             )
     }
-    function request(poll) { console.log("REQUEST"); return { type: pollConstants.POLL_REGISTER_REQUEST, poll } }
+    function request(poll) { return { type: pollConstants.POLL_REGISTER_REQUEST, poll } }
     function success(poll) { return { type: pollConstants.POLL_REGISTER_SUCCESS, poll } }
     function failure(error) { return { type: pollConstants.POLL_REGISTER_FAILURE, error } }
 }
 function votePoll(poll){
-    console.log("SNACK AND BEANS!", poll); 
     return  dispatch  => {
         dispatch(request(poll));
         pollService.votePoll(poll)
@@ -47,7 +46,7 @@ function votePoll(poll){
                 }
             )
     }
-    function request(poll) { console.log("REQUEST"); return { type: pollConstants.POLL_VOTE_REQUEST, poll } }
+    function request(poll) { return { type: pollConstants.POLL_VOTE_REQUEST, poll } }
     function success(poll) { return { type: pollConstants.POLL_VOTE_SUCCESS, poll } }
     function failure(error) { return { type: pollConstants.POLL_VOTE_FAILURE, error } }
 }

@@ -20,16 +20,20 @@ function login(user) {
         body: JSON.stringify({user })
     };
 
-    console.log("Login Body", requestOptions.body);
-
     return fetch(`api/users/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
+            user = user.user; 
             // login successful if there's a jwt token in the response
             if (user.token) {
+             
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
             }
+
+            for (var key in localStorage) {
+                console.log(key + ':' + localStorage[key]);
+              }
 
             return user;
         });
