@@ -30,6 +30,7 @@
     "react-router-redux": "^5.0.0-alpha.9",
     "react-scripts": "^2.0.4",
     "reactstrap": "^6.0.1",
+    "recharts": "^1.4.1",
     "redux": "4.0.0-rc.1",
     "redux-logger": "^3.0.6",
     "redux-observable": "1.0.0-alpha.2",
