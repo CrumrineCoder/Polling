@@ -9,6 +9,7 @@ import Home from "./home";
 import About from "./about";
 //import Login from "./login";
 import PollShow from "./poll";
+import Result from "./result";
 import PageNotFound from "./common/components/PageNotFound";
 
 /*
@@ -106,7 +107,7 @@ export default (
     <Route exact path="/" component={Home} />
     <Route path="/about" component={About} />
     <Route path="/:id/vote/" component={PollShow} />
-    <Route path="/:id/results/" component={About} />
+    <Route path="/:id/results/" component={Result} />
     <Route component={PageNotFound} />
   </Switch>
 );

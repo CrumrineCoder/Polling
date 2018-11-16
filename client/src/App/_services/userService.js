@@ -11,7 +11,7 @@ export const userService = {
     delete: _delete */
     register,
     login, 
-    getAll
+    getAll, logout
 };
 
 function login(user) {
@@ -39,12 +39,12 @@ function login(user) {
             return user;
         });
 }
-/*
+
 function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
 }
-*/
+
 
 function getAll() {
     const requestOptions = {
@@ -100,7 +100,7 @@ function handleResponse(response) {
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
-        //        logout();
+               logout();
         //        location.reload(true);
                 console.log("logout");
             }

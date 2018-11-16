@@ -11,7 +11,7 @@ export const userActions = {
     delete: _delete */
     register,
     login, 
-    getAll
+    getAll, logout
 };
 
 function login(user) {
@@ -34,12 +34,12 @@ function login(user) {
     function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
-/*
+
 function logout() {
     userService.logout();
     return { type: userConstants.LOGOUT };
 }
-*/
+
 function register(user) {
     return dispatch => {
         dispatch(request(user));
