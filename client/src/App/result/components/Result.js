@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { PieChart, Pie, Sector, Cell } from 'recharts';
 
-const data = [{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
-                  {name: 'Group C', value: 300}, {name: 'Group D', value: 200}];
+
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const RADIAN = Math.PI / 180;                    
@@ -22,6 +21,8 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 
 class SimplePieChart extends Component{
 	render () {
+		console.log("Props", this.props); 
+		var data = Object.values(this.props);
   	return (
     	<PieChart width={800} height={400} onMouseEnter={this.onPieEnter}>
         <Pie
@@ -50,11 +51,19 @@ class SimplePieChart extends Component{
 		}
 
 		render() {
+			var data = [];
+			for(var i=0; i<this.props.answers.length; i++){
+				var fullData = this.props.answers;
+				var insert = {text: fullData[i].text, value: fullData[i].value };
+				data.push(insert);
+			}
+			console.log(data); 
+			console.log("PROPS", this.props); 
 			var { selected } = this.state
 			return (
 				<div>
 					<h1> Hi</h1>
-					<SimplePieChart></SimplePieChart>
+					<SimplePieChart {...data}></SimplePieChart>
 				</div>
 			)
 		}
