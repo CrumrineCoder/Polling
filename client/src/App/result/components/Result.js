@@ -21,16 +21,16 @@ class SimpleBarChart extends Component {
 	render() {
 		var data = Object.values(this.props);
 		return (
-			<BarChart width={600} height={300} data={data}>
+			<BarChart width={800} height={400} data={data}>
 				<CartesianGrid strokeDasharray="3 3" />
 				<XAxis dataKey="name" />
 				<YAxis />
 				<Tooltip />
-				<Legend />
-				<Bar dataKey="value" fill="#8884d8" >
+				<Legend layout="vertical" verticalAlign="middle" align="right"/>
+				<Bar dataKey="votes" fill="#8884d8" >
 					{
           	data.map((entry, index) => {
-            	const color = entry.value > 4000 ? COLORS[0] : COLORS[1];
+            	const color = entry.votes > 4000 ? COLORS[0] : COLORS[1];
             	return <Cell key={index} fill={color} />;
             })
           }
@@ -53,7 +53,7 @@ class SimplePieChart extends Component {
 					label={renderCustomizedLabel}
 					outerRadius={80}
 					fill="#8884d8"
-					dataKey="value"
+					dataKey="votes"
 					isAnimationActive={false}
 				>
 					{
@@ -77,15 +77,15 @@ class Result extends Component {
 		var data = [];
 		for (var i = 0; i < this.props.answers.length; i++) {
 			var fullData = this.props.answers;
-			var insert = { name: fullData[i].text, value: fullData[i].value };
+			var insert = { name: fullData[i].text, votes: fullData[i].value };
 			data.push(insert);
 		}
 		var { selected } = this.state
 		return (
 			<div>
 				<h1> Hi</h1>
-				<SimplePieChart {...data} ></SimplePieChart>
 				<SimpleBarChart {...data}></SimpleBarChart>
+				<SimplePieChart {...data} ></SimplePieChart>
 			</div>
 		)
 	}
