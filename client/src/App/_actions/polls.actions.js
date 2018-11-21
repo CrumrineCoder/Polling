@@ -54,13 +54,14 @@ function votePoll(poll){
 
 function votePollUserAnswer(poll){
     return  dispatch  => {
+        var id = poll._parentID;
         dispatch(request(poll));
         pollService.votePollUserAnswer(poll)
             .then(
                 poll => {
                     dispatch(success());
                     history.push("");
-                    history.push(poll._parentID + "/results/");
+                    history.push(id + "/results/");
                     dispatch(alertActions.success('Vote Poll Successful'));
                 },
                 error => {
