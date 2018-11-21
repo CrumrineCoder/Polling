@@ -14,12 +14,20 @@ class Poll extends Component {
 
 	handleSubmit() {
 		var { selected, _id } = this.state;
+		console.log(selected);
 		const { dispatch } = this.props;
-		dispatch(pollActions.votePoll({ selected, _id }));
+		if(_id == "Other"){
+			dispatch(pollActions.votePollUserAnswer({ selected }));
+		} else{
+			dispatch(pollActions.votePoll({ selected, _id }));
+		}
 	}
 
 	handleOptionChange(evt) {
+		console.log(evt.target);
+		console.log(this.state.selected);
 		this.setState({ selected: evt.target.value, _id: evt.target.id });
+		console.log(this.state.selected);
 	}
 
 	setUserAnswer(evt) {
@@ -42,7 +50,7 @@ class Poll extends Component {
 					)
 				}, this)
 				}
-				<input type="radio" name="answer" value={this.state.userAnswer} ></input>
+				<input type="radio" name="answer"  onChange={this.handleOptionChange} value={this.state.userAnswer} id="Other" ></input>
 				<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify"/>
 				<button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
 			</div>

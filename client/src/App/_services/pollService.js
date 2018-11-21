@@ -25,9 +25,25 @@ function votePoll(poll) {
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(poll)
      };
+
+     console.log(requestOptions.body);
  
      return fetch(`/api/polls/vote`, requestOptions).then(handleResponse);
  }
+
+ 
+
+function votePollUserAnswer(poll) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(poll)
+    };
+
+    console.log(requestOptions.body);
+
+    return fetch(`/api/polls/vote`, requestOptions).then(handleResponse);
+}
 
 function getAll() {
     const requestOptions = {

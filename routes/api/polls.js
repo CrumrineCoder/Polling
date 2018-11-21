@@ -37,6 +37,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post("/vote", (req, res, next) => {
+  console.log(req.body);
   Polls.aggregate([
     { "$unwind": '$parent' },
     {

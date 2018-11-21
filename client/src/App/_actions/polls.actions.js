@@ -6,7 +6,8 @@ import { history } from '../store.js';
 export const pollActions = {
     createPoll,
     getAll, 
-    votePoll
+    votePoll,
+    votePollUserAnswer
 }
 
 function createPoll(poll){
@@ -49,6 +50,28 @@ function votePoll(poll){
     function request(poll) { return { type: pollConstants.POLL_VOTE_REQUEST, poll } }
     function success(poll) { return { type: pollConstants.POLL_VOTE_SUCCESS, poll } }
     function failure(error) { return { type: pollConstants.POLL_VOTE_FAILURE, error } }
+}
+
+function votePollUserAnswer(poll){
+    return  dispatch  => {
+        dispatch(request(poll));
+        pollService.votePollUserAnswer(poll)
+            .then(
+                poll => {
+                    dispatch(success());
+                    history.push("");
+                    history.push(poll._id + "/results/");
+                    dispatch(alertActions.success('Vote Poll Successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            )
+    }
+    function request(poll) { return { type: pollConstants.POLL_USER_VOTE_REQUEST, poll } }
+    function success(poll) { return { type: pollConstants.POLL_USER_VOTE_SUCCESS, poll } }
+    function failure(error) { return { type: pollConstants.POLL_USER_VOTE_FAILURE, error } }
 }
 
 
