@@ -6,7 +6,8 @@ export const pollService = {
     createPoll,
     getAll, 
     votePoll,
-    votePollUserAnswer
+    votePollUserAnswer,
+    votePollMultiple
 }
 
 function createPoll(poll) {
@@ -37,6 +38,15 @@ function votePollUserAnswer(poll) {
         body: JSON.stringify(poll)
     };
     return fetch(`/api/polls/userVote`, requestOptions).then(handleResponse);
+}
+
+function votePollMultiple(poll) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(poll)
+    };
+    return fetch(`/api/polls/voteMultiple`, requestOptions).then(handleResponse);
 }
 
 function getAll() {

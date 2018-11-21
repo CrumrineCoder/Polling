@@ -59,6 +59,25 @@ router.post("/userVote", (req, res, next) => {
     function (err, doc) {
       res.json(doc);
     });
+});
+
+router.post("/voteMultiple", (req, res, next) => {
+  console.log(req.body);
+  for (var i = 0; i < req.body.selected.length; i++) {
+    if (req.body._id == "Other") {
+      var userVote = {
+        "text": req.body.selected,
+        "value": 1
+      }
+      Polls.update(
+        { _id: req.body._parentID },
+        { $push: { userAnswers: userVote } },
+        done);
+    } else {
+      Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, done)
+    }
+  }
+  return res.json(req.body);
 })
 
 /*

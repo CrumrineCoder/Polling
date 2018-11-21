@@ -7,7 +7,8 @@ export const pollActions = {
     createPoll,
     getAll, 
     votePoll,
-    votePollUserAnswer
+    votePollUserAnswer,
+    votePollMultiple
 }
 
 function createPoll(poll){
@@ -73,6 +74,29 @@ function votePollUserAnswer(poll){
     function request(poll) { return { type: pollConstants.POLL_USER_VOTE_REQUEST, poll } }
     function success(poll) { return { type: pollConstants.POLL_USER_VOTE_SUCCESS, poll } }
     function failure(error) { return { type: pollConstants.POLL_USER_VOTE_FAILURE, error } }
+}
+
+function votePollMultiple(poll){
+    return  dispatch  => {
+        var id = poll._parentID;
+        dispatch(request(poll));
+        pollService.votePollMultiple(poll)
+            .then(
+                poll => {
+                    dispatch(success());
+                    history.push("");
+                    history.push(id + "/results/");
+                    dispatch(alertActions.success('Vote Poll Successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            )
+    }
+    function request(poll) { return { type: pollConstants.POLL_VOTE_MULTIPLE_REQUEST, poll } }
+    function success(poll) { return { type: pollConstants.POLL_VOTE_MULTIPLE_SUCCESS, poll } }
+    function failure(error) { return { type: pollConstants.POLL_VOTE_MULTIPLE_FAILURE, error } }
 }
 
 

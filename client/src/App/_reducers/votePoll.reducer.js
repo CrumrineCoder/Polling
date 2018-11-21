@@ -14,6 +14,12 @@ export default function votePoll(state = {}, action) {
       return {};
     case pollConstants.POLL_USER_VOTE_FAILURE:
       return {}; 
+    case pollConstants.POLL_VOTE_MULTIPLE_REQUEST:
+      return { creating: true };
+    case pollConstants.POLL_VOTE_MULTIPLE_SUCCESS:
+      return {};
+    case pollConstants.POLL_VOTE_MULTIPLE_FAILURE:
+      return {}; 
     default:
       return state
   }
