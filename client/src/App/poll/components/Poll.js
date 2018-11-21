@@ -6,7 +6,7 @@ class Poll extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { selected: "", _id: "", userAnswer: "" };
+		this.state = { selected: "", _id: "", userAnswer: '' };
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.setUserAnswer = this.setUserAnswer.bind(this);
@@ -43,8 +43,6 @@ class Poll extends Component {
 				}, this)
 				}
 				<input type="radio" name="answer" value={this.state.userAnswer} ></input>
-				<label placeholder="Other, please specify">{this.state.userAnswer}</label>
-				<br/>
 				<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify"/>
 				<button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
 			</div>
