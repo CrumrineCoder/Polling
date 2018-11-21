@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Result from '../components/Result';
-//import Result from "../components/Result";
 import {
 	doPolls
 } from '../../_actions/doPolls';
