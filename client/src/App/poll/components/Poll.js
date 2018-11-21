@@ -17,9 +17,9 @@ class Poll extends Component {
 		var { selected, _id, _parentID } = this.state;
 		console.log(selected);
 		const { dispatch } = this.props;
-		if(_id == "Other"){
+		if (_id === "Other") {
 			dispatch(pollActions.votePollUserAnswer({ selected, _parentID }));
-		} else{
+		} else {
 			dispatch(pollActions.votePoll({ selected, _id }));
 		}
 	}
@@ -41,18 +41,32 @@ class Poll extends Component {
 		return (
 			<div>
 				<h1>{this.props.question}</h1>
+				<h4>Answers</h4>
 				{this.props.answers.map(function (answer) {
+						console.log(answer);
 					return (
-						<div key={answer.text}>
-						<input type="radio" checked={selected === answer.text} name="answer" onChange={this.handleOptionChange} value={answer.text} id={answer._id} />
+						<div key={answer._id}>
+							<input type="radio" checked={selected === answer.text} name="answer" onChange={this.handleOptionChange} value={answer.text} id={answer._id} />
 							<label>{answer.text}</label>
-							
+
 						</div>
 					)
 				}, this)
 				}
-				<input type="radio" name="answer"  onChange={this.handleOptionChange} value={this.state.userAnswer} id="Other" ></input>
-				<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify"/>
+				<h4>User Answers </h4>
+				{this.props.userAnswers.map(function (answer) {
+					console.log(answer);
+					return (
+						<div key={answer._id}>
+							<input type="radio" checked={selected === answer.text} name="answer" onChange={this.handleOptionChange} value={answer.text} id={answer._id} />
+							<label>{answer.text}</label>
+
+						</div>
+					)
+				}, this)
+				}
+				<input type="radio" name="answer" onChange={this.handleOptionChange} value={this.state.userAnswer} id="Other" ></input>
+				<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" />
 				<button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
 			</div>
 		)
