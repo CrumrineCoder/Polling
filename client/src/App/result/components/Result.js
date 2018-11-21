@@ -20,13 +20,14 @@ var renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, perce
 class SimpleBarChart extends Component {
 	render() {
 		var data = Object.values(this.props);
+		//	<Legend layout="vertical" verticalAlign="middle" align="right"/>
 		return (
 			<BarChart width={800} height={400} data={data}>
 				<CartesianGrid strokeDasharray="3 3" />
 				<XAxis dataKey="name" />
 				<YAxis />
 				<Tooltip />
-				<Legend layout="vertical" verticalAlign="middle" align="right"/>
+			
 				<Bar dataKey="votes" fill="#8884d8" >
 					{
           	data.map((entry, index) => {
@@ -82,7 +83,7 @@ class Result extends Component {
 		}
 		return (
 			<div>
-				<h1> Hi</h1>
+				<h1>{this.props.question}</h1>
 				<SimpleBarChart {...data}></SimpleBarChart>
 				<SimplePieChart {...data} ></SimplePieChart>
 			</div>
