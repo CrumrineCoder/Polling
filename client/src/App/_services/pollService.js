@@ -5,7 +5,8 @@ import { authHeader } from '../_helpers/auth-header.js';
 export const pollService = {
     createPoll,
     getAll, 
-    votePoll
+    votePoll,
+    votePollUserAnswer
 }
 
 function createPoll(poll) {
