@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { PieChart, Pie, Sector, Cell, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const RADIAN = Math.PI / 180;
@@ -68,11 +68,6 @@ class SimplePieChart extends Component {
 
 class Result extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = { selected: "", _id: "" };
-	}
-
 	render() {
 		var data = [];
 		for (var i = 0; i < this.props.answers.length; i++) {
@@ -80,7 +75,11 @@ class Result extends Component {
 			var insert = { name: fullData[i].text, votes: fullData[i].value };
 			data.push(insert);
 		}
-		var { selected } = this.state
+		for (var j = 0; j < this.props.userAnswers.length; j++) {
+			var fullUserData = this.props.userAnswers;
+			var userInsert = { name: fullUserData[j].text, votes: fullUserData[j].value };
+			data.push(userInsert);
+		}
 		return (
 			<div>
 				<h1> Hi</h1>
