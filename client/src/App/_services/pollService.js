@@ -43,7 +43,7 @@ function votePollUserAnswer(poll) {
 
     console.log(requestOptions.body);
 
-    return fetch(`/api/polls/vote`, requestOptions).then(handleResponse);
+    return fetch(`/api/polls/userVote`, requestOptions).then(handleResponse);
 }
 
 function getAll() {

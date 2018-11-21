@@ -6,18 +6,19 @@ class Poll extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { selected: "", _id: "", userAnswer: '' };
+		console.log(this.props);
+		this.state = { selected: "", _id: "", userAnswer: '', _parentID: this.props._id };
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.setUserAnswer = this.setUserAnswer.bind(this);
 	}
 
 	handleSubmit() {
-		var { selected, _id } = this.state;
+		var { selected, _id, _parentID } = this.state;
 		console.log(selected);
 		const { dispatch } = this.props;
 		if(_id == "Other"){
-			dispatch(pollActions.votePollUserAnswer({ selected }));
+			dispatch(pollActions.votePollUserAnswer({ selected, _parentID }));
 		} else{
 			dispatch(pollActions.votePoll({ selected, _id }));
 		}

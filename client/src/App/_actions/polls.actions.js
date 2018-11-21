@@ -60,7 +60,7 @@ function votePollUserAnswer(poll){
                 poll => {
                     dispatch(success());
                     history.push("");
-                    history.push(poll._id + "/results/");
+                    history.push(poll._parentID + "/results/");
                     dispatch(alertActions.success('Vote Poll Successful'));
                 },
                 error => {

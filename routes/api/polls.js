@@ -45,11 +45,34 @@ router.post("/vote", (req, res, next) => {
         { "answers._id": req.body._id }
     }
   ]);
-  return Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function(err, doc){
-    res.json(doc); 
+  return Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function (err, doc) {
+    res.json(doc);
   })
 })
 
+router.post("/userVote", (req, res, next) => {
+  console.log(req.body);
+  /*Polls.aggregate([
+    { "$unwind": '$parent' },
+    {
+      "$match":
+        { "answers._id": req.body._id }
+    }
+  ]);
+  return Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function(err, doc){
+    res.json(doc); 
+  }) */
+  var userVote = {
+    "text": req.body.selected,
+    "value": 1
+  }
+  return Polls.update(
+    { _id: req.body._parentID },
+    { $push: { userAnswers: userVote } },
+    function (err, doc) {
+      res.json(doc);
+    });
+})
 
 /*
 router.param('id', (req, res, next, id) => {
