@@ -26,16 +26,10 @@ function login(user) {
         .then(user => {
             user = user.user; 
             // login successful if there's a jwt token in the response
-            if (user.token) {
-             
+            if (user.token) {        
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
             }
-
-            for (var key in localStorage) {
-                console.log(key + ':' + localStorage[key]);
-              }
-
             return user;
         });
 }
@@ -51,7 +45,6 @@ function getAll() {
         method: 'GET',
         headers: authHeader()
     };
-    console.log("headers", requestOptions.headers);
     return fetch(`api/users/current`, requestOptions).then(handleResponse);
 }
 /*

@@ -6,7 +6,6 @@ class Poll extends Component {
 
 	constructor(props) {
 		super(props);
-		console.log(this.props);
 		this.state = { selected: "", _id: "", userAnswer: '', _parentID: this.props._id };
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,7 +14,6 @@ class Poll extends Component {
 
 	handleSubmit() {
 		var { selected, _id, _parentID } = this.state;
-		console.log(selected);
 		const { dispatch } = this.props;
 		if (_id === "Other") {
 			dispatch(pollActions.votePollUserAnswer({ selected, _parentID }));
@@ -25,10 +23,7 @@ class Poll extends Component {
 	}
 
 	handleOptionChange(evt) {
-		console.log(evt.target);
-		console.log(this.state.selected);
 		this.setState({ selected: evt.target.value, _id: evt.target.id });
-		console.log(this.state.selected);
 	}
 
 	setUserAnswer(evt) {
@@ -43,7 +38,6 @@ class Poll extends Component {
 				<h1>{this.props.question}</h1>
 				<h4>Answers</h4>
 				{this.props.answers.map(function (answer) {
-						console.log(answer);
 					return (
 						<div key={answer._id}>
 							<input type="radio" checked={selected === answer.text} name="answer" onChange={this.handleOptionChange} value={answer.text} id={answer._id} />
@@ -55,7 +49,6 @@ class Poll extends Component {
 				}
 				<h4>User Answers </h4>
 				{this.props.userAnswers.map(function (answer) {
-					console.log(answer);
 					return (
 						<div key={answer._id}>
 							<input type="radio" checked={selected === answer.text} name="answer" onChange={this.handleOptionChange} value={answer.text} id={answer._id} />

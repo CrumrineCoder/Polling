@@ -15,7 +15,6 @@ function createPoll(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-
     return fetch(`/api/polls/createPoll`, requestOptions).then(handleResponse);
 }
 
@@ -26,9 +25,6 @@ function votePoll(poll) {
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(poll)
      };
-
-     console.log(requestOptions.body);
- 
      return fetch(`/api/polls/vote`, requestOptions).then(handleResponse);
  }
 
@@ -40,9 +36,6 @@ function votePollUserAnswer(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-
-    console.log(requestOptions.body);
-
     return fetch(`/api/polls/userVote`, requestOptions).then(handleResponse);
 }
 
@@ -66,11 +59,9 @@ function handleResponse(response) {
            //     location.reload(true);
                 console.log("reload");
             }
-
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
-
         return data;
     });
 }

@@ -19,7 +19,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.param('id', (req, res, next, id) => {
-
   return Polls.findById(id, (err, poll) => {
     if (err) {
       return res.sendStatus(404);
@@ -37,7 +36,6 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post("/vote", (req, res, next) => {
-  console.log(req.body);
   Polls.aggregate([
     { "$unwind": '$parent' },
     {
@@ -51,17 +49,6 @@ router.post("/vote", (req, res, next) => {
 })
 
 router.post("/userVote", (req, res, next) => {
-  console.log(req.body);
-  /*Polls.aggregate([
-    { "$unwind": '$parent' },
-    {
-      "$match":
-        { "answers._id": req.body._id }
-    }
-  ]);
-  return Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function(err, doc){
-    res.json(doc); 
-  }) */
   var userVote = {
     "text": req.body.selected,
     "value": 1
