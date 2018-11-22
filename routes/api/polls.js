@@ -64,7 +64,7 @@ router.post("/userVote", (req, res, next) => {
 router.post("/voteMultiple", (req, res, next) => {
   console.log(req.body);
   for (var i = 0; i < req.body.selected.length; i++) {
-    if (req.body._id == "Other") {
+    if (req.body._id[i] == "Other") {
       var userVote = {
         "text": req.body.selected,
         "value": 1
@@ -74,7 +74,7 @@ router.post("/voteMultiple", (req, res, next) => {
         { $push: { userAnswers: userVote } },
         done);
     } else {
-      Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, done)
+      Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id[i]) }, { $inc: { "answers.$.value": 1, "value": 1 } }, done)
     }
   }
   return res.json(req.body);
