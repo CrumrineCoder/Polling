@@ -41,6 +41,7 @@ function votePollUserAnswer(poll) {
 }
 
 function votePollMultiple(poll) {
+    console.log("Meat's back on the menu boys");
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

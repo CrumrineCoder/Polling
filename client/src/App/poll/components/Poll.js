@@ -10,6 +10,7 @@ class Poll extends Component {
 		this.state = { selected: [], _id: [], userAnswer: '', _parentID: this.props._id, checkboxes: this.props.answers, userCheckboxes: this.props.answers };
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleMultipleSubmit = this.handleMultipleSubmit.bind(this);
 		this.setUserAnswer = this.setUserAnswer.bind(this);
 		this.handleMultipleOptionChange = this.handleMultipleOptionChange.bind(this);
 	}
@@ -106,7 +107,7 @@ class Poll extends Component {
 				}
 				<input type="checkbox" onChange={this.handleOptionChange}  name="answer" value={this.state.userAnswer} id="Other" ></input>
 				<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" />
-				<button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
+				<button onClick={this.handleMultipleSubmit} className="btn btn-primary float-right">Submit</button>
 			</div>
 		)
 	}
