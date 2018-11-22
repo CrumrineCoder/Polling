@@ -64,10 +64,10 @@ router.post("/userVote", (req, res, next) => {
 router.post("/voteMultiple", (req, res, next) => {
   console.log(req.body);
   for (var i = 0; i < req.body.selected.length; i++) {
-    if (req.body._id[i] == "Other") {
+    if (req.body.selected[i]._id == "Other") {
       console.log(req.body.selected[i])
       var userVote = {
-        "text": req.body.selected,
+        "text": req.body.selected[i].value,
         "value": 1
       }
       Polls.update(
@@ -78,12 +78,12 @@ router.post("/voteMultiple", (req, res, next) => {
         { "$unwind": '$parent' },
         {
           "$match":
-            { "answers._id": req.body._id[i] }
+            { "answers._id": req.body.selected[i]._id }
         }
       ]); 
-      console.log("Name", req.body.selected[i]);
-      console.log("ID", req.body._id[i]);
-      Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id[i]) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function(err, doc){
+      console.log("Name", req.body.selected[i].value);
+      console.log("ID", req.body.selected[i]._id);
+      Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function(err, doc){
         console.log("Doc", doc);
       })
     }
