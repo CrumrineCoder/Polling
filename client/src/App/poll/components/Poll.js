@@ -55,6 +55,7 @@ class Poll extends Component {
 		console.log("Insert", insert); 
 	//	let idIndex;
 		var selected = this.state.selected;
+		console.log("selected", selected);
 	//	var _id = this.state._id;
 		// check if the check box is checked or unchecked
 		if (evt.target.checked) {
@@ -108,7 +109,7 @@ class Poll extends Component {
 					)
 				}, this)
 				}
-				<input type="checkbox" onChange={this.handleOptionChange}  submitted="toSubmit" name="answer" value={this.state.userAnswer} id="Other" ></input>
+				<input type="checkbox" onChange={this.handleMultipleOptionChange}  submitted="toSubmit" name="answer" value={this.state.userAnswer} id="Other" ></input>
 				<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" />
 				<button onClick={this.handleMultipleSubmit} className="btn btn-primary float-right">Submit</button>
 			</div>

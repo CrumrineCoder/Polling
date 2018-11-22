@@ -62,45 +62,29 @@ router.post("/userVote", (req, res, next) => {
 });
 
 router.post("/voteMultiple", (req, res, next) => {
+  var report = [];
+  console.log("body", req.body);
   for (var i = 0; i < req.body.selected.length; i++) {
-    if (req.body.selected[i]._id == "Other") {
-      console.log(req.body.selected[i])
+    console.log("submitted", req.body.selected[i]);
+    if (req.body.selected[i].submitted == "toSubmit") {
+      console.log("TO SUBMIT");
       var userVote = {
         "text": req.body.selected[i].value,
         "value": 1
       }
+      console.log(userVote);
       Polls.update(
         { _id: req.body._parentID },
-        { $push: { userAnswers: userVote } });
+        { $push: { userAnswers: userVote } }, function(err,docs){report.push(docs)});
     } else {
-      Polls.aggregate([
-        { "$unwind": '$parent' },
-        {
-          "$match":
-            { "answers._id": req.body.selected[i]._id }
-        }
-      ]);
-      console.log("Name", req.body.selected[i].value);
-      console.log("ID", req.body.selected[i]._id);
-      console.log("Submitted", req.body.selected[i].submitted); 
       if (req.body.selected[i].submitted === "answer") {
-        console.log("ANSWER!");
-       
-        Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function(err, docs){ console.log(docs)});
+        Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function(err, docs){ report.push(docs)});
       } else{
-        console.log("USERANSWER!"); 
-        Polls.aggregate([
-          { "$unwind": '$parent' },
-          {
-            "$match":
-              { "userAnswers._id": req.body.selected[i]._id }
-          }
-        ]);
-        Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body.selected[i]._id) }, { $inc: { "userAnswers.$.value": 1, "value": 1 } }, function(err, docs){ console.log(docs)});
+        Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body.selected[i]._id) }, { $inc: { "userAnswers.$.value": 1, "value": 1 } }, function(err, docs){ report.push(docs)});
       }
     }
   }
-  return res.json(req.body);
+  return res.json(report);
 })
 
 /*
