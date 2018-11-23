@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Container } from 'reactstrap';
 import { userActions } from '../../_actions/users.actions.js';
 
 class LoginForm extends Component {
@@ -16,7 +17,7 @@ class LoginForm extends Component {
     handleSubmit() {
         var { email, password } = this.state;
         const { dispatch } = this.props;
-        dispatch(userActions.login({email, password}));
+        dispatch(userActions.login({ email, password }));
     }
     // For Question
     handleChangeField(key, event) {
@@ -31,25 +32,28 @@ class LoginForm extends Component {
         const { email, password } = this.state;
         return (
             <div className="form">
-                <input
-                    onChange={(ev) => this.handleChangeField('email', ev)}
-                    value={email}
-                    className="form-control my-3"
-                    placeholder="Email"
-                />
-                <input
-                    onChange={(ev) => this.handleChangeField('password', ev)}
-                    value={password}
-                    className="form-control my-3"
-                    placeholder="password"
-                />
-                <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
+                <Container>
+                    <h3>Login</h3>
+                    <input
+                        onChange={(ev) => this.handleChangeField('email', ev)}
+                        value={email}
+                        className="form-control my-3"
+                        placeholder="Email"
+                    />
+                    <input
+                        onChange={(ev) => this.handleChangeField('password', ev)}
+                        value={password}
+                        className="form-control my-3"
+                        placeholder="password"
+                    />
+                    <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
+                </Container>
             </div>
         )
     }
 }
 
-function mapStateToProps(state) { 
+function mapStateToProps(state) {
     const { logging } = state.home.authenticate;
     return {
         logging

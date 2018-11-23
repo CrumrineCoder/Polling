@@ -11,6 +11,8 @@ import About from "./about";
 import PollShow from "./poll";
 import Result from "./result";
 import PageNotFound from "./common/components/PageNotFound";
+import Login from "./home/login/LoginForm";
+import Register from "./home/login/RegisterForm";
 
 /*
 const AuthString = 'Bearer '.concat(USER_TOKEN); 
@@ -106,6 +108,8 @@ export default (
   <Switch>  
     <Route exact path="/" component={Home} />
     <Route path="/about" component={About} />
+    <Route path="/register" component={Register} />
+    <Route path="/login" component={Login} />
     <Route path="/:id/vote/" component={PollShow} />
     <Route path="/:id/results/" component={Result} />
     <Route component={PageNotFound} />
