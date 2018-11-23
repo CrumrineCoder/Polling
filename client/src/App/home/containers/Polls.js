@@ -5,8 +5,6 @@ import PollMini from '../components/PollMini';
 import Tags from '../components/Tag';
 import Search from '../components/Search';
 import Form from '../components/Form';
-import RegisterForm from '../login/RegisterForm';
-import LoginForm from '../login/LoginForm';
 import Current from '../components/Current';
 import {
 	doPolls

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { userActions } from '../../_actions/users.actions.js';
+import { Link } from 'react-router-dom';
 
 class Poll extends Component {
 
@@ -76,7 +77,7 @@ class Poll extends Component {
 		if (isLoggedIn) {
 			button = <button onClick={this.handleMultipleSubmit} className="btn btn-primary float-right">Submit</button>;
 		  } else {
-			button = <button >LOG IN YOU DINGUS</button>;
+			button = <button >   <Link  to="/login" style={{display: 'block', height: '100%'}} >Login Please </Link></button>;
 		  }
 		return (
 			<div>
