@@ -11,11 +11,11 @@ class Poll extends Component {
 		const { dispatch } = this.props;
 		dispatch(userActions.getAll());
 		//_id: [],, checkboxes: this.props.answers, userCheckboxes: this.props.answers 
-		this.state = { 
+		this.state = {
 			selected: [],
-			 userAnswer: '', 
-			 _parentID: this.props._id, 
-			 isLoggedIn: typeof localStorage["user"] !== 'undefined' 
+			userAnswer: '',
+			_parentID: this.props._id,
+			isLoggedIn: typeof localStorage["user"] !== 'undefined'
 		};
 		console.log(this.state.isLoggedIn);
 		this.handleOptionChange = this.handleOptionChange.bind(this);
@@ -36,9 +36,12 @@ class Poll extends Component {
 	}
 
 	handleMultipleSubmit() {
-		var { selected, _id, _parentID } = this.state;
+		var { selected, _id, _parentID, isLoggedIn } = this.state;
 		const { dispatch } = this.props;
-		dispatch(pollActions.votePollMultiple({ selected, _id, _parentID, }))
+		if(isLoggedIn){
+			let user = localStorage["user"];
+			dispatch(pollActions.votePollMultiple({ selected, _id, _parentID, user }))
+		}
 	}
 
 	handleOptionChange(evt) {
@@ -76,9 +79,9 @@ class Poll extends Component {
 		let button;
 		if (isLoggedIn) {
 			button = <button onClick={this.handleMultipleSubmit} className="btn btn-primary float-right">Submit</button>;
-		  } else {
-			button = <button >   <Link  to="/login" style={{display: 'block', height: '100%'}} >Login Please </Link></button>;
-		  }
+		} else {
+			button = <button > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</button>;
+		}
 		return (
 			<div>
 				<h1>{this.props.question}</h1>
@@ -107,7 +110,7 @@ class Poll extends Component {
 				<input type="checkbox" onChange={this.handleMultipleOptionChange} submitted="toSubmit" name="answer" value={this.state.userAnswer} id="Other" ></input>
 				<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" />
 				{button}
-				
+
 			</div>
 		)
 	}
