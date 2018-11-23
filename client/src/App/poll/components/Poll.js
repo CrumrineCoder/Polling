@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pollActions } from '../../_actions/polls.actions.js';
+import { userActions } from '../../_actions/users.actions.js';
 
 class Poll extends Component {
 
 	constructor(props) {
 		super(props);
-		console.log(this.props);
+		const { dispatch } = this.props;
+		dispatch(userActions.getAll());
 		//_id: [],, checkboxes: this.props.answers, userCheckboxes: this.props.answers 
 		this.state = { selected: [],  userAnswer: '', _parentID: this.props._id};
 		this.handleOptionChange = this.handleOptionChange.bind(this);
@@ -120,8 +122,9 @@ class Poll extends Component {
 
 function mapStateToProps(state) {
 	const { voting } = state.home.votePoll;
+	const {userInteraction } = state.home.users; 
 	return {
-		voting
+		voting, userInteraction
 	};
 }
 
