@@ -5,6 +5,7 @@ import Result from '../components/Result';
 import {
 	doPolls
 } from '../../_actions/doPolls';
+import { pollActions } from '../../_actions/polls.actions.js';
 import { bindActionCreators } from 'redux'
 
 class Results extends Component {
@@ -12,10 +13,12 @@ class Results extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { poll: this.props.id };
-		this.props.doPolls(this.state.poll);
+		this.props.dispatch(pollActions.getAll());
+	//	this.props.doPolls(this.state.poll);
 	}
 
 	render() {
+		console.log(this.props);
 		let { polls } = this.props;
 		var isObject = polls.constructor === Object;
 		if (isObject) {
@@ -44,12 +47,13 @@ class Results extends Component {
 
 	}
 }
-
+/*
 Results.propTypes = {
 	results: PropTypes.array
 };
 
 const mapStateToProps = state => {
+	console.log(state.home);
 	return {
 		polls: state.home.Polls.polls,
 		loading: state.home.Polls.isLoading
@@ -62,4 +66,13 @@ const mapDispatchToProps = (dispatch) => {
 	}, dispatch)
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Results);
+export default connect(mapStateToProps, mapDispatchToProps)(Results); */
+
+function mapStateToProps(state) {
+    const { getPolls } = state.home.Polls;
+    return {
+        getPolls
+    };
+}
+
+export default connect(mapStateToProps)(Results);

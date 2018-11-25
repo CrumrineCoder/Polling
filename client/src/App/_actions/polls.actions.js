@@ -8,7 +8,8 @@ export const pollActions = {
     getAll, 
     votePoll,
     votePollUserAnswer,
-    votePollMultiple
+    votePollMultiple, 
+    getOne
 }
 
 function createPoll(poll){
@@ -117,6 +118,21 @@ function getAll() {
 }
 
 
+function getOne(poll) {
+    return dispatch => {
+        dispatch(request(poll));
+
+        pollService.getOne(poll)
+            .then(
+                polls => dispatch(success(polls)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request() { return { type: pollConstants.GETALL_REQUEST } }
+    function success(polls) { return { type: pollConstants.GETALL_SUCCESS, polls } }
+    function failure(error) { return { type: pollConstants.GETALL_FAILURE, error } }
+}
 
 
 

@@ -7,7 +7,8 @@ export const pollService = {
     getAll, 
     votePoll,
     votePollUserAnswer,
-    votePollMultiple
+    votePollMultiple,
+    getOne
 }
 
 function createPoll(poll) {
@@ -56,9 +57,18 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`/polls`, requestOptions).then(handleResponse);
+    return fetch(`/api/polls/`, requestOptions).then(handleResponse);
 }
 
+function getOne(poll) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(poll)
+    };
+
+    return fetch(`/api/polls/getOne`, requestOptions).then(handleResponse);
+}
 
 function handleResponse(response) {
     return response.text().then(text => {

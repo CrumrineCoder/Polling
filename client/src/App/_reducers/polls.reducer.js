@@ -11,40 +11,23 @@ export function polls(state = {}, action) {
         items: action.polls
       };
     case pollConstants.GETALL_FAILURE:
-      return { 
+      return {
         error: action.error
       };
-   /* case userConstants.DELETE_REQUEST:
-      // add 'deleting:true' property to user being deleted
+    case pollConstants.GETONE_REQUEST:
       return {
-        ...state,
-        items: state.items.map(user =>
-          user.id === action.id
-            ? { ...user, deleting: true }
-            : user
-        )
+        loading: true
       };
-    case userConstants.DELETE_SUCCESS:
-      // remove deleted user from state
+    case pollConstants.GETONE_SUCCESS:
       return {
-        items: state.items.filter(user => user.id !== action.id)
+        items: action.poll
       };
-    case userConstants.DELETE_FAILURE:
-      // remove 'deleting:true' property and add 'deleteError:[error]' property to user 
+    case pollConstants.GETONE_FAILURE:
       return {
-        ...state,
-        items: state.items.map(user => {
-          if (user.id === action.id) {
-            // make copy of user without 'deleting:true' property
-            const { deleting, ...userCopy } = user;
-            // return copy of user with 'deleteError:[error]' property
-            return { ...userCopy, deleteError: action.error };
-          }
-
-          return user;
-        })
-      }; */
+        error: action.error
+      };
     default:
       return state
   }
 }
+
