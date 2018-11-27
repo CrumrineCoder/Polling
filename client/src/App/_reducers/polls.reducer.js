@@ -1,31 +1,42 @@
 import { pollConstants } from '../_constants';
 
-export function polls(state = {}, action) {
+let initialState = {
+  polls: [],
+  isLoading: false,
+  errors: []
+};
+
+export function polls(state = initialState, action) {
   switch (action.type) {
     case pollConstants.GETALL_REQUEST:
-      return {
-        loading: true
-      };
+      return Object.assign({}, state, {
+        isLoading: true
+      });
     case pollConstants.GETALL_SUCCESS:
-      return {
-        items: action.polls
-      };
+      return Object.assign({}, state, {
+        isLoading: false,
+        polls: action.payload
+      });
+
     case pollConstants.GETALL_FAILURE:
-      return {
-        error: action.error
-      };
+      return Object.assign({}, state, {
+        isLoading: false,
+        errors: action.payload
+      });
     case pollConstants.GETONE_REQUEST:
-      return {
-        loading: true
-      };
+      return Object.assign({}, state, {
+        isLoading: true
+      });
     case pollConstants.GETONE_SUCCESS:
-      return {
-        items: action.poll
-      };
+      return Object.assign({}, state, {
+        isLoading: false,
+        polls: action.payload
+      });
     case pollConstants.GETONE_FAILURE:
-      return {
-        error: action.error
-      };
+      return Object.assign({}, state, {
+        isLoading: false,
+        errors: action.payload
+      });
     default:
       return state
   }
