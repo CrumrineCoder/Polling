@@ -24,6 +24,7 @@ export function polls(state = initialState, action) {
         errors: action.payload
       });
     case pollConstants.GETONE_REQUEST:
+      console.log("Reducer", action); 
       return Object.assign({}, state, {
         isLoading: true
       });

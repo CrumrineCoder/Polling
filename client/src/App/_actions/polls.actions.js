@@ -119,6 +119,7 @@ function getAll() {
 
 
 function getOne(poll) {
+    console.log("Actions", poll);
     return dispatch => {
         dispatch(request(poll));
 

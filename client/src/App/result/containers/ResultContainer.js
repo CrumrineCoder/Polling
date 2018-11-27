@@ -13,7 +13,7 @@ class Results extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { poll: this.props.id };
-		this.props.dispatch(pollActions.getAll());
+		this.props.dispatch(pollActions.getOne(this.state.poll));
 	//	this.props.doPolls(this.state.poll);
 	}
 

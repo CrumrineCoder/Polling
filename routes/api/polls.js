@@ -36,6 +36,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.get('/getOne', (req, res, next) => {
+  console.log("Get one", req.body);
   return Polls.findOne({ _id: req.body._id }, function (err, docs) { res.json(docs) });
 });
 
