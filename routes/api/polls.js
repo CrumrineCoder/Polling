@@ -19,6 +19,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.param('id', (req, res, next, id) => {
+  console.log("DONKEY KONG", id); 
   return Polls.findById(id, (err, poll) => {
     if (err) {
       return res.sendStatus(404);
@@ -29,19 +30,12 @@ router.param('id', (req, res, next, id) => {
   }).catch(next);
 });
 
-router.get('/:id', (req, res, next) => {
-  return res.json({
-    polls: [req.poll.toJSON()],
-  });
-});
-
 router.get('/get/:id', (req, res, next) => {
   console.log("Get one", req.body);
   console.log("get one param", req.params);
+  res.send("Ok"); 
 //  return Polls.findOne({ _id: req.body._id }, function (err, docs) { res.json(docs) });
 });
-
-
 
 router.post("/vote", (req, res, next) => {
   Polls.aggregate([

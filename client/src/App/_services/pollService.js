@@ -1,6 +1,7 @@
 
 //import config from 'config';
 import { authHeader } from '../_helpers/auth-header.js';
+import mongoose from 'mongoose';
 
 export const pollService = {
     createPoll,
@@ -60,12 +61,15 @@ function getAll() {
     return fetch(`/api/polls/`, requestOptions).then(handleResponse);
 }
 
+
 function getOne(poll) {
     console.log("Service", poll); 
     const requestOptions = {
         method: 'GET'
     };
-    return fetch(`api/polls/get/:id=`+poll, requestOptions).then(handleResponse);
+    var id = mongoose.Types.ObjectId(poll);
+    console.log("ID", id); 
+    return fetch("api/polls/get/:id="+id, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
