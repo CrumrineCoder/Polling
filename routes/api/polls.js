@@ -20,14 +20,16 @@ router.get('/', (req, res, next) => {
 
 router.param('id', (req, res, next, id) => {
   console.log("DONKEY KONG", id); 
-  return Polls.findById(id, (err, poll) => {
+
+  
+  return Polls.findById( ObjectId(id), (err, poll) => {
     if (err) {
       return res.sendStatus(404);
     } else if (poll) {
       req.poll = poll;
       return next();
     }
-  }).catch(next);
+  }).catch(next); 
 });
 
 router.get('/get/:id', (req, res, next) => {

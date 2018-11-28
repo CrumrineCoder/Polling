@@ -69,7 +69,7 @@ function getOne(poll) {
     };
     var id = mongoose.Types.ObjectId(poll);
     console.log("ID", id); 
-    return fetch("api/polls/get/:id="+id, requestOptions).then(handleResponse);
+    return fetch("api/polls/get/"+id, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
