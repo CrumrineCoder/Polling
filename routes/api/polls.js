@@ -17,7 +17,7 @@ router.get('/', (req, res, next) => {
     .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
     .catch(next);
 });
-
+/*
 router.param('id', (req, res, next, id) => {
   console.log("DONKEY KONG", id); 
 
@@ -30,13 +30,13 @@ router.param('id', (req, res, next, id) => {
       return next();
     }
   }).catch(next); 
-});
+}); */
 
 router.get('/get/:id', (req, res, next) => {
   console.log("Get one", req.body);
   console.log("get one param", req.params);
-  res.send("Ok"); 
-//  return Polls.findOne({ _id: req.body._id }, function (err, docs) { res.json(docs) });
+ // res.send("Ok"); 
+  return Polls.findOne({ _id: req.params.id }, function (err, docs) { console.log("docs", docs); res.json(docs) });
 });
 
 router.post("/vote", (req, res, next) => {

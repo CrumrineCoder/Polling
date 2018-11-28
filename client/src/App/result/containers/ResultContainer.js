@@ -19,7 +19,7 @@ class Results extends Component {
 	}
 
 	render() {
-		console.log(this.props);
+		console.log("Results props", this.props);
 		let { polls } = this.props;
 		var isObject = polls.constructor === Object;
 		if (isObject) {
