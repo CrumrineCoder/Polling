@@ -12,7 +12,7 @@ class Results extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { poll: this.props.id };
+		this.state = { poll: this.props };
 		this.props.dispatch(pollActions.getOne(this.state.poll));
 	//	this.props.doPolls(this.state.poll);
 	}

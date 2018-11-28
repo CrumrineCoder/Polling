@@ -130,9 +130,9 @@ function getOne(poll) {
             );
     };
 
-    function request() { return { type: pollConstants.GETALL_REQUEST } }
-    function success(polls) { return { type: pollConstants.GETALL_SUCCESS, polls } }
-    function failure(error) { return { type: pollConstants.GETALL_FAILURE, error } }
+    function request() { return { type: pollConstants.GETONE_REQUEST } }
+    function success(polls) { return { type: pollConstants.GETONE_SUCCESS, polls } }
+    function failure(error) { return { type: pollConstants.GETONE_FAILURE, error } }
 }
 
 

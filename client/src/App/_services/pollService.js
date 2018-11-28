@@ -63,14 +63,9 @@ function getAll() {
 function getOne(poll) {
     const requestOptions = {
         method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-          },
-        body: JSON.stringify(poll)
+        headers: authHeader()
     };
-    console.log("Service", requestOptions); 
-
-    fetch(`/api/polls/getOne`).then(handleResponse);
+    return fetch(`api/polls/getOne`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

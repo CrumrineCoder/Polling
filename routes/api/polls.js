@@ -35,9 +35,17 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
+
+//GET current route (required, only authenticated users have access)
 router.get('/getOne', (req, res, next) => {
-  console.log("Get one", req.body);
-  return Polls.findOne({ _id: req.body._id }, function (err, docs) { res.json(docs) });
+  const id = req.payload;
+  return Users.findById(id)
+    .then((user) => {
+      if (!user) {
+        return res.sendStatus(400);
+      }
+      return res.json({ user: user.toAuthJSON() });
+    });
 });
 
 router.post("/vote", (req, res, next) => {
