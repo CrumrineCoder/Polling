@@ -61,11 +61,11 @@ function getAll() {
 }
 
 function getOne(poll) {
+    console.log("Service", poll); 
     const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
+        method: 'GET'
     };
-    return fetch(`api/polls/getOne`, requestOptions).then(handleResponse);
+    return fetch(`api/polls/get/:id=`+poll, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

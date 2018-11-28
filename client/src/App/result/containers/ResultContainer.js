@@ -13,7 +13,8 @@ class Results extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { poll: this.props };
-		this.props.dispatch(pollActions.getOne(this.state.poll));
+		console.log("State", this.state); 
+		this.props.dispatch(pollActions.getOne(this.state.poll.id));
 	//	this.props.doPolls(this.state.poll);
 	}
 
@@ -69,6 +70,7 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(Results); */
 
 function mapStateToProps(state) {
+	console.log("Home", state.home);
     const { getPolls } = state.home.Polls;
     return {
         getPolls

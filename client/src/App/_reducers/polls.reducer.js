@@ -1,4 +1,4 @@
-import { pollConstants } from '../_constants';
+import { pollConstants } from '../_constants/pollConstants.js';
 
 let initialState = {
   polls: [],
@@ -6,7 +6,7 @@ let initialState = {
   errors: []
 };
 
-export function polls(state = initialState, action) {
+export default function polls(state = initialState, action) {
   switch (action.type) {
     case pollConstants.GETALL_REQUEST:
       return Object.assign({}, state, {
@@ -29,11 +29,13 @@ export function polls(state = initialState, action) {
         isLoading: true
       });
     case pollConstants.GETONE_SUCCESS:
+    console.log("Reducer", action); 
       return Object.assign({}, state, {
         isLoading: false,
         polls: action.payload
       });
     case pollConstants.GETONE_FAILURE:
+    console.log("Reducer", action); 
       return Object.assign({}, state, {
         isLoading: false,
         errors: action.payload
