@@ -14,7 +14,7 @@ class Results extends Component {
 		super(props);
 		this.state = { poll: this.props };
 		console.log("State", this.state); 
-		this.props.dispatch(pollActions.getOne(this.state.poll.id));
+	    this.props.dispatch(pollActions.getOne(this.state.poll.id));
 	//	this.props.doPolls(this.state.poll);
 	}
 

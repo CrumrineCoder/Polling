@@ -36,7 +36,7 @@ router.get('/get/:id', (req, res, next) => {
   console.log("Get one", req.body);
   console.log("get one param", req.params);
  // res.send("Ok"); 
-  return Polls.findOne({ _id: req.params.id }, function (err, docs) { console.log("docs", docs); res.json(docs) });
+  return Polls.findOne({ _id: req.params.id }, function (err, docs) { res.json(docs) });
 });
 
 router.post("/vote", (req, res, next) => {
