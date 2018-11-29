@@ -13,27 +13,33 @@ class Results extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { poll: this.props };
-		console.log("State", this.state); 
-	    this.props.dispatch(pollActions.getOne(this.state.poll.id));
-	//	this.props.doPolls(this.state.poll);
+		console.log("State", this.state);
+
+		//	this.props.doPolls(this.state.poll);
 	}
+	componentWillMount() {
+		this.props.dispatch(pollActions.getOne(this.state.poll.id));
+	}
+
 
 	render() {
 		console.log("Results props", this.props);
 		let { polls } = this.props;
-		var isObject = polls.constructor === Object;
-		if (isObject) {
-			polls = [polls];
-		}
 		let pageContent = '';
-
-		if (this.props.loading || polls.length === 0) {
+		console.log("LOADING", this.props.loading); 
+		if (this.props.loading === 0) {
 			pageContent = (
 				<div className="pollsLoader">
 					The content is loading. This may take half a minute depending on dynos.
       		    </div>
 			)
 		} else {
+			console.log("RESULT PROPS AFTER LOADING", this.props);
+			var isObject = polls.constructor === Object;
+			if (isObject) {
+				polls = [polls];
+			}
+
 			pageContent = (
 				<ul className="polls">
 					<Result {...polls[0]} />
@@ -71,10 +77,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(Results); */
 
 function mapStateToProps(state) {
 	console.log("Home", state.home);
-    const { getPolls } = state.home.Polls;
-    return {
-        getPolls
-    };
+	const { getPolls } = state.home.Polls;
+	return {
+		getPolls
+	};
 }
 
 export default connect(mapStateToProps)(Results);

@@ -24,18 +24,18 @@ export default function polls(state = initialState, action) {
         errors: action.payload
       });
     case pollConstants.GETONE_REQUEST:
-      console.log("Reducer", action); 
+      console.log("Reducer REQUEST", action); 
       return Object.assign({}, state, {
         isLoading: true
       });
     case pollConstants.GETONE_SUCCESS:
-    console.log("Reducer", action); 
+    console.log("Reducer SUCCESS", action); 
       return Object.assign({}, state, {
         isLoading: false,
         polls: action.payload
       });
     case pollConstants.GETONE_FAILURE:
-    console.log("Reducer", action); 
+    console.log("Reducer FAILURE", action); 
       return Object.assign({}, state, {
         isLoading: false,
         errors: action.payload
