@@ -118,6 +118,7 @@ function getAll() {
 }
 
 
+
 function getOne(poll) {
     console.log("Actions", poll);
     return dispatch => {
@@ -130,7 +131,7 @@ function getOne(poll) {
             );
     };
 
-    function request() { return { type: pollConstants.GETONE_REQUEST } }
+    function request(poll) { return { type: pollConstants.GETONE_REQUEST, poll } }
     function success(polls) { return { type: pollConstants.GETONE_SUCCESS, polls } }
     function failure(error) { return { type: pollConstants.GETONE_FAILURE, error } }
 }
