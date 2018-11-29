@@ -2,7 +2,6 @@ import { pollConstants } from '../_constants/pollConstants.js';
 
 let initialState = {
   polls: [],
-  isLoading: false,
   errors: []
 };
 
@@ -24,22 +23,28 @@ export default function polls(state = initialState, action) {
         errors: action.payload
       });
     case pollConstants.GETONE_REQUEST:
-      console.log("Reducer REQUEST", action); 
-      return Object.assign({}, state, {
+      console.log("Reducer REQUEST ACTION", action);
+      console.log("Reducer REQUEST STATE", state);
+      return { ...state, loading: true }
+    /*  return Object.assign({}, state, {
         isLoading: true
-      });
+      }); */
     case pollConstants.GETONE_SUCCESS:
-    console.log("Reducer SUCCESS", action); 
-      return Object.assign({}, state, {
-        isLoading: false,
-        polls: action.payload
-      });
+      console.log("Reducer SUCCESS ACTION", action);
+      console.log("Reducer SUCCESS STATE", state);
+      return { ...state, loading: false, polls: action.payload }
+    /*    return Object.assign({}, state, {
+          isLoading: false,
+          polls: action.payload
+        }); */
     case pollConstants.GETONE_FAILURE:
-    console.log("Reducer FAILURE", action); 
-      return Object.assign({}, state, {
-        isLoading: false,
-        errors: action.payload
-      });
+      console.log("Reducer FAILURE ACTION", action);
+      console.log("Reducer FAILURE STATE", state);
+      return { ...state, loading: false, errors: action.payload }
+    /*   return Object.assign({}, state, {
+         isLoading: false,
+         errors: action.payload
+       }); */
     default:
       return state
   }
