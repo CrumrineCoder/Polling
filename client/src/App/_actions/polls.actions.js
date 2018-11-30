@@ -112,13 +112,46 @@ function getAll() {
             );
     };
 
-    function request() { return { type: pollConstants.GETALL_REQUEST } }
+    function request(polls) { return { type: pollConstants.GETALL_REQUEST, polls } }
     function success(polls) { return { type: pollConstants.GETALL_SUCCESS, polls } }
     function failure(error) { return { type: pollConstants.GETALL_FAILURE, error } }
 }
 
 
-
+function receiveVotes(poll, json) {
+    return {
+      type: RECEIVE_VOTES,
+      poll,
+      votes: json.data.children.map(child => child.data),
+      receivedAt: Date.now()
+    }
+  }
+  function fetchVotes(poll) {
+    return dispatch => {
+      dispatch(requestVotes(poll))
+      return fetch(`https://www.reddit.com/r/${poll}.json`)
+        .then(response => response.json())
+        .then(json => dispatch(receiveVotes(poll, json)))
+    }
+  }
+  function shouldFetchVotes(state, poll) {
+    const posts = state.votesByPoll[poll]
+    if (!posts) {
+      return true
+    } else if (posts.isFetching) {
+      return false
+    } else {
+      return posts.didInvalidate
+    }
+  }
+  export function fetchVotesIfNeeded(poll) {
+    return (dispatch, getState) => {
+      if (shouldFetchVotes(getState(), poll)) {
+        return dispatch(fetchVotes(poll))
+      }
+    }
+  }
+  
 function getOne(poll) {
     console.log("Actions", poll);
     return dispatch => {
@@ -126,12 +159,13 @@ function getOne(poll) {
 
         pollService.getOne(poll)
             .then(
+                console.log("PollService GetOne", poll),
                 polls => dispatch(success(polls)),
                 error => dispatch(failure(error.toString()))
             );
     };
 
-    function request(poll) { return { type: pollConstants.GETONE_REQUEST, poll } }
+    function request() { return { type: pollConstants.GETONE_REQUEST, loading } }
     function success(polls) { return { type: pollConstants.GETONE_SUCCESS, polls } }
     function failure(error) { return { type: pollConstants.GETONE_FAILURE, error } }
 }
