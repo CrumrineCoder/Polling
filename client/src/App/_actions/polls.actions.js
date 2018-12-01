@@ -9,7 +9,7 @@ export const pollActions = {
     votePoll,
     votePollUserAnswer,
     votePollMultiple, 
-    getOne
+    fetchVotesIfNeeded
 }
 
 function createPoll(poll){
@@ -120,7 +120,7 @@ function getAll() {
 
 function receiveVotes(poll, json) {
     return {
-      type: RECEIVE_VOTES,
+      type: pollConstants.GETONE_SUCCESS,
       poll,
       votes: json.data.children.map(child => child.data),
       receivedAt: Date.now()
@@ -133,6 +133,7 @@ function receiveVotes(poll, json) {
         .then(response => response.json())
         .then(json => dispatch(receiveVotes(poll, json)))
     }
+    function requestVotes(poll) { return { type: pollConstants.GETONE_REQUEST, poll } }
   }
   function shouldFetchVotes(state, poll) {
     const posts = state.votesByPoll[poll]
@@ -144,14 +145,14 @@ function receiveVotes(poll, json) {
       return posts.didInvalidate
     }
   }
-  export function fetchVotesIfNeeded(poll) {
+   function fetchVotesIfNeeded(poll) {
     return (dispatch, getState) => {
       if (shouldFetchVotes(getState(), poll)) {
         return dispatch(fetchVotes(poll))
       }
     }
   }
-  
+  /*
 function getOne(poll) {
     console.log("Actions", poll);
     return dispatch => {
@@ -169,7 +170,7 @@ function getOne(poll) {
     function success(polls) { return { type: pollConstants.GETONE_SUCCESS, polls } }
     function failure(error) { return { type: pollConstants.GETONE_FAILURE, error } }
 }
-
+*/
 
 
 /*

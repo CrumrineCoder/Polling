@@ -18,7 +18,7 @@ class Results extends Component {
 		//	this.props.doPolls(this.state.poll);
 	}
 	componentWillMount() {
-		this.props.dispatch(pollActions.getOne(this.state.poll.id));
+		this.props.dispatch(pollActions.fetchVotesIfNeeded(this.state.poll.id));
 	}
 
 
