@@ -32,6 +32,7 @@ class Results extends Component {
 		console.log("Results props", this.props);
 		let polls  = this.props;
 		console.log(polls);
+		console.log("HELP", this.state);
 	/*	let pageContent = '';
 		if (this.props.isFetching) {
 			console.log("TRUE");
