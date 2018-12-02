@@ -2,28 +2,43 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Poll from '../components/Poll';
-import {
-	doPolls
-} from '../../_actions/doPolls';
-import { bindActionCreators } from 'redux'
+import { pollActions } from '../../_actions/polls.actions.js';
 
 class Polls extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = { poll: this.props.id };
-		this.props.doPolls(this.state.poll);
+	static propTypes = {
+		selectedPoll: PropTypes.string.isRequired,
+		votes: PropTypes.Array.isRequired,
+		isFetching: PropTypes.bool.isRequired,
+		lastUpdated: PropTypes.number,
+		dispatch: PropTypes.func.isRequired
 	}
+
+	componentDidMount() {
+		console.log("DID MOUNT");
+		console.log(this.props);
+		this.props.dispatch(pollActions.selectPoll(this.props.id));
+		this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
+	}
+
+	componentDidUpdate(prevProps) {
+		console.log("DID UPDATE");
+		if (this.props.selectedPoll !== prevProps.selectedPoll) {
+			this.props.dispatch(pollActions.selectPoll(this.props.id));
+			this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
+		}
+	}
+
 
 	render() {
 		let { polls } = this.props;
-		var isObject = polls.constructor === Object;
+	/*	var isObject = polls.constructor === Object;
 		if (isObject) {
 			polls = [polls];
-		}
+		} */
 		let pageContent = '';
 
-		if (this.props.loading || polls.length === 0) {
+		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
 					The content is loading. This may take half a minute depending on dynos.
@@ -44,7 +59,7 @@ class Polls extends Component {
 
 	}
 }
-
+/*
 Polls.propTypes = {
 	polls: PropTypes.array
 };
@@ -60,6 +75,36 @@ const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		doPolls
 	}, dispatch)
-};
+}; */
 
-export default connect(mapStateToProps, mapDispatchToProps)(Polls);
+
+Polls.propTypes = {
+	selectedPoll: PropTypes.string.isRequired,
+	votes: PropTypes.Array.isRequired,
+	isFetching: PropTypes.bool.isRequired,
+	lastUpdated: PropTypes.number,
+	dispatch: PropTypes.func.isRequired
+}
+
+function mapStateToProps(state) {
+	console.log("MAP STATE STATE", state);
+	const { selectedPoll, votesByPoll } = state.home
+	console.log("selectedPoll in Map State", selectedPoll);
+	console.log("votesByPoll in  Map State", votesByPoll);
+	const { isFetching, lastUpdated, votes } = votesByPoll[
+		selectedPoll
+	] || {
+			isFetching: true,
+			votes: []
+		}
+	console.log("Votes in Map State", votes);
+	console.log("Fetching in  Map State", isFetching);
+	return {
+		selectedPoll,
+		votes,
+		isFetching,
+		lastUpdated
+	}
+}
+
+export default connect(mapStateToProps)(Polls);
