@@ -119,10 +119,12 @@ function getAll() {
 
 
 function receiveVotes(poll, json) {
+    console.log("RECIEVED", poll);
+    console.log("RECEIVED JSON", json);
     return {
         type: pollConstants.GETONE_SUCCESS,
         poll,
-        votes: json.data.children.map(child => child.data),
+        votes: json,
         receivedAt: Date.now()
     }
 }

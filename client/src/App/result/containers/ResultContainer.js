@@ -26,23 +26,16 @@ class Results extends Component {
 		console.log("Results props", this.props);
 		let { polls } = this.props;
 		let pageContent = '';
-		console.log("LOADING", this.props.loading); 
-		if (this.props.loading === 0) {
+		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
 					The content is loading. This may take half a minute depending on dynos.
       		    </div>
 			)
 		} else {
-			console.log("RESULT PROPS AFTER LOADING", this.props);
-			var isObject = polls.constructor === Object;
-			if (isObject) {
-				polls = [polls];
-			}
-
 			pageContent = (
 				<ul className="polls">
-					<Result {...polls[0]} />
+					<Result {...polls} />
 				</ul>
 			)
 		}
