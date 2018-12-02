@@ -97,13 +97,16 @@ Results.propTypes = {
 function mapStateToProps(state) {
 	console.log("MAP STATE STATE", state); 
 	const { selectedPoll, votesByPoll } = state.home
-	const { isFetching, lastUpdated, items: votes } = votesByPoll[
+	console.log("selectedPoll in Map State", selectedPoll);
+	console.log("votesByPoll in  Map State", votesByPoll); 
+	const { isFetching, lastUpdated, votes } = votesByPoll[
 		selectedPoll
 	] || {
 	  isFetching: true,
-	  items: []
+	  votes: []
 	}
-
+	console.log("Votes in Map State", votes);
+	console.log("Fetching in  Map State", isFetching); 
 	return {
 	  selectedPoll,
 	  votes,
