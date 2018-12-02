@@ -70,6 +70,7 @@ class SimplePieChart extends Component {
 class Result extends Component {
 
 	render() {
+		console.log("RESULT PROPS MAAAN", this.props); 
 		var data = [];
 		for (var i = 0; i < this.props.answers.length; i++) {
 			var fullData = this.props.answers;

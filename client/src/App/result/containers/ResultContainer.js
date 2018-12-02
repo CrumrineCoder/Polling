@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Result from '../components/Result';
 import {
-	doPolls
+	doPolls, doPollsFailed
 } from '../../_actions/doPolls';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { bindActionCreators } from 'redux'
@@ -17,31 +17,44 @@ class Results extends Component {
 
 		//	this.props.doPolls(this.state.poll);
 	}
-	componentWillMount() {
-		this.props.dispatch(pollActions.fetchVotesIfNeeded(this.state.poll.id));
-	}
 
+	componentDidMount() {
+		this.props.dispatch(pollActions.fetchVotesIfNeeded(this.state.poll.id));
+	  }
+
+	  componentDidUpdate(prevProps) {
+		if (this.props.selectedPoll !== prevProps.selectedPoll) {
+			this.props.dispatch(pollActions.fetchVotesIfNeeded(this.state.poll.id));
+		}
+	  }
 
 	render() {
 		console.log("Results props", this.props);
-		let { polls } = this.props;
-		let pageContent = '';
+		let polls  = this.props;
+		console.log(polls);
+	/*	let pageContent = '';
 		if (this.props.isFetching) {
+			console.log("TRUE");
 			pageContent = (
 				<div className="pollsLoader">
 					The content is loading. This may take half a minute depending on dynos.
       		    </div>
 			)
 		} else {
+			console.log("FALSE");
 			pageContent = (
 				<ul className="polls">
 					<Result {...polls} />
 				</ul>
 			)
-		}
+		} */
 		return (
 			<div className="poll">
-				{pageContent}
+				 { this.props.isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>}
+           <div style={{ opacity:this.props.isFetching ? 0.5 : 1 }}>
+              <Result {...polls} />
+            </div>
+        }
 			</div>
 		);
 
