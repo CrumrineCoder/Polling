@@ -75,15 +75,24 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Results); */
 
+Results.propTypes = {
+	selectedPoll: PropTypes.string.isRequired,
+	votes: PropTypes.array.isRequired,
+	isFetching: PropTypes.bool.isRequired,
+	lastUpdated: PropTypes.number,
+	dispatch: PropTypes.func.isRequired
+  }
+
 function mapStateToProps(state) {
-	const { selectedPoll, votesByPoll } = state
+	console.log("MAP STATE STATE", state); 
+	const { selectedPoll, votesByPoll } = state.home
 	const { isFetching, lastUpdated, items: posts } = votesByPoll[
 		selectedPoll
 	] || {
 	  isFetching: true,
 	  items: []
 	}
-  ​
+
 	return {
 	  selectedPoll,
 	  posts,
