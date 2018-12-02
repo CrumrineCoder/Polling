@@ -33,43 +33,37 @@ export function votesByPoll(state = {}, action) {
       return state
   }
 }
-
-function votes(state = initialState, action) {
-  console.log("votes");
+const votes = (state = {
+  isFetching: false,
+  didInvalidate: false,
+  votes: []
+}, action) => {
+  console.log("posts");
   console.log(state);
   console.log(action);
   switch (action.type) {
-    case pollConstants.GETALL_REQUEST:
-      return Object.assign({}, state, {
-        isLoading: true
-      });
-    case pollConstants.GETALL_SUCCESS:
-      return Object.assign({}, state, {
-        isLoading: false,
-        polls: action.payload
-      });
-
-    case pollConstants.GETALL_FAILURE:
-      return Object.assign({}, state, {
-        isLoading: false,
-        errors: action.payload
-      });
-      case pollConstants.GETONE_FAILURE:
-      return Object.assign({}, state, {
+    case pollConstants.GETONE_FAILURE:
+    console.log("reducer failure posts");
+      return {
+        ...state,
         didInvalidate: true
-      })
-    case pollConstants.GETONE_SUCCESS:
-      return Object.assign({}, state, {
+      }
+    case pollConstants.GETONE_REQUEST:
+    console.log("reducer request posts");
+      return {
+        ...state,
         isFetching: true,
         didInvalidate: false
-      })
-    case pollConstants.GETONE_REQUEST:
-      return Object.assign({}, state, {
+      }
+    case pollConstants.GETONE_SUCCESS:
+    console.log("reducer success/receive posts");
+      return {
+        ...state,
         isFetching: false,
         didInvalidate: false,
         votes: action.votes,
         lastUpdated: action.receivedAt
-      })
+      }
     default:
       return state
   }
