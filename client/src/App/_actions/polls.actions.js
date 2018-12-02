@@ -138,7 +138,7 @@ function receiveVotes(poll, json) {
   function shouldFetchVotes(state, poll) {
       console.log("State", state);
       console.log("Poll", poll);
-    const posts = state.votesByPoll[poll]
+    const posts = state.home.votesByPoll[poll]
     if (!posts) {
       return true
     } else if (posts.isFetching) {

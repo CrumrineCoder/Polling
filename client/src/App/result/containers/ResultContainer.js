@@ -77,7 +77,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Results); */
 
 Results.propTypes = {
 	selectedPoll: PropTypes.string.isRequired,
-	votes: PropTypes.array.isRequired,
+	items: PropTypes.array.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	lastUpdated: PropTypes.number,
 	dispatch: PropTypes.func.isRequired
