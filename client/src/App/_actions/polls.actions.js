@@ -118,7 +118,7 @@ function getAll() {
     function failure(error) { return { type: pollConstants.GETALL_FAILURE, error } }
 }
 
-  function selectPoll(poll) { return { type: pollConstants.GETONE_SELECT, poll } }
+function selectPoll(poll) { return { type: pollConstants.GETONE_SELECT, poll } }
 
 function receiveVotes(poll, json) {
     console.log("RECIEVED VOTES POLL", poll);
@@ -131,11 +131,11 @@ function receiveVotes(poll, json) {
     }
 }
 function fetchVotes(poll) {
-    console.log("Fetch Votes Poll (poll):", poll); 
+    console.log("Fetch Votes Poll (poll):", poll);
     return dispatch => {
         dispatch(requestVotes(poll))
-         pollService.getOne(poll)
-      //      .then(response => response.json())
+        pollService.getOne(poll)
+            //      .then(response => response.json())
             .then(json => dispatch(receiveVotes(poll, json)))
     }
     function requestVotes(poll) { return { type: pollConstants.GETONE_REQUEST, poll } }

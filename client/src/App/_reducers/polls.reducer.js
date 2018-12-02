@@ -1,11 +1,5 @@
 import { pollConstants } from '../_constants/pollConstants.js';
 
-let initialState = {
-  isFetching: false,
-  didInvalidate: false,
-  votes: []
-};
-// Change This
 export function selectedPoll(state = 'default', action) {
   console.log("selectedPoll");
   console.log(state);

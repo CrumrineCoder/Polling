@@ -2,17 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Result from '../components/Result';
-import {
-	doPolls, doPollsFailed
-} from '../../_actions/doPolls';
 import { pollActions } from '../../_actions/polls.actions.js';
-import { bindActionCreators } from 'redux'
 
 class Results extends Component {
 
 	static propTypes = {
 		selectedPoll: PropTypes.string.isRequired,
-		votes: PropTypes.array.isRequired,
+		votes: PropTypes.object.isRequired,
 		isFetching: PropTypes.bool.isRequired,
 		lastUpdated: PropTypes.number,
 		dispatch: PropTypes.func.isRequired
@@ -90,7 +86,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Results); */
 
 Results.propTypes = {
 	selectedPoll: PropTypes.string.isRequired,
-	votes: PropTypes.array.isRequired,
+	votes: PropTypes.object.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	lastUpdated: PropTypes.number,
 	dispatch: PropTypes.func.isRequired
