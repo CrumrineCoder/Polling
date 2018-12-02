@@ -76,11 +76,20 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(Results); */
 
 function mapStateToProps(state) {
-	console.log("Home", state.home);
-	const { getPolls } = state.home.Polls;
+	const { selectedPoll, votesByPoll } = state
+	const { isFetching, lastUpdated, items: posts } = votesByPoll[
+		selectedPoll
+	] || {
+	  isFetching: true,
+	  items: []
+	}
+  ​
 	return {
-		getPolls
-	};
+	  selectedPoll,
+	  posts,
+	  isFetching,
+	  lastUpdated
+	}
 }
 
 export default connect(mapStateToProps)(Results);

@@ -9,7 +9,7 @@ export const pollActions = {
     votePoll,
     votePollUserAnswer,
     votePollMultiple, 
-    fetchVotesIfNeeded
+    fetchVotesIfNeeded  
 }
 
 function createPoll(poll){
@@ -136,6 +136,8 @@ function receiveVotes(poll, json) {
     function requestVotes(poll) { return { type: pollConstants.GETONE_REQUEST, poll } }
   }
   function shouldFetchVotes(state, poll) {
+      console.log("State", state);
+      console.log("Poll", poll);
     const posts = state.votesByPoll[poll]
     if (!posts) {
       return true

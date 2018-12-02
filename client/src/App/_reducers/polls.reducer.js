@@ -6,7 +6,30 @@ let initialState = {
   isLoading: false
 };
 
-export default function polls(state = initialState, action) {
+export function selectedPoll(state = 'reactjs', action) {
+  switch (action.type) {
+    case pollConstants.GETONE_SELECT:
+      return action.poll
+    default:
+      return state
+  }
+}
+
+export function votesByPoll(state = {}, action) {
+  console.log("VotesByPoll");
+  switch (action.type) {
+    case pollConstants.GETONE_FAILURE:
+    case pollConstants.GETONE_SUCCESS:
+    case pollConstants.GETONE_REQUEST:
+      return Object.assign({}, state, {
+        [action.poll]: polls(state[action.poll], action)
+      })
+    default:
+      return state
+  }
+}
+
+function polls(state = initialState, action) {
   switch (action.type) {
     case pollConstants.GETALL_REQUEST:
       return Object.assign({}, state, {
@@ -23,40 +46,23 @@ export default function polls(state = initialState, action) {
         isLoading: false,
         errors: action.payload
       });
-    case pollConstants.GETONE_REQUEST:
-      console.log("Reducer REQUEST ACTION", action);
-      console.log("Reducer REQUEST STATE", state);
+      case pollConstants.GETONE_FAILURE:
       return Object.assign({}, state, {
-        isLoading: true
-      });
-    /*   return { ...state, loading: true }
-     return Object.assign({}, state, {
-        isLoading: true
-      }); */
+        didInvalidate: true
+      })
     case pollConstants.GETONE_SUCCESS:
-      console.log("Reducer SUCCESS ACTION", action);
-      console.log("Reducer SUCCESS STATE", state);
       return Object.assign({}, state, {
-        isLoading: false
-      });
-    /*   return { ...state, loading: false, polls: action.payload }
-       return Object.assign({}, state, {
-          isLoading: false,
-          polls: action.payload
-        }); */
-    case pollConstants.GETONE_FAILURE:
-      console.log("Reducer FAILURE ACTION", action);
-      console.log("Reducer FAILURE STATE", state);
+        isFetching: true,
+        didInvalidate: false
+      })
+    case pollConstants.GETONE_REQUEST:
       return Object.assign({}, state, {
-        isLoading: false
-      });
-    /*     return { ...state, loading: false, errors: action.payload }
-return Object.assign({}, state, {
-       isLoading: false,
-       errors: action.payload
-     }); */
+        isFetching: false,
+        didInvalidate: false,
+        items: action.votes,
+        lastUpdated: action.receivedAt
+      })
     default:
       return state
   }
 }
-
