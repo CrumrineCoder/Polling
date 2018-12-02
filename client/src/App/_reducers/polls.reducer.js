@@ -6,7 +6,7 @@ let initialState = {
   votes: []
 };
 // Change This
-export function selectedPoll(state = 'reactjs', action) {
+export function selectedPoll(state = 'default', action) {
   console.log("selectedPoll");
   console.log(state);
   console.log(action); 

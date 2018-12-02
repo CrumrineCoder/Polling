@@ -21,12 +21,14 @@ class Results extends Component {
 	componentDidMount() {
 		console.log("DID MOUNT");
 		console.log(this.props); 
+		this.props.dispatch(pollActions.selectPoll(this.props.id));
 		this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
 	  }
 
 	  componentDidUpdate(prevProps) {
 		  console.log("DID UPDATE");
 		if (this.props.selectedPoll !== prevProps.selectedPoll) {
+			this.props.dispatch(pollActions.selectPoll(this.props.id));
 			this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
 		}
 	  }

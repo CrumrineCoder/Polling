@@ -9,7 +9,8 @@ export const pollActions = {
     votePoll,
     votePollUserAnswer,
     votePollMultiple,
-    fetchVotesIfNeeded
+    fetchVotesIfNeeded,
+    selectPoll
 }
 
 function createPoll(poll) {
@@ -117,6 +118,7 @@ function getAll() {
     function failure(error) { return { type: pollConstants.GETALL_FAILURE, error } }
 }
 
+  function selectPoll(poll) { return { type: pollConstants.GETONE_SELECT, poll } }
 
 function receiveVotes(poll, json) {
     console.log("RECIEVED VOTES POLL", poll);
