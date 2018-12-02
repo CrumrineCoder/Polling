@@ -18,11 +18,11 @@ class Results extends Component {
 		//	this.props.doPolls(this.state.poll);
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		this.props.dispatch(pollActions.fetchVotesIfNeeded(this.state.poll.id));
 	  }
 
-	  componentDidUpdate(prevProps) {
+	  componentWillUpdate(prevProps) {
 		if (this.props.selectedPoll !== prevProps.selectedPoll) {
 			this.props.dispatch(pollActions.fetchVotesIfNeeded(this.state.poll.id));
 		}
@@ -33,7 +33,7 @@ class Results extends Component {
 		let polls  = this.props;
 		console.log(polls);
 		console.log("HELP", this.state);
-	/*	let pageContent = '';
+		let pageContent = '';
 		if (this.props.isFetching) {
 			console.log("TRUE");
 			pageContent = (
@@ -48,14 +48,15 @@ class Results extends Component {
 					<Result {...polls} />
 				</ul>
 			)
-		} */
-		return (
-			<div className="poll">
-				 { this.props.isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>}
+		} 
+		/*	 { this.props.isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>}
            <div style={{ opacity:this.props.isFetching ? 0.5 : 1 }}>
               <Result {...polls} />
             </div>
-        }
+        }*/
+		return (
+			<div className="poll">
+				{pageContent}
 			</div>
 		);
 
