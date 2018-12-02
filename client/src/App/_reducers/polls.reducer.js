@@ -1,12 +1,15 @@
 import { pollConstants } from '../_constants/pollConstants.js';
 
 let initialState = {
-  polls: [],
-  errors: [], 
-  isLoading: false
+  isFetching: false,
+  didInvalidate: false,
+  votes: []
 };
-
+// Change This
 export function selectedPoll(state = 'reactjs', action) {
+  console.log("selectedPoll");
+  console.log(state);
+  console.log(action); 
   switch (action.type) {
     case pollConstants.GETONE_SELECT:
       return action.poll
@@ -17,21 +20,24 @@ export function selectedPoll(state = 'reactjs', action) {
 
 export function votesByPoll(state = {}, action) {
   console.log("VotesByPoll");
+  console.log(state);
+  console.log(action);
   switch (action.type) {
     case pollConstants.GETONE_FAILURE:
     case pollConstants.GETONE_SUCCESS:
     case pollConstants.GETONE_REQUEST:
-      console.log("Rain Dogs Action", action); 
-      console.log("Rain Dogs State", state);
       return Object.assign({}, state, {
-        [action.poll]: polls(state[action.poll], action)
+        [action.poll]: votes(state[action.poll], action)
       })
     default:
       return state
   }
 }
 
-function polls(state = initialState, action) {
+function votes(state = initialState, action) {
+  console.log("votes");
+  console.log(state);
+  console.log(action);
   switch (action.type) {
     case pollConstants.GETALL_REQUEST:
       return Object.assign({}, state, {
@@ -61,7 +67,7 @@ function polls(state = initialState, action) {
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        items: action.votes,
+        votes: action.votes,
         lastUpdated: action.receivedAt
       })
     default:

@@ -10,29 +10,32 @@ import { bindActionCreators } from 'redux'
 
 class Results extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = { poll: this.props };
-		console.log("State", this.state);
-
-		//	this.props.doPolls(this.state.poll);
-	}
-
-	componentWillMount() {
-		this.props.dispatch(pollActions.fetchVotesIfNeeded(this.state.poll.id));
+	static propTypes = {
+		selectedPoll: PropTypes.string.isRequired,
+		votes: PropTypes.array.isRequired,
+		isFetching: PropTypes.bool.isRequired,
+		lastUpdated: PropTypes.number,
+		dispatch: PropTypes.func.isRequired
 	  }
 
-	  componentWillUpdate(prevProps) {
+	componentDidMount() {
+		console.log("DID MOUNT");
+		console.log(this.props); 
+		this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
+	  }
+
+	  componentDidUpdate(prevProps) {
+		  console.log("DID UPDATE");
 		if (this.props.selectedPoll !== prevProps.selectedPoll) {
-			this.props.dispatch(pollActions.fetchVotesIfNeeded(this.state.poll.id));
+			this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
 		}
 	  }
 
 	render() {
 		console.log("Results props", this.props);
 		let polls  = this.props;
-		console.log(polls);
-		console.log("HELP", this.state);
+		console.log("PROPS", polls);
+		console.log("STATE", this.state);
 		let pageContent = '';
 		if (this.props.isFetching) {
 			console.log("TRUE");
@@ -85,7 +88,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Results); */
 
 Results.propTypes = {
 	selectedPoll: PropTypes.string.isRequired,
-	items: PropTypes.array.isRequired,
+	votes: PropTypes.array.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	lastUpdated: PropTypes.number,
 	dispatch: PropTypes.func.isRequired
@@ -94,7 +97,7 @@ Results.propTypes = {
 function mapStateToProps(state) {
 	console.log("MAP STATE STATE", state); 
 	const { selectedPoll, votesByPoll } = state.home
-	const { isFetching, lastUpdated, items: posts } = votesByPoll[
+	const { isFetching, lastUpdated, items: votes } = votesByPoll[
 		selectedPoll
 	] || {
 	  isFetching: true,
@@ -103,7 +106,7 @@ function mapStateToProps(state) {
 
 	return {
 	  selectedPoll,
-	  posts,
+	  votes,
 	  isFetching,
 	  lastUpdated
 	}

@@ -119,8 +119,8 @@ function getAll() {
 
 
 function receiveVotes(poll, json) {
-    console.log("RECIEVED", poll);
-    console.log("RECEIVED JSON", json);
+    console.log("RECIEVED VOTES POLL", poll);
+    console.log("RECEIVED VOTES JSON", json);
     return {
         type: pollConstants.GETONE_SUCCESS,
         poll,
@@ -129,7 +129,7 @@ function receiveVotes(poll, json) {
     }
 }
 function fetchVotes(poll) {
-    console.log("Fetch Votes Poll", poll); 
+    console.log("Fetch Votes Poll (poll):", poll); 
     return dispatch => {
         dispatch(requestVotes(poll))
          pollService.getOne(poll)
@@ -139,19 +139,21 @@ function fetchVotes(poll) {
     function requestVotes(poll) { return { type: pollConstants.GETONE_REQUEST, poll } }
 }
 function shouldFetchVotes(state, poll) {
+    console.log("ShouldFetchVotes");
     console.log("State", state);
     console.log("Poll", poll);
-    const posts = state.home.votesByPoll[poll]
-    console.log("Posts", posts);
-    if (!posts) {
+    const votes = state.home.votesByPoll[poll]
+    console.log("votes", votes);
+    if (!votes) {
         return true
-    } else if (posts.isFetching) {
+    } else if (votes.isFetching) {
         return false
     } else {
-        return posts.didInvalidate
+        return votes.didInvalidate
     }
 }
 function fetchVotesIfNeeded(poll) {
+    console.log("fetchVotesIfNeeded (poll)", poll);
     return (dispatch, getState) => {
         if (shouldFetchVotes(getState(), poll)) {
             return dispatch(fetchVotes(poll))
