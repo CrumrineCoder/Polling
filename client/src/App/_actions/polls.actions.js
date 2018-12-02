@@ -127,10 +127,11 @@ function receiveVotes(poll, json) {
     }
 }
 function fetchVotes(poll) {
+    console.log("Fetch Votes Poll", poll); 
     return dispatch => {
         dispatch(requestVotes(poll))
-        return fetch(`https://www.reddit.com/r/${poll}.json`)
-            .then(response => response.json())
+         pollService.getOne(poll)
+      //      .then(response => response.json())
             .then(json => dispatch(receiveVotes(poll, json)))
     }
     function requestVotes(poll) { return { type: pollConstants.GETONE_REQUEST, poll } }

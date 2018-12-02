@@ -21,6 +21,8 @@ export function votesByPoll(state = {}, action) {
     case pollConstants.GETONE_FAILURE:
     case pollConstants.GETONE_SUCCESS:
     case pollConstants.GETONE_REQUEST:
+      console.log("Rain Dogs Action", action); 
+      console.log("Rain Dogs State", state);
       return Object.assign({}, state, {
         [action.poll]: polls(state[action.poll], action)
       })
