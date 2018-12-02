@@ -5,15 +5,15 @@ import { history } from '../store.js';
 
 export const pollActions = {
     createPoll,
-    getAll, 
+    getAll,
     votePoll,
     votePollUserAnswer,
-    votePollMultiple, 
-    fetchVotesIfNeeded  
+    votePollMultiple,
+    fetchVotesIfNeeded
 }
 
-function createPoll(poll){
-    return  dispatch  => {
+function createPoll(poll) {
+    return dispatch => {
         dispatch(request(poll));
         pollService.createPoll(poll)
             .then(
@@ -32,8 +32,8 @@ function createPoll(poll){
     function success(poll) { return { type: pollConstants.POLL_REGISTER_SUCCESS, poll } }
     function failure(error) { return { type: pollConstants.POLL_REGISTER_FAILURE, error } }
 }
-function votePoll(poll){
-    return  dispatch  => {
+function votePoll(poll) {
+    return dispatch => {
         dispatch(request(poll));
         pollService.votePoll(poll)
             .then(
@@ -54,8 +54,8 @@ function votePoll(poll){
     function failure(error) { return { type: pollConstants.POLL_VOTE_FAILURE, error } }
 }
 
-function votePollUserAnswer(poll){
-    return  dispatch  => {
+function votePollUserAnswer(poll) {
+    return dispatch => {
         var id = poll._parentID;
         dispatch(request(poll));
         pollService.votePollUserAnswer(poll)
@@ -77,8 +77,8 @@ function votePollUserAnswer(poll){
     function failure(error) { return { type: pollConstants.POLL_USER_VOTE_FAILURE, error } }
 }
 
-function votePollMultiple(poll){
-    return  dispatch  => {
+function votePollMultiple(poll) {
+    return dispatch => {
         var id = poll._parentID;
         dispatch(request(poll));
         pollService.votePollMultiple(poll)
@@ -120,40 +120,41 @@ function getAll() {
 
 function receiveVotes(poll, json) {
     return {
-      type: pollConstants.GETONE_SUCCESS,
-      poll,
-      votes: json.data.children.map(child => child.data),
-      receivedAt: Date.now()
+        type: pollConstants.GETONE_SUCCESS,
+        poll,
+        votes: json.data.children.map(child => child.data),
+        receivedAt: Date.now()
     }
-  }
-  function fetchVotes(poll) {
+}
+function fetchVotes(poll) {
     return dispatch => {
-      dispatch(requestVotes(poll))
-      return fetch(`https://www.reddit.com/r/${poll}.json`)
-        .then(response => response.json())
-        .then(json => dispatch(receiveVotes(poll, json)))
+        dispatch(requestVotes(poll))
+        return fetch(`https://www.reddit.com/r/${poll}.json`)
+            .then(response => response.json())
+            .then(json => dispatch(receiveVotes(poll, json)))
     }
     function requestVotes(poll) { return { type: pollConstants.GETONE_REQUEST, poll } }
-  }
-  function shouldFetchVotes(state, poll) {
-      console.log("State", state);
-      console.log("Poll", poll);
+}
+function shouldFetchVotes(state, poll) {
+    console.log("State", state);
+    console.log("Poll", poll);
     const posts = state.home.votesByPoll[poll]
+    console.log("Posts", posts);
     if (!posts) {
-      return true
+        return true
     } else if (posts.isFetching) {
-      return false
+        return false
     } else {
-      return posts.didInvalidate
+        return posts.didInvalidate
     }
-  }
-   function fetchVotesIfNeeded(poll) {
+}
+function fetchVotesIfNeeded(poll) {
     return (dispatch, getState) => {
-      if (shouldFetchVotes(getState(), poll)) {
-        return dispatch(fetchVotes(poll))
-      }
+        if (shouldFetchVotes(getState(), poll)) {
+            return dispatch(fetchVotes(poll))
+        }
     }
-  }
+}
   /*
 function getOne(poll) {
     console.log("Actions", poll);
