@@ -58,7 +58,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`/api/polls/`, requestOptions).then(handleResponse);
+    return fetch(`/api/polls/get/`, requestOptions).then(handleResponse);
 }
 
 
@@ -67,8 +67,12 @@ function getOne(poll) {
     const requestOptions = {
         method: 'GET'
     };
+    if(poll === undefined){
+        return fetch("api/polls/get/", requestOptions).then(handleResponse);
+    }
     var id = mongoose.Types.ObjectId(poll);
     console.log("ID", id); 
+    
     return fetch("api/polls/get/"+id, requestOptions).then(handleResponse);
 }
 

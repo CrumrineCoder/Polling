@@ -11,7 +11,7 @@ router.post('/createPoll', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/', (req, res, next) => {
+router.get('/get/', (req, res, next) => {
   return Polls.find()
     .sort({ createdAt: 'descending' })
     .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
