@@ -156,6 +156,9 @@ function shouldFetchVotes(state, poll) {
 }
 function fetchVotesIfNeeded(poll) {
     console.log("fetchVotesIfNeeded (poll)", poll);
+    if(poll === undefined){
+        poll = null; 
+    }
     return (dispatch, getState) => {
         if (shouldFetchVotes(getState(), poll)) {
             return dispatch(fetchVotes(poll))
