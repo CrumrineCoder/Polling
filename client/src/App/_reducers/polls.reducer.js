@@ -1,6 +1,6 @@
 import { pollConstants } from '../_constants/pollConstants.js';
 
-export function selectedPoll(state = 'default', action) {
+export function selectedPoll(state = '', action) {
   console.log("selectedPoll");
   console.log(state);
   console.log(action); 
