@@ -18,7 +18,7 @@ class Polls extends Component {
 
 	static propTypes = {
 		selectedPoll: PropTypes.string.isRequired,
-		votes: PropTypes.array.isRequired,
+		polls: PropTypes.array.isRequired,
 		isFetching: PropTypes.bool.isRequired,
 		lastUpdated: PropTypes.number,
 		dispatch: PropTypes.func.isRequired
@@ -58,6 +58,7 @@ class Polls extends Component {
 			polls = [polls];
 		} */
 		let pageContent = ''
+		console.log("Polls props", this.props); 
 
 		if (this.state.filter !== '') {
 			polls = polls.filter((i) => i.tag === this.state.filter);
@@ -83,6 +84,7 @@ class Polls extends Component {
       		    </div>
 			)
 		} else {
+			console.log("Polls poll", polls); 
 			pageContent = (
 				<ul className="polls">
 					{polls.map((poll, i) => <PollMini update={this.update} key={i} {...poll} />)}
@@ -106,7 +108,7 @@ class Polls extends Component {
 
 Polls.propTypes = {
 	selectedPoll: PropTypes.string.isRequired,
-	votes: PropTypes.array.isRequired,
+	polls: PropTypes.array.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	lastUpdated: PropTypes.number,
 	dispatch: PropTypes.func.isRequired
@@ -117,17 +119,17 @@ function mapStateToProps(state) {
 	const { selectedPoll, votesByPoll } = state.home
 	console.log("selectedPoll in Map State", selectedPoll);
 	console.log("votesByPoll in  Map State", votesByPoll);
-	const { isFetching, lastUpdated, votes } = votesByPoll[
+	const { isFetching, lastUpdated, votes:polls } = votesByPoll[
 		selectedPoll
 	] || {
 			isFetching: true,
-			votes: []
+			polls: []
 		}
-	console.log("Votes in Map State", votes);
+	console.log("Votes in Map State", polls);
 	console.log("Fetching in  Map State", isFetching);
 	return {
 		selectedPoll,
-		votes,
+		polls,
 		isFetching,
 		lastUpdated
 	}

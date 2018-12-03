@@ -123,6 +123,9 @@ function selectPoll(poll) { return { type: pollConstants.GETONE_SELECT, poll } }
 function receiveVotes(poll, json) {
     console.log("RECIEVED VOTES POLL", poll);
     console.log("RECEIVED VOTES JSON", json);
+    if(poll ==="All"){
+        json = json.polls;
+    }
     return {
         type: pollConstants.GETONE_SUCCESS,
         poll,
