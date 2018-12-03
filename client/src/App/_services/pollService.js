@@ -67,7 +67,7 @@ function getOne(poll) {
     const requestOptions = {
         method: 'GET'
     };
-    if(poll === null){
+    if(poll === "All"){
         return fetch("api/polls/get/", requestOptions).then(handleResponse);
     }
     var id = mongoose.Types.ObjectId(poll);
