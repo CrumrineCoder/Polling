@@ -8,7 +8,7 @@ class Polls extends Component {
 
 	static propTypes = {
 		selectedPoll: PropTypes.string.isRequired,
-		votes: PropTypes.Array.isRequired,
+		votes: PropTypes.array.isRequired,
 		isFetching: PropTypes.bool.isRequired,
 		lastUpdated: PropTypes.number,
 		dispatch: PropTypes.func.isRequired
@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => {
 
 Polls.propTypes = {
 	selectedPoll: PropTypes.string.isRequired,
-	votes: PropTypes.Array.isRequired,
+	votes: PropTypes.array.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	lastUpdated: PropTypes.number,
 	dispatch: PropTypes.func.isRequired
