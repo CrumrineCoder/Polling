@@ -8,7 +8,7 @@ class Polls extends Component {
 
 	static propTypes = {
 		selectedPoll: PropTypes.string.isRequired,
-		votes: PropTypes.array.isRequired,
+		votes: PropTypes.object.isRequired,
 		isFetching: PropTypes.bool.isRequired,
 		lastUpdated: PropTypes.number,
 		dispatch: PropTypes.func.isRequired
@@ -31,7 +31,8 @@ class Polls extends Component {
 
 
 	render() {
-		let { polls } = this.props;
+		console.log("POLL CONTAINER PROPS", this.props); 
+		let { votes } = this.props;
 	/*	var isObject = polls.constructor === Object;
 		if (isObject) {
 			polls = [polls];
@@ -47,7 +48,7 @@ class Polls extends Component {
 		} else {
 			pageContent = (
 				<ul className="polls">
-					<Poll {...polls[0]} />
+					<Poll {...votes} />
 				</ul>
 			)
 		}
@@ -80,7 +81,7 @@ const mapDispatchToProps = (dispatch) => {
 
 Polls.propTypes = {
 	selectedPoll: PropTypes.string.isRequired,
-	votes: PropTypes.array.isRequired,
+	votes: PropTypes.object.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	lastUpdated: PropTypes.number,
 	dispatch: PropTypes.func.isRequired
