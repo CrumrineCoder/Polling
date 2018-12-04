@@ -1,9 +1,24 @@
 import { pollConstants } from '../_constants/pollConstants.js';
+import { LOCATION_CHANGE } from 'react-router-redux';
 
 const initialState = {
   isFetching: false,
   didInvalidate: false,
   votes: []
+}
+
+
+
+export const reducer = (state = {}, action) => {
+  console.log("LOCATION CHANGE!");
+  switch(action.type) {
+    case LOCATION_CHANGE: {
+      console.log("LOCATION CHANGE CALLED!"); 
+      return {};
+    }
+    default:
+      return state;
+  }
 }
 
 export function selectedPoll(state = "All", action) {
