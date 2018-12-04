@@ -13,7 +13,7 @@ class Polls extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {filter: "", query: "" };
+		this.state = { filter: "", query: "" };
 		this.changeFilter = this.changeFilter.bind(this);
 	}
 
@@ -28,14 +28,16 @@ class Polls extends Component {
 	componentDidMount() {
 		console.log("DID MOUNT");
 		console.log(this.props);
-	//	this.props.dispatch(pollActions.selectPoll(this.props.id));
+		//	this.props.dispatch(pollActions.selectPoll(this.props.id));
+		this.props.dispatch(pollActions.selectPoll("All"));
 		this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
 	}
 
 	componentDidUpdate(prevProps) {
 		console.log("DID UPDATE");
 		if (this.props.selectedPoll !== prevProps.selectedPoll) {
-	//		this.props.dispatch(pollActions.selectPoll(this.props.id));
+			//		this.props.dispatch(pollActions.selectPoll(this.props.id));
+			this.props.dispatch(pollActions.selectPoll("All"));
 			this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
 		}
 	}
@@ -54,12 +56,12 @@ class Polls extends Component {
 
 	render() {
 		let { polls } = this.props;
-	/*	var isObject = polls.constructor === Object;
-		if (isObject) {
-			polls = [polls];
-		} */
+		/*	var isObject = polls.constructor === Object;
+			if (isObject) {
+				polls = [polls];
+			} */
 		let pageContent = ''
-		console.log("Polls props", this.props); 
+		console.log("Polls props", this.props);
 
 		if (this.state.filter !== '') {
 			polls = polls.filter((i) => i.tag === this.state.filter);
@@ -69,7 +71,7 @@ class Polls extends Component {
 			text = text.split(' ');
 			return items.filter(function (item) {
 				return text.every(function (el) {
-					return (item.title.toLowerCase().indexOf(el.toLowerCase()) > -1 || item.body.toLowerCase().indexOf(el.toLowerCase()) >-1 );
+					return (item.title.toLowerCase().indexOf(el.toLowerCase()) > -1 || item.body.toLowerCase().indexOf(el.toLowerCase()) > -1);
 				});
 			});
 		}
@@ -85,7 +87,7 @@ class Polls extends Component {
       		    </div>
 			)
 		} else {
-			console.log("Polls poll", polls); 
+			console.log("Polls poll", polls);
 			pageContent = (
 				<ul className="polls">
 					{polls.map((poll, i) => <PollMini update={this.update} key={i} {...poll} />)}
@@ -120,7 +122,7 @@ function mapStateToProps(state) {
 	const { selectedPoll, votesByPoll } = state.home
 	console.log("selectedPoll in Map State", selectedPoll);
 	console.log("votesByPoll in  Map State", votesByPoll);
-	const { isFetching, lastUpdated, votes:polls } = votesByPoll[
+	const { isFetching, lastUpdated, votes: polls } = votesByPoll[
 		selectedPoll
 	] || {
 			isFetching: true,

@@ -28,7 +28,7 @@ export function selectedPoll(state = "All", action) {
   switch (action.type) {
     case LOCATION_CHANGE: {
       console.log("VOTES BY POLL LOCATION CHANGE!"); 
-      return {};
+      return null;
     }
     case pollConstants.GETONE_SELECT:
       return action.poll
