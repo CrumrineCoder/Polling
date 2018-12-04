@@ -7,6 +7,7 @@ import Search from '../components/Search';
 import Form from '../components/Form';
 import Current from '../components/Current';
 import { pollActions } from '../../_actions/polls.actions.js';
+import { withRouter } from 'react-router-dom';
 
 class Polls extends Component {
 
@@ -135,4 +136,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps)(Polls);
+export default withRouter(connect(mapStateToProps)(Polls));

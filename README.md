@@ -11,6 +11,7 @@ http://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-
 https://github.com/passport/express-4.x-local-example
 https://redux.js.org/advanced/exampleredditapi
 https://redux.js.org/introduction/examples#real-world
+https://spin.atomicobject.com/2017/04/14/react-redux-props/
 
 Home - Changelogs, Case Studies, Introspectives. 
 About - Who I am outside of my work, perhaps occasionally articles unrelated to WebDev. 

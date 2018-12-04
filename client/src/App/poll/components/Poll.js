@@ -9,6 +9,7 @@ class Poll extends Component {
 	constructor(props) {
 		super(props);
 		const { dispatch } = this.props;
+		console.log("YO IT'S THE PROPS", this.props); 
 		dispatch(userActions.getAll());
 		//_id: [],, checkboxes: this.props.answers, userCheckboxes: this.props.answers 
 		this.state = {

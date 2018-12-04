@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Result from '../components/Result';
 import { pollActions } from '../../_actions/polls.actions.js';
+import { withRouter } from 'react-router-dom';
 
 class Results extends Component {
 
@@ -13,6 +14,12 @@ class Results extends Component {
 		lastUpdated: PropTypes.number,
 		dispatch: PropTypes.func.isRequired
 	}
+
+	componentWillMount() {
+		console.log("Will Mount"); 
+		//  this.props.resetPage()
+//		this.props.dispatch("RESULTS_EXIT");
+  }
 
 	componentDidMount() {
 		console.log("DID MOUNT");
@@ -93,7 +100,7 @@ Results.propTypes = {
 }
 
 function mapStateToProps(state) {
-	console.log("MAP STATE STATE", state);
+	console.log("MAP STATE STATE RESULT CONTAINER", state);
 	const { selectedPoll, votesByPoll } = state.home
 	console.log("selectedPoll in Map State", selectedPoll);
 	console.log("votesByPoll in  Map State", votesByPoll);
@@ -113,4 +120,12 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps)(Results);
+/*
+const mapDispatchToProps = (dispatch) => {
+  return {
+    resetPage: () => { dispatch({type: 'RESULTS_EXIT'}) }
+  }
+}
+*/
+
+export default withRouter(connect(mapStateToProps)(Results));

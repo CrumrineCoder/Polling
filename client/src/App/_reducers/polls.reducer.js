@@ -1,14 +1,34 @@
 import { pollConstants } from '../_constants/pollConstants.js';
 
+const initialState = {
+  isFetching: false,
+  didInvalidate: false,
+  votes: []
+}
+
 export function selectedPoll(state = "All", action) {
   console.log("selectedPoll");
   console.log(state);
-  console.log(action); 
+  console.log(action);
   switch (action.type) {
     case pollConstants.GETONE_SELECT:
       return action.poll
     default:
       return state
+  }
+}
+
+export function resultsExitReducer(state = initialState, action) {
+  console.log("resultsExitReducer");
+  console.log(state);
+  console.log(action);
+  switch (action.type) {
+    case pollConstants.RESULTS_EXIT: {
+      state = initialState
+      break
+    }
+    default:
+     return state
   }
 }
 
@@ -27,30 +47,26 @@ export function votesByPoll(state = {}, action) {
       return state
   }
 }
-const votes = (state = {
-  isFetching: false,
-  didInvalidate: false,
-  votes: []
-}, action) => {
+const votes = (state = initialState, action) => {
   console.log("posts");
   console.log(state);
   console.log(action);
   switch (action.type) {
     case pollConstants.GETONE_FAILURE:
-    console.log("reducer failure posts");
+      console.log("reducer failure posts");
       return {
         ...state,
         didInvalidate: true
       }
     case pollConstants.GETONE_REQUEST:
-    console.log("reducer request posts");
+      console.log("reducer request posts");
       return {
         ...state,
         isFetching: true,
         didInvalidate: false
       }
     case pollConstants.GETONE_SUCCESS:
-    console.log("reducer success/receive posts");
+      console.log("reducer success/receive posts");
       return {
         ...state,
         isFetching: false,
