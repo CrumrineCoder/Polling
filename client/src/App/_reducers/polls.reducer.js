@@ -26,6 +26,10 @@ export function selectedPoll(state = "All", action) {
   console.log(state);
   console.log(action);
   switch (action.type) {
+    case LOCATION_CHANGE: {
+      console.log("VOTES BY POLL LOCATION CHANGE!"); 
+      return {};
+    }
     case pollConstants.GETONE_SELECT:
       return action.poll
     default:
@@ -52,6 +56,10 @@ export function votesByPoll(state = {}, action) {
   console.log(state);
   console.log(action);
   switch (action.type) {
+    case LOCATION_CHANGE: {
+      console.log("VOTES BY POLL LOCATION CHANGE!"); 
+      return {};
+    }
     case pollConstants.GETONE_FAILURE:
     case pollConstants.GETONE_SUCCESS:
     case pollConstants.GETONE_REQUEST:
