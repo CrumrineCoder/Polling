@@ -26,17 +26,12 @@ class Polls extends Component {
 	}
 
 	componentDidMount() {
-		console.log("DID MOUNT");
-		console.log(this.props);
-		//	this.props.dispatch(pollActions.selectPoll(this.props.id));
 		this.props.dispatch(pollActions.selectPoll("All"));
 		this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
 	}
 
 	componentDidUpdate(prevProps) {
-		console.log("DID UPDATE");
 		if (this.props.selectedPoll !== prevProps.selectedPoll) {
-			//		this.props.dispatch(pollActions.selectPoll(this.props.id));
 			this.props.dispatch(pollActions.selectPoll("All"));
 			this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
 		}
@@ -56,12 +51,7 @@ class Polls extends Component {
 
 	render() {
 		let { polls } = this.props;
-		/*	var isObject = polls.constructor === Object;
-			if (isObject) {
-				polls = [polls];
-			} */
-		let pageContent = ''
-		console.log("Polls props", this.props);
+		let pageContent = '';
 
 		if (this.state.filter !== '') {
 			polls = polls.filter((i) => i.tag === this.state.filter);
@@ -87,15 +77,13 @@ class Polls extends Component {
       		    </div>
 			)
 		} else {
-			console.log("Polls poll", polls);
 			pageContent = (
 				<ul className="polls">
 					{polls.map((poll, i) => <PollMini update={this.update} key={i} {...poll} />)}
 				</ul>
 			)
 		}
-		//<LoginForm></LoginForm>
-		//<RegisterForm></RegisterForm>
+
 		return (
 			<div className="pollsContainer">
 				<Search onSearch={this.handleSearchBar} />
@@ -118,18 +106,13 @@ Polls.propTypes = {
 }
 
 function mapStateToProps(state) {
-	console.log("MAP STATE STATE", state);
 	const { selectedPoll, votesByPoll } = state.home
-	console.log("selectedPoll in Map State", selectedPoll);
-	console.log("votesByPoll in  Map State", votesByPoll);
 	const { isFetching, lastUpdated, votes: polls } = votesByPoll[
 		selectedPoll
 	] || {
 			isFetching: true,
 			polls: []
 		}
-	console.log("Votes in Map State", polls);
-	console.log("Fetching in  Map State", isFetching);
 	return {
 		selectedPoll,
 		polls,
