@@ -9,19 +9,21 @@ import {
 	NavLink
 } from 'reactstrap';
 import { Container } from 'reactstrap';
-
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Header extends Component {
 
 	constructor(props) {
 		super(props);
-
+		console.log("Header Props", this.props);	
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			isOpen: false,
-			isLoggedIn: typeof localStorage["user"] !== 'undefined'
+			isOpen: false
+	//		isLoggedIn: typeof localStorage["user"] !== 'undefined'
 		};
 	}
+
 	toggle() {
 		this.setState({
 			isOpen: !this.state.isOpen
@@ -29,7 +31,7 @@ class Header extends Component {
 	}
 
 	render() {
-		const { isLoggedIn } = this.state
+		const { isLoggedIn } = this.props
 		let userLinks;
 		if (isLoggedIn) {
 			userLinks = <NavItem> <NavLink href="#/login">Logout</NavLink>		</NavItem>
@@ -60,4 +62,15 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+Header.propTypes = {
+	isLoggedIn: PropTypes.bool.isRequired,
+}
+
+function mapStateToProps(state) {
+	const isLoggedIn = state.home.authenticate.loggedIn; 
+	return {isLoggedIn};
+}
+
+export default connect(mapStateToProps)(Header);
+
+//export default Header;
