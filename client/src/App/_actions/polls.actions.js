@@ -9,7 +9,8 @@ export const pollActions = {
     votePollUserAnswer,
     votePollMultiple,
     fetchVotesIfNeeded,
-    selectPoll
+    selectPoll,
+    rescind
 }
 
 function createPoll(poll) {
@@ -99,6 +100,29 @@ function votePollMultiple(poll) {
     function request(poll) { return { type: pollConstants.POLL_VOTE_MULTIPLE_REQUEST, poll } }
     function success(poll) { return { type: pollConstants.POLL_VOTE_MULTIPLE_SUCCESS, poll } }
     function failure(error) { return { type: pollConstants.POLL_VOTE_MULTIPLE_FAILURE, error } }
+}
+
+function rescind(poll) {
+    return dispatch => {
+        var id = poll._parentID;
+        dispatch(request(poll));
+        pollService.rescind(poll)
+            .then(
+                poll => {
+                    dispatch(success());
+                    history.push("");
+                    history.push(id + "/vote/");
+                    dispatch(alertActions.success('Vote Poll Successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            )
+    }
+    function request(poll) { return { type: pollConstants.POLL_RESCIND_REQUEST, poll } }
+    function success(poll) { return { type: pollConstants.POLL_RESCIND_SUCCESS, poll } }
+    function failure(error) { return { type: pollConstants.POLL_RESCIND_FAILURE, error } }
 }
 
 function selectPoll(poll) { return { type: pollConstants.GET_SELECT, poll } }

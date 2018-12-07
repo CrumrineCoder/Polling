@@ -35,7 +35,7 @@ router.param('id', (req, res, next, id) => {
 router.get('/get/:id', (req, res, next) => {
   console.log("Get one", req.body);
   console.log("get one param", req.params);
- // res.send("Ok"); 
+  // res.send("Ok"); 
   return Polls.findOne({ _id: req.params.id }, function (err, docs) { res.json(docs) });
 });
 
@@ -87,11 +87,24 @@ router.post("/voteMultiple", (req, res, next) => {
         console.log("Body User!", req.body.user);
         Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.Users": req.body.user }, $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs) });
       } else {
-        Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body.selected[i]._id) }, { $inc: { "userAnswers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs) });
-        Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.Users": req.body.user } }, function (err, docs) { report.push(docs) });
+        Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "userAnswers.$.Users": req.body.user }, $inc: { "userAnswers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs) });
+        //  Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.Users": req.body.user } }, function (err, docs) { report.push(docs) });
       }
     }
   }
+  return res.json(report);
+});
+
+router.post("/rescind", (req, res, next) => {
+  console.log("Rescind Body", req.body);
+  var report = [];
+  Polls.update(
+    { _id: req.body.parentID },
+    { $pull: { Users: req.body.userID } },
+    { multi: true },
+    function (err, data) {
+      report.push(docs)
+    });
   return res.json(report);
 })
 

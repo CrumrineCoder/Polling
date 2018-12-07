@@ -15,6 +15,11 @@ class Results extends Component {
 		dispatch: PropTypes.func.isRequired
 	}
 
+	constructor(props) {
+		super(props);
+		this.handleClick = this.handleClick.bind(this);
+	}
+
 	componentDidMount() {
 		this.props.dispatch(pollActions.selectPoll(this.props.id));
 		this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
@@ -24,6 +29,17 @@ class Results extends Component {
 		if (this.props.selectedPoll !== prevProps.selectedPoll) {
 			this.props.dispatch(pollActions.selectPoll(this.props.id));
 			this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
+		}
+	}
+
+	handleClick(e) {
+		e.preventDefault();
+		let user = JSON.parse(localStorage.getItem('user'));
+		if (user && user.token) {
+			const userID = localStorage.getItem('user')["_id"];
+			const parentID = this.props.id;
+			console.log({ userID, parentID });
+			this.props.dispatch(pollActions.rescind({ userID, parentID }));
 		}
 	}
 
@@ -46,6 +62,7 @@ class Results extends Component {
 
 		return (
 			<div className="poll">
+				<button onClick={this.handleClick}>Rescind</button>
 				{pageContent}
 			</div>
 		);
