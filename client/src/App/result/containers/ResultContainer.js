@@ -36,9 +36,9 @@ class Results extends Component {
 		e.preventDefault();
 		let user = JSON.parse(localStorage.getItem('user'));
 		if (user && user.token) {
-			const _userID = user._id;
+			const user = user;
 			const _parentID = this.props.id;
-			this.props.dispatch(pollActions.rescind({ _userID, _parentID }));
+			this.props.dispatch(pollActions.rescind({ user, _parentID }));
 		}
 	}
 

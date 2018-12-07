@@ -13,7 +13,7 @@ const PollSchema = new Schema({
     SeeResults: Boolean, 
     Captcha: Boolean
   },
-  answers: [{text: String, value: Number, Users: [{userID: String, email: String, token: String}]}], 
+  answers: [{text: String, value: Number, Users: [{_id: String, email: String, token: String}]}], 
   userAnswers: [{text: String, value: Number, Users: [Object]}]
 }, { timestamps: true, minimize: false });
 
