@@ -100,7 +100,7 @@ router.post("/rescind", (req, res, next) => {
   var report = [];
   //Polls.findOne({ _id: req.parbodyams.id }, function (err, docs) { console.log("#1 docs", docs) });
   Polls.update(
-    { _id: req.body._parentID },
+    { _id: ObjectId(req.body._parentID) },
     { $pull: { "Users": { _id: ObjectId(req.body._userID) }}},
     { multi: true },
     function (err, docs) {
