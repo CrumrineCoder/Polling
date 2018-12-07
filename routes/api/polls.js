@@ -85,7 +85,7 @@ router.post("/voteMultiple", (req, res, next) => {
       if (req.body.selected[i].submitted === "answer") {
         //      Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs) });
         console.log("Body User!", req.body.user);
-        Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.Users": req.body.user }, $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs) });
+        Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.Users": req.body.user }, $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) { if (err) { console.log("ERR:", err); } console.log(docs); report.push(docs); });
       } else {
         Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "userAnswers.$.Users": req.body.user }, $inc: { "userAnswers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs) });
         //  Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.Users": req.body.user } }, function (err, docs) { report.push(docs) });
@@ -101,7 +101,7 @@ router.post("/rescind", (req, res, next) => {
   //Polls.findOne({ _id: req.parbodyams.id }, function (err, docs) { console.log("#1 docs", docs) });
   Polls.update(
     { _id: ObjectId(req.body._parentID) },
-    { $pull: { "Users": { _id: ObjectId(req.body._userID) }}},
+    { $pull: { "Users": { _id: ObjectId(req.body._userID) } } },
     { multi: true },
     function (err, docs) {
       report.push(docs)
