@@ -99,10 +99,10 @@ router.post("/rescind", (req, res, next) => {
   console.log("Rescind Body", req.body);
   var report = [];
   Polls.update(
-    { _id: req.body.parentID },
-    { $pull: { Users: req.body.userID } },
+    { _id: req.body._parentID },
+    { $pull: { Users: req.body._userID } },
     { multi: true },
-    function (err, data) {
+    function (err, docs) {
       report.push(docs)
     });
   return res.json(report);
