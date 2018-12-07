@@ -98,9 +98,10 @@ router.post("/voteMultiple", (req, res, next) => {
 router.post("/rescind", (req, res, next) => {
   console.log("Rescind Body", req.body);
   var report = [];
+  //Polls.findOne({ _id: req.parbodyams.id }, function (err, docs) { console.log("#1 docs", docs) });
   Polls.update(
     { _id: req.body._parentID },
-    { $pull: { Users: req.body._userID } },
+    { $pull: { "Users": { _id: ObjectId(req.body._userID) }}},
     { multi: true },
     function (err, docs) {
       report.push(docs)
