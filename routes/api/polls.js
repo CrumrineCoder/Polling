@@ -95,16 +95,12 @@ router.post("/voteMultiple", (req, res, next) => {
   return res.json(report);
 });
 
-router.post("/rescind", (req, res, next) => {
 
-  console.log("Rescind Body", req.body);
+router.post("/rescind", (req, res, next) => {
   var report = [];
-//  Polls.findOne({ _id: req.body._userID }, function (err, docs) { console.log("#1 docs DOC DOC DOCS", docs) });
-  Polls.findOne({_id: ObjectId(req.body._parentID)  }, function (err, docs) {    if(err){console.log("err #2 ER ER ER er er er", err);} console.log("#2 docs DOC DOC DOCS", docs) });
-  Polls.updateMany(
-    { _id: ObjectId(req.body._parentID) },
-    { $set: {"answers.$.value": 10}},
-   // { $pull: { "answers.$.Users": {"id": req.body.user} }},
+  Polls.update(
+    {"answers.Users.id": req.body.user.id  },
+    { $pull: { "answers.$.Users": {"id": req.body.user.id }} },
     function (err, docs) {
       if(err){console.log("err #3, er er er", err);}
       console.log("DOCS #3 DOCS DOCS", docs)
