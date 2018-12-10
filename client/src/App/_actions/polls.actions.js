@@ -103,6 +103,7 @@ function votePollMultiple(poll) {
 }
 
 function rescind(poll) {
+    console.log("RESCIND POLL!!!", poll);
     return dispatch => {
         var id = poll._parentID;
         dispatch(request(poll));
