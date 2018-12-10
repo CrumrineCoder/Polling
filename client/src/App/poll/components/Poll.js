@@ -41,6 +41,7 @@ class Poll extends Component {
 		const { dispatch } = this.props;
 		if(isLoggedIn){
 			let user = JSON.parse(localStorage.getItem('user'));
+			user = user._id;
 			console.log("USER!", user);
 			dispatch(pollActions.votePollMultiple({ selected, _id, _parentID, user }))
 		}
