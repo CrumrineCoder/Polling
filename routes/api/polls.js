@@ -103,7 +103,7 @@ router.post("/rescind", (req, res, next) => {
   Polls.findOne({_id: ObjectId(req.body._parentID)  }, function (err, docs) {    if(err){console.log("err #2 ER ER ER er er er", err);} console.log("#2 docs DOC DOC DOCS", docs) });
   Polls.updateMany(
     { _id: ObjectId(req.body._parentID) },
-    { $set: {"question": "DINGO BREATH"}},
+    { $set: {"answers.$.value": 10}},
    // { $pull: { "answers.$.Users": {"id": req.body.user} }},
     function (err, docs) {
       if(err){console.log("err #3, er er er", err);}
