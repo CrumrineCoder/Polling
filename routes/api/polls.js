@@ -85,9 +85,9 @@ router.post("/voteMultiple", (req, res, next) => {
     } else {
       if (req.body.selected[i].submitted === "answer") {
         //      Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs) });
-        Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.Users": req.body.user }, $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) { if (err) { console.log("ERR:", err); } console.log(docs); report.push(docs); });
+        Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.Users": {id: req.body.user} }, $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) { if (err) { console.log("ERR:", err); } console.log(docs); report.push(docs); });
       } else {
-        Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "userAnswers.$.Users": req.body.user }, $inc: { "userAnswers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs) });
+        Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "userAnswers.$.Users": {id: req.body.user}  }, $inc: { "userAnswers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs) });
         //  Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.Users": req.body.user } }, function (err, docs) { report.push(docs) });
       }
     }
@@ -103,7 +103,8 @@ router.post("/rescind", (req, res, next) => {
   Polls.findOne({_id: ObjectId(req.body._parentID)  }, function (err, docs) {    if(err){console.log("err #2 ER ER ER er er er", err);} console.log("#2 docs DOC DOC DOCS", docs) });
   Polls.updateMany(
     { _id: ObjectId(req.body._parentID) },
-    { $pull: { "answers.$.Users": { $in: { _id: req.body.user._id} }}},
+    { $set: {"question": "DINGO BREATH"}},
+   // { $pull: { "answers.$.Users": {"id": req.body.user} }},
     function (err, docs) {
       if(err){console.log("err #3, er er er", err);}
       console.log("DOCS #3 DOCS DOCS", docs)

@@ -39,7 +39,7 @@ class Results extends Component {
 		console.log("USER!", user);
 		if (user && user.token) {
 			const _parentID = this.props.id;
-			user = user._id;
+			user = {"id":user._id};
 			this.props.dispatch(pollActions.rescind({ user, _parentID }));
 		}
 	}
