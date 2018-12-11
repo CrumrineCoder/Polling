@@ -35,12 +35,14 @@ class Results extends Component {
 	handleClick(e) {
 		e.preventDefault();
 		let user = JSON.parse(localStorage.getItem('user'));
-
+		let answersLength = this.props.votes.answers.length;
+		let userAnswersLength =  this.props.votes.userAnswers.length;
+		console.log("PROPS", this.props)
 		console.log("USER!", user);
 		if (user && user.token) {
 			const _parentID = this.props.id;
 			user = {"id":user._id};
-			this.props.dispatch(pollActions.rescind({ user, _parentID }));
+			this.props.dispatch(pollActions.rescind({ user, _parentID, answersLength, userAnswersLength }));
 		}
 	}
 

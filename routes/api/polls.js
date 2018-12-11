@@ -76,48 +76,47 @@ router.post("/voteMultiple", (req, res, next) => {
       var userVote = {
         "text": req.body.selected[i].value,
         "value": 1,
-        "Users": [{"id": req.body.user}]
+        "Users": [{ "id": req.body.user }]
         //{"id": req.body.user}
       }
       console.log(userVote);
       Polls.update(
         { _id: req.body._parentID },
-        { $push: { userAnswers: userVote } }, function (err, docs) { if(err){console.log("ER ER ER", err);}; report.push(docs); });
+        { $push: { userAnswers: userVote } }, function (err, docs) { if (err) { console.log("ER ER ER", err); }; report.push(docs); });
       //   Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.users": req.body.user }  }, function(err, docs){ report.push(docs)});
     } else {
       if (req.body.selected[i].submitted === "answer") {
-        Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.Users": {id: req.body.user} }, $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) {report.push(docs); });
+        Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.Users": { id: req.body.user } }, $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs); });
       } else {
-        Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "userAnswers.$.Users": {id: req.body.user}  }, $inc: { "userAnswers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs) });
+        Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "userAnswers.$.Users": { id: req.body.user } }, $inc: { "userAnswers.$.value": 1, "value": 1 } }, function (err, docs) { report.push(docs) });
       }
     }
   }
   return res.json(report);
 });
-
+mongoose.set('debug', true);
 
 router.post("/rescind", (req, res, next) => {
   var report = [];
-  var pollsSum; 
- /* Polls.find()
-  .sort({ createdAt: 'descending' })
-  .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
-  .catch(next);*/
-
-  Polls.update(
-    {_id: ObjectId(req.body._parentID),"answers.Users.id": req.body.user.id  },
-    { $pull: { "answers.$.Users": {"id": req.body.user.id }} },
-    {multi : true},
-    function (err, docs) {
-      report.push(docs)
-    }); 
-    Polls.update(
-      {_id: ObjectId(req.body._parentID),"userAnswers.Users.id": req.body.user.id  },
-      { $pull: { "userAnswers.$.Users": {"id": req.body.user.id }} },
-      {multi : true},
+  console.log("BODY", req.body);
+  for (var i = 0; i < req.body.answersLength; i++) {
+    Polls.updateMany(
+      { _id: ObjectId(req.body._parentID), "answers.Users.id": req.body.user.id },
+      { $pull: { "answers.$.Users": { "id": req.body.user.id } } },
       function (err, docs) {
+        console.log("ANSWER DOCS", docs);
         report.push(docs)
       });
+  }
+  for (var i = 0; i < req.body.userAnswersLength; i++) {
+  Polls.updateMany(
+    { _id: ObjectId(req.body._parentID), "userAnswers.Users.id": req.body.user.id },
+    { $pull: { "userAnswers.$.Users": { "id": req.body.user.id } } },
+    function (err, docs) {
+      console.log("USERANSWER DOC", docs);
+      report.push(docs)
+    });
+  }
   return res.json(report);
 })
 
