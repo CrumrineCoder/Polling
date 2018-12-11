@@ -98,12 +98,26 @@ router.post("/voteMultiple", (req, res, next) => {
 
 router.post("/rescind", (req, res, next) => {
   var report = [];
-  Polls.updateMany(
+  var pollsSum; 
+ /* Polls.find()
+  .sort({ createdAt: 'descending' })
+  .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
+  .catch(next);*/
+
+  Polls.update(
     {_id: ObjectId(req.body._parentID),"answers.Users.id": req.body.user.id  },
     { $pull: { "answers.$.Users": {"id": req.body.user.id }} },
+    {multi : true},
     function (err, docs) {
       report.push(docs)
-    });
+    }); 
+    Polls.update(
+      {_id: ObjectId(req.body._parentID),"userAnswers.Users.id": req.body.user.id  },
+      { $pull: { "userAnswers.$.Users": {"id": req.body.user.id }} },
+      {multi : true},
+      function (err, docs) {
+        report.push(docs)
+      });
   return res.json(report);
 })
 
