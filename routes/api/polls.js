@@ -102,7 +102,7 @@ router.post("/rescind", (req, res, next) => {
   for (var i = 0; i < req.body.answersLength; i++) {
     Polls.updateMany(
       { _id: ObjectId(req.body._parentID), "answers.Users.id": req.body.user.id },
-      { $pull: { "answers.$.Users": { "id": req.body.user.id } } },
+      { $pull: { "answers.$.Users": { "id": req.body.user.id } }, $inc: { "answers.$.value": -1, "value": -1 } },
       function (err, docs) {
         console.log("ANSWER DOCS", docs);
         report.push(docs)
@@ -111,7 +111,7 @@ router.post("/rescind", (req, res, next) => {
   for (var i = 0; i < req.body.userAnswersLength; i++) {
   Polls.updateMany(
     { _id: ObjectId(req.body._parentID), "userAnswers.Users.id": req.body.user.id },
-    { $pull: { "userAnswers.$.Users": { "id": req.body.user.id } } },
+    { $pull: { "userAnswers.$.Users": { "id": req.body.user.id } }, $inc: { "userAnswers.$.value": -1, "value": -1 } },
     function (err, docs) {
       console.log("USERANSWER DOC", docs);
       report.push(docs)
