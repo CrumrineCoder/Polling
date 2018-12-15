@@ -74,6 +74,7 @@ router.get('/current', auth.required, (req, res, next) => {
         return res.sendStatus(400);
       }
       console.log("CLOSE MY EYES FOR ONE MORE TIME", user);
+      console.log("HOW DOES  THE COMPUTER SEE IT?", { user: user.toAuthJSON() });
       return res.json({ user: user.toAuthJSON() });
     });
 });

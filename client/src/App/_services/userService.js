@@ -90,6 +90,7 @@ function _delete(id) {
 } */
 
 function handleResponse(response) {
+    console.log("RESPONSE", response); 
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
@@ -103,7 +104,7 @@ function handleResponse(response) {
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
-
+        console.log("DATA TO SEND BACK", data); 
         return data;
     });
 }
