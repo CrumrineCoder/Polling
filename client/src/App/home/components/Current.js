@@ -18,10 +18,15 @@ class Current extends Component {
                 console.log('error ' + error);
             }); */
             const { dispatch } = this.props;
-            dispatch(userActions.getAll());
+            console.log("WHAT'S IN THE BOX?", dispatch(userActions.getAll()));
+    }
+
+    componentDidReceiveProps(){
+        console.log("MOLLY BRINGS ME PROPS", this.props); 
     }
    
     render() {
+        console.log("!CURRENT !CURRENT !CURRENT", this.props); 
         return (
             <div className="form">
                 <button onClick={this.handleSubmit} className="btn btn-primary float-right">Current</button>
@@ -31,6 +36,7 @@ class Current extends Component {
 }
 
 function mapStateToProps(state) { 
+    console.log("MAMP STATE", state.home); 
     const { userInteraction } = state.home.users;
     return {
         userInteraction
