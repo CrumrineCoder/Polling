@@ -27,14 +27,14 @@ UsersSchema.methods.generateJWT = function() {
 
   return jwt.sign({
     email: this.email,
-    id: this._id,
+    id: this.id,
     exp: parseInt(expirationDate.getTime() / 1000, 10),
   }, 'secret');
 }
 
 UsersSchema.methods.toAuthJSON = function() {
   return {
-    _id: this._id,
+    id: this.id,
     email: this.email,
     token: this.generateJWT(),
   };

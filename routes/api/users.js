@@ -66,6 +66,7 @@ router.post('/login', auth.optional, (req, res, next) => {
 
 //GET current route (required, only authenticated users have access)
 router.get('/current', auth.required, (req, res, next) => {
+  console.log("BLEED", req.payload);
   const id = req.payload;
   return Users.findById(id)
     .then((user) => {

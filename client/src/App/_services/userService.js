@@ -41,10 +41,12 @@ function logout() {
 
 
 function getAll() {
+    console.log("GET ALL USER SERVICE");
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
+    console.log("REQUEST OPTIONS", requestOptions);
     return fetch(`api/users/current`, requestOptions).then(handleResponse);
 }
 /*
