@@ -72,6 +72,7 @@ router.get('/current', auth.required, (req, res, next) => {
       if (!user) {
         return res.sendStatus(400);
       }
+      console.log("CLOSE MY EYES FOR ONE MORE TIME", user);
       return res.json({ user: user.toAuthJSON() });
     });
 });

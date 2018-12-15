@@ -64,6 +64,7 @@ function register(user) {
 }
 
 function getAll() {
+    console.log("TEST HI KIRBY"); 
     return dispatch => {
         dispatch(request());
 

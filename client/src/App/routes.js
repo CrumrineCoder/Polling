@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect,  withRouter } from "react-router";
+import { Route, Switch, Redirect, withRouter } from "react-router";
 import { connect } from 'react-redux';
 //, Redirect
 //import { withRouter } from 'react-router-dom';
@@ -30,36 +30,41 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 
 class PrivateRoute extends React.Component {
-  state = {
-    loaded: false,
-    isAuthenticated: false
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      loaded: false,
+      isAuthenticated: false
+    }
   }
   componentDidMount() {
- /*   this.authenticate()
-    this.unlisten = this.props.history.listen(() => {
-      Auth.currentAuthenticatedUser()
-        .then(user => console.log('user: ', user))
-        .catch(() => {
-          if (this.state.isAuthenticated) this.setState({ isAuthenticated: false })
-        })
-    }); */
+    /*   this.authenticate()
+       this.unlisten = this.props.history.listen(() => {
+         Auth.currentAuthenticatedUser()
+           .then(user => console.log('user: ', user))
+           .catch(() => {
+             if (this.state.isAuthenticated) this.setState({ isAuthenticated: false })
+           })
+       }); */
     const { dispatch } = this.props;
-    dispatch(userActions.getAll());
+    console.log("JET SET RADIO", dispatch(userActions.getAll()));
   }
   componentWillUnmount() {
- //   this.unlisten()
+    //   this.unlisten()
   }
   authenticate() {
-  /*  Auth.currentAuthenticatedUser()
-      .then(() => {
-        this.setState({ loaded: true, isAuthenticated: true })
-      })
-      .catch(() => this.props.history.push('/auth')) */
+    /*  Auth.currentAuthenticatedUser()
+        .then(() => {
+          this.setState({ loaded: true, isAuthenticated: true })
+        })
+        .catch(() => this.props.history.push('/auth')) */
   }
   render() {
-    console.log("PRIVATE ROUTEPROPS", this.props); 
+    console.log("PRIVATE ROUTEPROPS", this.props);
+    console.log("TEST", this.state); 
     const { component: Component, ...rest } = this.props
-    const { loaded , isAuthenticated} = this.state
+    const { loaded, isAuthenticated } = this.state
     if (!loaded) return null
     return (
       <Route
@@ -68,12 +73,12 @@ class PrivateRoute extends React.Component {
           return isAuthenticated ? (
             <Component {...props} />
           ) : (
-            <Redirect
-              to={{
-                pathname: "/auth",
-              }}
-            />
-          )
+              <Redirect
+                to={{
+                  pathname: "/auth",
+                }}
+              />
+            )
         }}
       />
     )
@@ -81,14 +86,14 @@ class PrivateRoute extends React.Component {
 }
 
 //PrivateRoute = withRouter(PrivateRoute)
-function mapStateToProps(state) { 
+function mapStateToProps(state) {
   const { userInteraction } = state.home.users;
   return {
-      userInteraction
+    userInteraction
   };
 }
 
-PrivateRoute = connect(mapStateToProps)(PrivateRoute);
+PrivateRoute = withRouter(connect(mapStateToProps)(PrivateRoute));
 /*
 const fakeAuth = {
   isAuthenticated: false,
@@ -105,7 +110,7 @@ const fakeAuth = {
 }
 */
 export default (
-  <Switch>  
+  <Switch>
     <Route exact path="/" component={Home} />
     <Route path="/about" component={About} />
     <Route path="/register" component={Register} />
