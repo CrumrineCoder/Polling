@@ -46,6 +46,8 @@ class Results extends Component {
 
 	render() {
 		let polls = this.props;
+		console.log("props", this.props);
+		console.log( JSON.parse(localStorage.getItem('user')));
 		let pageContent = '';
 		if (this.props.isFetching) {
 			pageContent = (
@@ -54,6 +56,19 @@ class Results extends Component {
       		    </div>
 			)
 		} else {
+			let id = [];
+			for(var i=0; i<this.props.votes.answers.length; i++){
+				for(var j=0; j<this.props.votes.answers[i].Users.length; j++){
+					id.push(this.props.votes.answers[i].Users[j].id);
+				}
+			}
+			for(var k=0; k<this.props.votes.userAnswers.length; k++){
+				for(var l=0; l<this.props.votes.userAnswers[k].Users.length; l++){
+					id.push(this.props.votes.userAnswers[k].Users[l].id);
+				}
+			}
+			console.log(id); 
+			console.log(id.indexOf(JSON.parse(localStorage.getItem('user')).id));
 			pageContent = (
 				<ul className="polls">
 					<Result {...polls} />

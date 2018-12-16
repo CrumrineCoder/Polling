@@ -62,7 +62,6 @@ function get(poll) {
     if(poll === "All"){
         return fetch("api/polls/get/", requestOptions).then(handleResponse);
     }
-
     var id = mongoose.Types.ObjectId(poll);
     return fetch("api/polls/get/"+id, requestOptions).then(handleResponse);
 }

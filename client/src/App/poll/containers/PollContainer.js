@@ -30,7 +30,6 @@ class Polls extends Component {
 	render() {
 		let { votes } = this.props;
 		let pageContent = '';
-
 		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">

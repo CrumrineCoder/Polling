@@ -103,7 +103,6 @@ function votePollMultiple(poll) {
 }
 
 function rescind(poll) {
-    console.log("RESCIND POLL!!!", poll);
     return dispatch => {
         var id = poll._parentID;
         dispatch(request(poll));
@@ -141,6 +140,7 @@ function receiveVotes(poll, json) {
 }
 
 function fetchVotes(poll) {
+
     return dispatch => {
         dispatch(requestVotes(poll))
         pollService.get(poll)
@@ -150,7 +150,6 @@ function fetchVotes(poll) {
 }
 
 function shouldFetchVotes(state, poll) {
- //   console.log("SHOULD FETCH VOTES",  state.home.users.items.user); 
     const votes = state.home.votesByPoll[poll]
     if (!votes) {
         return true
