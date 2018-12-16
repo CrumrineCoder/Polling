@@ -63,6 +63,7 @@ function register(user) {
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
+
 function getAll() {
     console.log("TEST HI KIRBY"); 
     return dispatch => {

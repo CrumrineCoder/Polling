@@ -1,23 +1,34 @@
 import { userConstants } from '../_constants/user.constants.js';
-
-export default function users(state = {}, action) {
+const initialState = {
+  isFetchingCurrentUser: false,
+  didInvalidateCurrentUser: false,
+  currentUser: {}
+}
+export default function users(state = initialState, action) {
   console.log("USERS ACTION", action); 
   switch (action.type) {
     case userConstants.GETALL_REQUEST:
       console.log("GETALL REQUEST");
       return {
-        loading: true
+        ...state,
+        isFetchingCurrentUser: true,
+        didInvalidateCurrentUser: false
       };
     case userConstants.GETALL_SUCCESS:
     console.log("GETALL SUCCESS");
       return {
-        items: action.users
+        ...state,
+        isFetchingCurrentUser: false,
+        didInvalidateCurrentUser: false,
+        currentUser: action.users
       };
     case userConstants.GETALL_FAILURE:
     console.log("GETALL FAILURE");
       return { 
-        error: action.error
+        ...state,
+        didInvalidateCurrentUser: true
       };
+      
    /* case userConstants.DELETE_REQUEST:
       // add 'deleting:true' property to user being deleted
       return {

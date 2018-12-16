@@ -63,12 +63,24 @@ class PrivateRoute extends React.Component {
   render() {
     console.log("PRIVATE ROUTEPROPS", this.props);
     console.log("TEST", this.state); 
-    const { component: Component, ...rest } = this.props
+    const { component: Component, ...rest } = this.props;
+    let pageContent = '';
+		if (this.props.users.isFetchingCurrentUser) {
+			pageContent = (
+				<div className="pollsLoader">
+					The content is loading. This may take half a minute depending on dynos.
+      	</div>
+			)
+		} else {
+			pageContent = (
+				<div>Honk</div>
+			)
+		}
   //  const { loaded, isAuthenticated } = this.state
    // if (!loaded) return null
    //{this.props.users.items.user.email} 
     return (
-        <div></div>
+        <div>{pageContent}</div>
     )
     /*      <Route
         {...rest}

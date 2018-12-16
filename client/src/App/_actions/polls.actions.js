@@ -129,7 +129,7 @@ function rescind(poll) {
 function selectPoll(poll) { return { type: pollConstants.GET_SELECT, poll } }
 
 function receiveVotes(poll, json) {
-    if(poll ==="All"){
+    if (poll === "All") {
         json = json.polls;
     }
     return {
@@ -150,6 +150,7 @@ function fetchVotes(poll) {
 }
 
 function shouldFetchVotes(state, poll) {
+ //   console.log("SHOULD FETCH VOTES",  state.home.users.items.user); 
     const votes = state.home.votesByPoll[poll]
     if (!votes) {
         return true
