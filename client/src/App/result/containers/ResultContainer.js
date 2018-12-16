@@ -75,9 +75,8 @@ class Results extends Component {
 			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
 				//	<Redirect to={{ pathname: '/login'}} />
 				//	history.push(poll.poll._id + "/vote");
-				console.log(polls);
 				history.push("");
-				history.push(polls._id + "/vote");
+				history.push(polls.id + "/vote");
 			
 			}
 			pageContent = (
