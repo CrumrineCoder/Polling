@@ -64,10 +64,13 @@ class PrivateRoute extends React.Component {
     console.log("PRIVATE ROUTEPROPS", this.props);
     console.log("TEST", this.state); 
     const { component: Component, ...rest } = this.props
-    const { loaded, isAuthenticated } = this.state
-    if (!loaded) return null
+  //  const { loaded, isAuthenticated } = this.state
+   // if (!loaded) return null
+   //{this.props.users.items.user.email} 
     return (
-      <Route
+        <div></div>
+    )
+    /*      <Route
         {...rest}
         render={props => {
           return isAuthenticated ? (
@@ -80,16 +83,16 @@ class PrivateRoute extends React.Component {
               />
             )
         }}
-      />
-    )
+      /> */
   }
 }
 
 //PrivateRoute = withRouter(PrivateRoute)
 function mapStateToProps(state) {
-  const { userInteraction } = state.home.users;
+  const { users } = state.home;
+  console.log("MAP STATE USERS", users); 
   return {
-    userInteraction
+    users
   };
 }
 

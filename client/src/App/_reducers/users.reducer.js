@@ -1,16 +1,20 @@
 import { userConstants } from '../_constants/user.constants.js';
 
 export default function users(state = {}, action) {
+  console.log("USERS ACTION", action); 
   switch (action.type) {
     case userConstants.GETALL_REQUEST:
+      console.log("GETALL REQUEST");
       return {
         loading: true
       };
     case userConstants.GETALL_SUCCESS:
+    console.log("GETALL SUCCESS");
       return {
         items: action.users
       };
     case userConstants.GETALL_FAILURE:
+    console.log("GETALL FAILURE");
       return { 
         error: action.error
       };
