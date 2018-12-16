@@ -34,7 +34,7 @@ class Results extends Component {
 
 	handleClick(e) {
 		e.preventDefault();
-		let user = localStorage.getItem('user');
+		let user = JSON.parse(localStorage.getItem('user'));
 		let answersLength = this.props.votes.answers.length;
 		let userAnswersLength =  this.props.votes.userAnswers.length;
 		if (user && user.token) {
@@ -46,7 +46,6 @@ class Results extends Component {
 
 	render() {
 		let polls = this.props;
-		console.log("results props", this.props); 
 		let pageContent = '';
 		if (this.props.isFetching) {
 			pageContent = (
