@@ -9,7 +9,6 @@ class Poll extends Component {
 	constructor(props) {
 		super(props);
 		const { dispatch } = this.props;
-		console.log("YO IT'S THE PROPS", this.props); 
 		dispatch(userActions.getAll());
 		//_id: [],, checkboxes: this.props.answers, userCheckboxes: this.props.answers 
 		this.state = {
@@ -18,7 +17,6 @@ class Poll extends Component {
 			_parentID: this.props._id,
 			isLoggedIn: typeof localStorage["user"] !== 'undefined'
 		};
-		console.log(this.state.isLoggedIn);
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleMultipleSubmit = this.handleMultipleSubmit.bind(this);
@@ -40,9 +38,8 @@ class Poll extends Component {
 		var { selected, _id, _parentID, isLoggedIn } = this.state;
 		const { dispatch } = this.props;
 		if(isLoggedIn){
-			let user = JSON.parse(localStorage.getItem('user'));
+			let user = localStorage.getItem('user');
 			user = user._id;
-			console.log("USER!", user);
 			dispatch(pollActions.votePollMultiple({ selected, _id, _parentID, user }))
 		}
 	}
