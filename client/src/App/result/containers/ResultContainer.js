@@ -59,12 +59,12 @@ class Results extends Component {
 			let id = [];
 			for(var i=0; i<this.props.votes.answers.length; i++){
 				for(var j=0; j<this.props.votes.answers[i].Users.length; j++){
-					id.push(this.props.votes.answers[i].Users[j].id);
+					id.push(this.props.votes.answers[i].Users[j]);
 				}
 			}
 			for(var k=0; k<this.props.votes.userAnswers.length; k++){
 				for(var l=0; l<this.props.votes.userAnswers[k].Users.length; l++){
-					id.push(this.props.votes.userAnswers[k].Users[l].id);
+					id.push(this.props.votes.userAnswers[k].Users[l]);
 				}
 			}
 			console.log(id); 
