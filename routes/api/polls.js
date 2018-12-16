@@ -33,8 +33,6 @@ router.param('id', (req, res, next, id) => {
 }); */
 
 router.get('/get/:id', (req, res, next) => {
-  console.log("Get one", req.body);
-  console.log("get one param", req.params);
   // res.send("Ok"); 
   return Polls.findOne({ _id: req.params.id }, function (err, docs) { res.json(docs) });
 });
@@ -67,19 +65,15 @@ router.post("/userVote", (req, res, next) => {
 
 router.post("/voteMultiple", (req, res, next) => {
   var report = [];
-  console.log("body", req.body);
   //const user = {userID: req.body.user._id, email: req.body.user.email, token: req.body.user.token};
   for (var i = 0; i < req.body.selected.length; i++) {
-    console.log("submitted", req.body.selected[i]);
     if (req.body.selected[i].submitted == "toSubmit") {
-      console.log("TO SUBMIT", typeof req.body.user);
       var userVote = {
         "text": req.body.selected[i].value,
         "value": 1,
         "Users": [req.body.user]
         //{"id": req.body.user}
       }
-      console.log(userVote);
       Polls.update(
         { _id: req.body._parentID },
         { $push: { userAnswers: userVote } }, function (err, docs) { if (err) { console.log("ER ER ER", err); }; report.push(docs); });
@@ -101,8 +95,8 @@ router.post("/rescind", (req, res, next) => {
   console.log("BODY", req.body);
   for (var i = 0; i < req.body.answersLength; i++) {
     Polls.updateMany(
-      { _id: ObjectId(req.body._parentID), "answers.Users.id": req.body.user.id },
-      { $pull: { "answers.$.Users": req.body.user.id  }, $inc: { "answers.$.value": -1, "value": -1 } },
+      { _id: ObjectId(req.body._parentID), "answers.Users": req.body.user },
+      { $pull: { "answers.$.Users": req.body.user  }, $inc: { "answers.$.value": -1, "value": -1 } },
       function (err, docs) {
         console.log("ANSWER DOCS", docs);
         report.push(docs)
@@ -110,8 +104,8 @@ router.post("/rescind", (req, res, next) => {
   }
   for (var i = 0; i < req.body.userAnswersLength; i++) {
   Polls.updateMany(
-    { _id: ObjectId(req.body._parentID), "userAnswers.Users.id": req.body.user.id },
-    { $pull: { "userAnswers.$.Users":  req.body.user.id  }, $inc: { "userAnswers.$.value": -1, "value": -1 } },
+    { _id: ObjectId(req.body._parentID), "userAnswers.Users": req.body.user },
+    { $pull: { "userAnswers.$.Users":  req.body.user  }, $inc: { "userAnswers.$.value": -1, "value": -1 } },
     function (err, docs) {
       console.log("USERANSWER DOC", docs);
       report.push(docs)
