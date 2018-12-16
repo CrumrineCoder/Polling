@@ -4,14 +4,15 @@ import { alertActions } from './alert.actions.js';
 import { history } from '../store.js';
 
 export const userActions = {
-   /* login,
-    logout,
+    /* login,
+     logout,
+     register,
+     getAll,
+     delete: _delete */
     register,
+    login,
     getAll,
-    delete: _delete */
-    register,
-    login, 
-    getAll, logout
+    logout
 };
 
 function login(user) {
@@ -19,7 +20,7 @@ function login(user) {
         dispatch(request(user));
         userService.login(user)
             .then(
-                user => { 
+                user => {
                     dispatch(success(user));
                     history.push('/success');
                 },
@@ -46,7 +47,7 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => { 
+                user => {
                     dispatch(success());
                     history.push('/login');
                     dispatch(alertActions.success('Registration successful'));
@@ -65,7 +66,6 @@ function register(user) {
 
 
 function getAll() {
-    console.log("TEST HI KIRBY"); 
     return dispatch => {
         dispatch(request());
 

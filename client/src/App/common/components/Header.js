@@ -16,7 +16,6 @@ class Header extends Component {
 
 	constructor(props) {
 		super(props);
-		console.log("Header Props", this.props);	
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false

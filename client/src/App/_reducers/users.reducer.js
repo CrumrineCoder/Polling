@@ -5,17 +5,14 @@ const initialState = {
   currentUser: {}
 }
 export default function users(state = initialState, action) {
-  console.log("USERS ACTION", action); 
   switch (action.type) {
     case userConstants.GETALL_REQUEST:
-      console.log("GETALL REQUEST");
       return {
         ...state,
         isFetchingCurrentUser: true,
         didInvalidateCurrentUser: false
       };
     case userConstants.GETALL_SUCCESS:
-    console.log("GETALL SUCCESS");
       return {
         ...state,
         isFetchingCurrentUser: false,
@@ -23,7 +20,6 @@ export default function users(state = initialState, action) {
         currentUser: action.users
       };
     case userConstants.GETALL_FAILURE:
-    console.log("GETALL FAILURE");
       return { 
         ...state,
         didInvalidateCurrentUser: true

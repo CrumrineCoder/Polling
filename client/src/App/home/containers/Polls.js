@@ -5,7 +5,6 @@ import PollMini from '../components/PollMini';
 import Tags from '../components/Tag';
 import Search from '../components/Search';
 import Form from '../components/Form';
-import Current from '../components/Current';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { withRouter } from 'react-router-dom';
 
@@ -88,7 +87,6 @@ class Polls extends Component {
 			<div className="pollsContainer">
 				<Search onSearch={this.handleSearchBar} />
 				<Tags onChangeFilter={this.changeFilter} />
-				<Current></Current>
 				<Form></Form>
 				{pageContent}
 			</div>
