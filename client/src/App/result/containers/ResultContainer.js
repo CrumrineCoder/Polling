@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Result from '../components/Result';
 import { pollActions } from '../../_actions/polls.actions.js';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { history } from '../../store.js';
 
 class Results extends Component {
@@ -70,12 +70,12 @@ class Results extends Component {
 			}
 			console.log(id);
 			console.log(id.indexOf(JSON.parse(localStorage.getItem('user')).id));
-			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) != -1) {
+			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
 				//	<Redirect to={{ pathname: '/login'}} />
 				//	history.push(poll.poll._id + "/vote");
 				console.log(polls);
 				history.push("");
-				history.push(polls.id + "/vote");
+				history.push(polls._id + "/vote");
 			
 			}
 			pageContent = (

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Poll from '../components/Poll';
 import { pollActions } from '../../_actions/polls.actions.js';
+import { history } from '../../store.js';
 
 class Polls extends Component {
 
@@ -37,6 +38,27 @@ class Polls extends Component {
       		    </div>
 			)
 		} else {
+			let id = [];
+			for (var i = 0; i < this.props.votes.answers.length; i++) {
+				for (var j = 0; j < this.props.votes.answers[i].Users.length; j++) {
+					id.push(this.props.votes.answers[i].Users[j]);
+				}
+			}
+			for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
+				for (var l = 0; l < this.props.votes.userAnswers[k].Users.length; l++) {
+					id.push(this.props.votes.userAnswers[k].Users[l]);
+				}
+			}
+			console.log(id);
+			console.log(id.indexOf(JSON.parse(localStorage.getItem('user')).id));
+			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) !== -1) {
+				//	<Redirect to={{ pathname: '/login'}} />
+				//	history.push(poll.poll._id + "/vote");
+				console.log(votes);
+				history.push("");
+				history.push(votes._id + "/results");
+			
+			}
 			pageContent = (
 				<ul className="polls">
 					<Poll {...votes} />
