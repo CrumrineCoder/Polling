@@ -11,7 +11,8 @@ export const userService = {
     delete: _delete */
     register,
     login, 
-    getAll, logout
+    getAll, 
+    logout
 };
 
 function login(user) {
@@ -35,6 +36,7 @@ function login(user) {
 }
 
 function logout() {
+    console.log("LOG OUT IS CALLED"); 
     // remove user from local storage to log user out
     localStorage.removeItem('user');
 }
@@ -93,8 +95,12 @@ function handleResponse(response) {
     console.log("RESPONSE", response); 
     return response.text().then(text => {
         const data = text && JSON.parse(text);
+        console.log("DATA INSIDEER", data); 
         if (!response.ok) {
+            console.log("beep");
             if (response.status === 401) {
+                console.log("Boop");
+                console.log("UNAUTHORIZED DATA", data); 
                 // auto logout if 401 response returned from api
                logout();
         //        location.reload(true);

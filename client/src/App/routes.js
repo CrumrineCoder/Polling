@@ -62,25 +62,42 @@ class PrivateRoute extends React.Component {
   }
   render() {
     console.log("PRIVATE ROUTEPROPS", this.props);
-    console.log("TEST", this.state); 
+    console.log("TEST", this.state);
     const { component: Component, ...rest } = this.props;
+    const { loaded, isAuthenticated } = this.state
     let pageContent = '';
-		if (this.props.users.isFetchingCurrentUser) {
-			pageContent = (
-				<div className="pollsLoader">
-					The content is loading. This may take half a minute depending on dynos.
+    if(this.props.users.didInvalidateCurrentUser){
+      pageContent = (
+        (
+          <Route {...rest} render={props => (
+            localStorage.getItem('user')
+                ? <Component {...props} />
+                : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+        )} />
+        )
+      )
+    }
+    else if (this.props.users.isFetchingCurrentUser) {
+      pageContent = (
+        <div className="pollsLoader">
+            Validating...
       	</div>
-			)
-		} else {
-			pageContent = (
-				<div>Honk</div>
-			)
-		}
-  //  const { loaded, isAuthenticated } = this.state
-   // if (!loaded) return null
-   //{this.props.users.items.user.email} 
+      )
+    } 
+    else{
+      pageContent = (
+        (
+          <Route {...rest} render={props => (
+            <Component {...props} />
+        )} />
+        )
+      )
+    }
+    //  const { loaded, isAuthenticated } = this.state
+    // if (!loaded) return null
+    //{this.props.users.items.user.email} 
     return (
-        <div>{pageContent}</div>
+      <div>{pageContent}</div>
     )
     /*      <Route
         {...rest}
@@ -102,7 +119,7 @@ class PrivateRoute extends React.Component {
 //PrivateRoute = withRouter(PrivateRoute)
 function mapStateToProps(state) {
   const { users } = state.home;
-  console.log("MAP STATE USERS", users); 
+  console.log("MAP STATE USERS", users);
   return {
     users
   };
@@ -130,7 +147,7 @@ export default (
     <Route path="/about" component={About} />
     <Route path="/register" component={Register} />
     <Route path="/login" component={Login} />
-    <Route path="/:id/vote/" component={PollShow} />
+    <PrivateRoute path="/:id/vote/" component={PollShow} />
     <PrivateRoute path="/:id/results/" component={Result} />
     <Route component={PageNotFound} />
   </Switch>

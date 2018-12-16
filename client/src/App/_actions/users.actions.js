@@ -78,7 +78,7 @@ function getAll() {
 
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { console.log("SUCCESS  USERS", users); return { type: userConstants.GETALL_SUCCESS, users } }
-    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+    function failure(error) { console.log("ERROR USERS", error); return { type: userConstants.GETALL_FAILURE, error } }
 }
 /*
 // prefixed function name with underscore because delete is a reserved word in javascript
