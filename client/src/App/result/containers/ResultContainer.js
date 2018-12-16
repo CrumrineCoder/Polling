@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Result from '../components/Result';
 import { pollActions } from '../../_actions/polls.actions.js';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
+import { history } from '../../store.js';
 
 class Results extends Component {
 
@@ -36,10 +37,10 @@ class Results extends Component {
 		e.preventDefault();
 		let user = JSON.parse(localStorage.getItem('user'));
 		let answersLength = this.props.votes.answers.length;
-		let userAnswersLength =  this.props.votes.userAnswers.length;
+		let userAnswersLength = this.props.votes.userAnswers.length;
 		if (user && user.token) {
 			const _parentID = this.props.id;
-			user = {"id":user._id};
+			user = { "id": user._id };
 			this.props.dispatch(pollActions.rescind({ user, _parentID, answersLength, userAnswersLength }));
 		}
 	}
@@ -47,7 +48,7 @@ class Results extends Component {
 	render() {
 		let polls = this.props;
 		console.log("props", this.props);
-		console.log( JSON.parse(localStorage.getItem('user')));
+		console.log(JSON.parse(localStorage.getItem('user')));
 		let pageContent = '';
 		if (this.props.isFetching) {
 			pageContent = (
@@ -57,18 +58,26 @@ class Results extends Component {
 			)
 		} else {
 			let id = [];
-			for(var i=0; i<this.props.votes.answers.length; i++){
-				for(var j=0; j<this.props.votes.answers[i].Users.length; j++){
+			for (var i = 0; i < this.props.votes.answers.length; i++) {
+				for (var j = 0; j < this.props.votes.answers[i].Users.length; j++) {
 					id.push(this.props.votes.answers[i].Users[j]);
 				}
 			}
-			for(var k=0; k<this.props.votes.userAnswers.length; k++){
-				for(var l=0; l<this.props.votes.userAnswers[k].Users.length; l++){
+			for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
+				for (var l = 0; l < this.props.votes.userAnswers[k].Users.length; l++) {
 					id.push(this.props.votes.userAnswers[k].Users[l]);
 				}
 			}
-			console.log(id); 
+			console.log(id);
 			console.log(id.indexOf(JSON.parse(localStorage.getItem('user')).id));
+			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) != -1) {
+				//	<Redirect to={{ pathname: '/login'}} />
+				//	history.push(poll.poll._id + "/vote");
+				console.log(polls);
+				history.push("");
+				history.push(polls.id + "/vote");
+			
+			}
 			pageContent = (
 				<ul className="polls">
 					<Result {...polls} />
