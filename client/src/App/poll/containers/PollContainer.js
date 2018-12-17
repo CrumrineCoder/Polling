@@ -49,12 +49,8 @@ class Polls extends Component {
 					id.push(this.props.votes.userAnswers[k].Users[l]);
 				}
 			}
-			console.log(id);
-			console.log(id.indexOf(JSON.parse(localStorage.getItem('user')).id));
+
 			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) !== -1) {
-				//	<Redirect to={{ pathname: '/login'}} />
-				//	history.push(poll.poll._id + "/vote");
-				console.log(votes);
 				history.push("");
 				history.push(votes._id + "/results");
 			

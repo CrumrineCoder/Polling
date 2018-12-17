@@ -66,15 +66,12 @@ router.post('/login', auth.optional, (req, res, next) => {
 
 //GET current route (required, only authenticated users have access)
 router.get('/current', auth.required, (req, res, next) => {
-  console.log("BLEED", req.payload);
   const id = req.payload.id;
   return Users.findById(id)
     .then((user) => {
       if (!user) {
         return res.sendStatus(400);
       }
-      console.log("CLOSE MY EYES FOR ONE MORE TIME", user);
-      console.log("HOW DOES  THE COMPUTER SEE IT?", { user: user.toAuthJSON() });
       return res.json({ user: user.toAuthJSON() });
     });
 });

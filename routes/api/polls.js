@@ -74,8 +74,6 @@ router.post("/voteMultiple", (req, res, next) => {
         "Users": [req.body.user]
         //{"id": req.body.user}
       }
-      console.log("USER VOTE");
-      console.log(userVote);
       Polls.update(
         { _id: req.body._parentID },
         { $push: { userAnswers: userVote }, $inc: { "value": 1 } }, function (err, docs) { if (err) { console.log("ER ER ER", err); }; report.push(docs); });
@@ -94,13 +92,11 @@ mongoose.set('debug', true);
 
 router.post("/rescind", (req, res, next) => {
   var report = [];
-  console.log("BODY", req.body);
   for (var i = 0; i < req.body.answersLength; i++) {
     Polls.updateMany(
       { _id: ObjectId(req.body._parentID), "answers.Users": req.body.user },
       { $pull: { "answers.$.Users": req.body.user  }, $inc: { "answers.$.value": -1, "value": -1 } },
       function (err, docs) {
-        console.log("ANSWER DOCS", docs);
         report.push(docs)
       });
   }
@@ -109,7 +105,6 @@ router.post("/rescind", (req, res, next) => {
     { _id: ObjectId(req.body._parentID), "userAnswers.Users": req.body.user },
     { $pull: { "userAnswers.$.Users":  req.body.user  }, $inc: { "userAnswers.$.value": -1, "value": -1 } },
     function (err, docs) {
-      console.log("USERANSWER DOC", docs);
       report.push(docs)
     });
   }

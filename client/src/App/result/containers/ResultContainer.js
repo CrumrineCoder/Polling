@@ -36,21 +36,17 @@ class Results extends Component {
 	handleClick(e) {
 		e.preventDefault();
 		let user = JSON.parse(localStorage.getItem('user'));
-		console.log("WOOLIE", user);
 		let answersLength = this.props.votes.answers.length;
 		let userAnswersLength = this.props.votes.userAnswers.length;
 		if (user && user.token) {
 			const _parentID = this.props.id;
 			user = user.id;
-			console.log("WOOLIE", user);
 			this.props.dispatch(pollActions.rescind({ user, _parentID, answersLength, userAnswersLength }));
 		}
 	}
 
 	render() {
 		let polls = this.props;
-		console.log("props", this.props);
-		console.log(JSON.parse(localStorage.getItem('user')));
 		let pageContent = '';
 		if (this.props.isFetching) {
 			pageContent = (
@@ -70,11 +66,7 @@ class Results extends Component {
 					id.push(this.props.votes.userAnswers[k].Users[l]);
 				}
 			}
-			console.log(id);
-			console.log(id.indexOf(JSON.parse(localStorage.getItem('user')).id));
 			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
-				//	<Redirect to={{ pathname: '/login'}} />
-				//	history.push(poll.poll._id + "/vote");
 				history.push("");
 				history.push(polls.id + "/vote");
 			
