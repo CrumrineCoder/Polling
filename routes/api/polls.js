@@ -38,16 +38,7 @@ router.get('/get/:id', (req, res, next) => {
 });
 
 router.post("/vote", (req, res, next) => {
-  Polls.aggregate([
-    { "$unwind": '$parent' },
-    {
-      "$match":
-        { "answers._id": req.body._id }
-    }
-  ]);
-  return Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id) }, { $inc: { "answers.$.value": 1, "value": 1 } }, function (err, doc) {
-    res.json(doc);
-  })
+  Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id) }, { $push: { "answers.$.Users": req.body.user }, $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) { res.json(docs) });
 })
 
 router.post("/userVote", (req, res, next) => {
@@ -95,18 +86,18 @@ router.post("/rescind", (req, res, next) => {
   for (var i = 0; i < req.body.answersLength; i++) {
     Polls.updateMany(
       { _id: ObjectId(req.body._parentID), "answers.Users": req.body.user },
-      { $pull: { "answers.$.Users": req.body.user  }, $inc: { "answers.$.value": -1, "value": -1 } },
+      { $pull: { "answers.$.Users": req.body.user }, $inc: { "answers.$.value": -1, "value": -1 } },
       function (err, docs) {
         report.push(docs)
       });
   }
   for (var i = 0; i < req.body.userAnswersLength; i++) {
-  Polls.updateMany(
-    { _id: ObjectId(req.body._parentID), "userAnswers.Users": req.body.user },
-    { $pull: { "userAnswers.$.Users":  req.body.user  }, $inc: { "userAnswers.$.value": -1, "value": -1 } },
-    function (err, docs) {
-      report.push(docs)
-    });
+    Polls.updateMany(
+      { _id: ObjectId(req.body._parentID), "userAnswers.Users": req.body.user },
+      { $pull: { "userAnswers.$.Users": req.body.user }, $inc: { "userAnswers.$.value": -1, "value": -1 } },
+      function (err, docs) {
+        report.push(docs)
+      });
   }
   return res.json(report);
 })

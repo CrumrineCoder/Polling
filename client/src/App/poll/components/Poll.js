@@ -16,30 +16,38 @@ class Poll extends Component {
 			userAnswer: '',
 			_parentID: this.props._id,
 			isLoggedIn: typeof localStorage["user"] !== 'undefined',
-			choiceType: ''
+			choiceType: '',
+			optionChangeType: undefined,
+			submitType: undefined
 		};
 		this.handleOptionChange = this.handleOptionChange.bind(this);
+		this.handleMultipleOptionChange = this.handleMultipleOptionChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleMultipleSubmit = this.handleMultipleSubmit.bind(this);
 		this.setUserAnswer = this.setUserAnswer.bind(this);
-		this.handleMultipleOptionChange = this.handleMultipleOptionChange.bind(this);
 	}
 
 	componentDidMount(){
 		if(this.props.options.MultipleAnswers){
 			this.setState({ choiceType: "checkbox" });
+			this.setState({ optionChangeType: this.handleMultipleOptionChange });
+			this.setState({ submitType: this.handleMultipleSubmit });
 		} else{
 			this.setState({ choiceType: "radio" });
+			this.setState({ optionChangeType: this.handleOptionChange });
+			this.setState({ submitType: this.handleSubmit });
 		}
 	}
 
 	handleSubmit() {
-		var { selected, _id, _parentID } = this.state;
+		var { selected, _id, _parentID } = this.state; 
 		const { dispatch } = this.props;
 		if (_id === "Other") {
 			dispatch(pollActions.votePollUserAnswer({ selected, _parentID }));
 		} else {
-			dispatch(pollActions.votePoll({ selected, _id }));
+			let user = JSON.parse(localStorage.getItem('user'));
+			user = user.id;
+			dispatch(pollActions.votePoll({ selected, _id, user}));
 		}
 	}
 
@@ -88,7 +96,7 @@ class Poll extends Component {
 		console.log("POLL RENDER PROPS", this.props); 
 		let button;
 		if (isLoggedIn) {
-			button = <button onClick={this.handleMultipleSubmit} className="btn btn-primary float-right">Submit</button>;
+			button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
 		} else {
 			button = <button > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</button>;
 		}
@@ -100,7 +108,7 @@ class Poll extends Component {
 				{this.props.answers.map(function (answer) {
 					return (
 						<div key={answer._id}>
-							<input type={this.state.choiceType} name="answer" submitted="answer" custom="some-value" onChange={this.handleMultipleOptionChange} value={answer.text} id={answer._id} />
+							<input type={this.state.choiceType} name="answer" submitted="answer" custom="some-value" onChange={this.state.optionChangeType} value={answer.text} id={answer._id} />
 							<label>{answer.text}</label>
 
 						</div>
@@ -111,7 +119,7 @@ class Poll extends Component {
 				{this.props.userAnswers.map(function (answer) {
 					return (
 						<div key={answer._id}>
-							<input type={this.state.choiceType} name="answer" submitted="userAnswer" onChange={this.handleMultipleOptionChange} value={answer.text} id={answer._id} />
+							<input type={this.state.choiceType} name="answer" submitted="userAnswer" onChange={this.state.optionChangeType} value={answer.text} id={answer._id} />
 							<label>{answer.text}</label>
 
 						</div>
