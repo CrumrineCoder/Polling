@@ -15,13 +15,22 @@ class Poll extends Component {
 			selected: [],
 			userAnswer: '',
 			_parentID: this.props._id,
-			isLoggedIn: typeof localStorage["user"] !== 'undefined'
+			isLoggedIn: typeof localStorage["user"] !== 'undefined',
+			choiceType: ''
 		};
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleMultipleSubmit = this.handleMultipleSubmit.bind(this);
 		this.setUserAnswer = this.setUserAnswer.bind(this);
 		this.handleMultipleOptionChange = this.handleMultipleOptionChange.bind(this);
+	}
+
+	componentDidMount(){
+		if(this.props.options.MultipleAnswers){
+			this.setState({ choiceType: "checkbox" });
+		} else{
+			this.setState({ choiceType: "radio" });
+		}
 	}
 
 	handleSubmit() {
@@ -75,13 +84,15 @@ class Poll extends Component {
 
 
 	render() {
-		const { isLoggedIn } = this.state
+		const { isLoggedIn } = this.state;
+		console.log("POLL RENDER PROPS", this.props); 
 		let button;
 		if (isLoggedIn) {
 			button = <button onClick={this.handleMultipleSubmit} className="btn btn-primary float-right">Submit</button>;
 		} else {
 			button = <button > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</button>;
 		}
+	
 		return (
 			<div>
 				<h1>{this.props.question}</h1>
@@ -89,7 +100,7 @@ class Poll extends Component {
 				{this.props.answers.map(function (answer) {
 					return (
 						<div key={answer._id}>
-							<input type="checkbox" name="answer" submitted="answer" custom="some-value" onChange={this.handleMultipleOptionChange} value={answer.text} id={answer._id} />
+							<input type={this.state.choiceType} name="answer" submitted="answer" custom="some-value" onChange={this.handleMultipleOptionChange} value={answer.text} id={answer._id} />
 							<label>{answer.text}</label>
 
 						</div>
@@ -100,14 +111,14 @@ class Poll extends Component {
 				{this.props.userAnswers.map(function (answer) {
 					return (
 						<div key={answer._id}>
-							<input type="checkbox" name="answer" submitted="userAnswer" onChange={this.handleMultipleOptionChange} value={answer.text} id={answer._id} />
+							<input type={this.state.choiceType} name="answer" submitted="userAnswer" onChange={this.handleMultipleOptionChange} value={answer.text} id={answer._id} />
 							<label>{answer.text}</label>
 
 						</div>
 					)
 				}, this)
 				}
-				<input type="checkbox" onChange={this.handleMultipleOptionChange} submitted="toSubmit" name="answer" value={this.state.userAnswer} id="Other" ></input>
+				<input type={this.state.choiceType} onChange={this.handleMultipleOptionChange} submitted="toSubmit" name="answer" value={this.state.userAnswer} id="Other" ></input>
 				<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" />
 				{button}
 			</div>
