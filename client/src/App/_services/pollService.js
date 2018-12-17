@@ -19,6 +19,7 @@ function createPoll(poll) {
 }
 
 function votePoll(poll) {
+    console.log(poll);
      const requestOptions = {
          method: 'POST',
          headers: { 'Content-Type': 'application/json' },

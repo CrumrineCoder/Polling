@@ -27,12 +27,12 @@ class Poll extends Component {
 		this.setUserAnswer = this.setUserAnswer.bind(this);
 	}
 
-	componentDidMount(){
-		if(this.props.options.MultipleAnswers){
+	componentDidMount() {
+		if (this.props.options.MultipleAnswers) {
 			this.setState({ choiceType: "checkbox" });
 			this.setState({ optionChangeType: this.handleMultipleOptionChange });
 			this.setState({ submitType: this.handleMultipleSubmit });
-		} else{
+		} else {
 			this.setState({ choiceType: "radio" });
 			this.setState({ optionChangeType: this.handleOptionChange });
 			this.setState({ submitType: this.handleSubmit });
@@ -40,21 +40,22 @@ class Poll extends Component {
 	}
 
 	handleSubmit() {
-		var { selected, _id, _parentID } = this.state; 
+		var { selected, _parentID, userAnswer } = this.state;
+		console.log(selected); 
 		const { dispatch } = this.props;
-		if (_id === "Other") {
-			dispatch(pollActions.votePollUserAnswer({ selected, _parentID }));
+		let user = JSON.parse(localStorage.getItem('user'));
+		user = user.id;
+		if (selected[0]._id === "Other") {
+			dispatch(pollActions.votePollUserAnswer({ userAnswer, _parentID, user }));
 		} else {
-			let user = JSON.parse(localStorage.getItem('user'));
-			user = user.id;
-			dispatch(pollActions.votePoll({ selected, _id, user}));
+			dispatch(pollActions.votePoll({ selected, user }));
 		}
 	}
 
 	handleMultipleSubmit() {
 		var { selected, _id, _parentID, isLoggedIn } = this.state;
 		const { dispatch } = this.props;
-		if(isLoggedIn){
+		if (isLoggedIn) {
 			let user = JSON.parse(localStorage.getItem('user'));
 			user = user.id;
 			dispatch(pollActions.votePollMultiple({ selected, _id, _parentID, user }))
@@ -93,14 +94,33 @@ class Poll extends Component {
 
 	render() {
 		const { isLoggedIn } = this.state;
-		console.log("POLL RENDER PROPS", this.props); 
+		console.log("POLL RENDER PROPS", this.props);
 		let button;
+		let userAnswers = [];
 		if (isLoggedIn) {
 			button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
 		} else {
 			button = <button > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</button>;
 		}
-	
+		if (this.props.options.UserAnswers) {
+			userAnswers.push (
+				<h4>User Answers </h4>
+			)
+			console.log(this.props.userAnswers); 
+			{
+				this.props.userAnswers.map(function (answer) {
+					userAnswers.push (
+						<div key={answer._id}>
+							<input type={this.state.choiceType} name="answer" submitted="userAnswer" onChange={this.state.optionChangeType} value={answer.text} id={answer._id} />
+							<label>{answer.text}</label>
+						</div>
+					)
+				}, this);
+			}
+			userAnswers.push(<div><input type={this.state.choiceType} onChange={this.handleMultipleOptionChange} submitted="toSubmit" name="answer" value={this.state.userAnswer} id="Other" ></input>
+			<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" /></div>)
+		}
+
 		return (
 			<div>
 				<h1>{this.props.question}</h1>
@@ -115,19 +135,7 @@ class Poll extends Component {
 					)
 				}, this)
 				}
-				<h4>User Answers </h4>
-				{this.props.userAnswers.map(function (answer) {
-					return (
-						<div key={answer._id}>
-							<input type={this.state.choiceType} name="answer" submitted="userAnswer" onChange={this.state.optionChangeType} value={answer.text} id={answer._id} />
-							<label>{answer.text}</label>
-
-						</div>
-					)
-				}, this)
-				}
-				<input type={this.state.choiceType} onChange={this.handleMultipleOptionChange} submitted="toSubmit" name="answer" value={this.state.userAnswer} id="Other" ></input>
-				<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" />
+				{userAnswers}
 				{button}
 			</div>
 		)

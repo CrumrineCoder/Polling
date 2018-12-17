@@ -42,9 +42,11 @@ router.post("/vote", (req, res, next) => {
 })
 
 router.post("/userVote", (req, res, next) => {
+  console.log("User Vote", req.body); 
   var userVote = {
-    "text": req.body.selected,
-    "value": 1
+    "text": req.body.userAnswer,
+    "value": 1,
+    "Users": [req.body.user]
   }
   return Polls.update(
     { _id: req.body._parentID },

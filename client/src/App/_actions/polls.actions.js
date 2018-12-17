@@ -57,6 +57,7 @@ function votePoll(poll) {
 }
 
 function votePollUserAnswer(poll) {
+    console.log(poll);
     return dispatch => {
         var id = poll._parentID;
         dispatch(request(poll));
