@@ -7,12 +7,23 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: '', answers: [{ text: '', value: 0 }, { text: '', value: 0 }],
+            question: '',
+             answers: [
+                 { text: '', value: 0 }, 
+                 { text: '', value: 0 }
+            ],
+            option: {
+				MultipleAnswers: false,
+				UserAnswers: false, 
+				Rescind: false, 
+				SeeResults: false
+			},
             submitted: false
         };
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.goToResults = this.goToResults.bind(this);
+        this.handleOptionChange = this.handleOptionChange.bind(this);
     }
 
     goToResults(id) {
@@ -22,7 +33,7 @@ class Form extends Component {
     handleSubmit() {
         var { question, answers } = this.state;
         const { dispatch } = this.props;
-     
+
 
         // Remove empty answers
         answers = answers.filter(function (el) {
@@ -32,7 +43,7 @@ class Form extends Component {
         // Remove duplicate answers
         answers = answers.filter((answer, index, self) =>
             index === self.findIndex((a) => (
-                a.text === answer.text 
+                a.text === answer.text
             ))
         )
 
@@ -43,9 +54,10 @@ class Form extends Component {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
         } else {
             this.setState({ submitted: true });
-          dispatch(pollActions.createPoll({question, answers}));
+            dispatch(pollActions.createPoll({ question, answers }));
         }
     }
+
     // For Answers
     handleAnswerTextChange = (idx) => (evt) => {
         const newAnswers = this.state.answers.map((answer, sidx) => {
@@ -55,12 +67,28 @@ class Form extends Component {
 
         this.setState({ answers: newAnswers });
     }
+
+    // For Options
+    handleOptionChange(e){
+        console.log(e.target);
+        let option = {...this.state.option};
+        option[e.target.value] = !option[e.target.value];
+        this.setState({option});
+  /*      const newAnswers = this.state.answers.map((answer, sidx) => {
+            if (idx !== sidx) return answer;
+            return { ...answer, text: evt.target.value };
+        });
+
+        this.setState({ answers: newAnswers }); */
+    }
+
     // For Question
     handleChangeField(key, event) {
         this.setState({
             [key]: event.target.value,
         });
     }
+
     handleAddAnswer = () => {
         this.setState({
             answers: this.state.answers.concat([{ text: '', value: 0 }])
@@ -72,6 +100,7 @@ class Form extends Component {
             answers: this.state.answers.filter((s, sidx) => idx !== sidx)
         });
     }
+
     render() {
         const { question } = this.state;
         return (
@@ -94,6 +123,10 @@ class Form extends Component {
                     </div>
                 ))}
                 <button type="button" onClick={this.handleAddAnswer} className="small">Add Answer</button>
+                <label><input type="checkbox" checked={this.state.option.MultipleAnswers} onChange={this.handleOptionChange} name="option" value="MultipleAnswers" /> Multiple Answers </label>
+                <label><input type="checkbox" checked={this.state.option.UserAnswers} onChange={this.handleOptionChange} name="option" value="UserAnswers" /> UserAnswers </label>
+                <label><input type="checkbox" checked={this.state.option.Rescind} onChange={this.handleOptionChange} name="option" value="Rescind" /> Rescind </label>
+                <label><input type="checkbox" checked={this.state.option.SeeResults} onChange={this.handleOptionChange} name="option" value="SeeResults" /> SeeResults </label>
                 <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
             </div>
         )

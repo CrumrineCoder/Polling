@@ -110,7 +110,6 @@ class Poll extends Component {
 				<input type="checkbox" onChange={this.handleMultipleOptionChange} submitted="toSubmit" name="answer" value={this.state.userAnswer} id="Other" ></input>
 				<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" />
 				{button}
-
 			</div>
 		)
 	}
