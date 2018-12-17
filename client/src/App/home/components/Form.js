@@ -12,7 +12,7 @@ class Form extends Component {
                  { text: '', value: 0 }, 
                  { text: '', value: 0 }
             ],
-            option: {
+            options: {
 				MultipleAnswers: false,
 				UserAnswers: false, 
 				Rescind: false, 
@@ -31,7 +31,7 @@ class Form extends Component {
     }
 
     handleSubmit() {
-        var { question, answers } = this.state;
+        var { question, answers, options } = this.state;
         const { dispatch } = this.props;
 
 
@@ -54,7 +54,7 @@ class Form extends Component {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
         } else {
             this.setState({ submitted: true });
-            dispatch(pollActions.createPoll({ question, answers }));
+            dispatch(pollActions.createPoll({ question, answers, options }));
         }
     }
 
@@ -70,16 +70,9 @@ class Form extends Component {
 
     // For Options
     handleOptionChange(e){
-        console.log(e.target);
-        let option = {...this.state.option};
-        option[e.target.value] = !option[e.target.value];
-        this.setState({option});
-  /*      const newAnswers = this.state.answers.map((answer, sidx) => {
-            if (idx !== sidx) return answer;
-            return { ...answer, text: evt.target.value };
-        });
-
-        this.setState({ answers: newAnswers }); */
+        let options = {...this.state.options};
+        options[e.target.value] = !options[e.target.value];
+        this.setState({options});
     }
 
     // For Question
@@ -123,10 +116,10 @@ class Form extends Component {
                     </div>
                 ))}
                 <button type="button" onClick={this.handleAddAnswer} className="small">Add Answer</button>
-                <label><input type="checkbox" checked={this.state.option.MultipleAnswers} onChange={this.handleOptionChange} name="option" value="MultipleAnswers" /> Multiple Answers </label>
-                <label><input type="checkbox" checked={this.state.option.UserAnswers} onChange={this.handleOptionChange} name="option" value="UserAnswers" /> UserAnswers </label>
-                <label><input type="checkbox" checked={this.state.option.Rescind} onChange={this.handleOptionChange} name="option" value="Rescind" /> Rescind </label>
-                <label><input type="checkbox" checked={this.state.option.SeeResults} onChange={this.handleOptionChange} name="option" value="SeeResults" /> SeeResults </label>
+                <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Multiple Answers </label>
+                <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> UserAnswers </label>
+                <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Rescind </label>
+                <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> SeeResults </label>
                 <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
             </div>
         )
