@@ -74,9 +74,11 @@ router.post("/voteMultiple", (req, res, next) => {
         "Users": [req.body.user]
         //{"id": req.body.user}
       }
+      console.log("USER VOTE");
+      console.log(userVote);
       Polls.update(
         { _id: req.body._parentID },
-        { $push: { userAnswers: userVote } }, function (err, docs) { if (err) { console.log("ER ER ER", err); }; report.push(docs); });
+        { $push: { userAnswers: userVote }, $inc: { "value": 1 } }, function (err, docs) { if (err) { console.log("ER ER ER", err); }; report.push(docs); });
       //   Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.users": req.body.user }  }, function(err, docs){ report.push(docs)});
     } else {
       if (req.body.selected[i].submitted === "answer") {

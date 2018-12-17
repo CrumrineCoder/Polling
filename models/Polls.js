@@ -14,7 +14,7 @@ const PollSchema = new Schema({
     Captcha: Boolean
   },
   answers: [{text: String, value: Number, Users: [String]}], 
-  userAnswers: [{text: String, value: Number, Users: [{id: String}]}]
+  userAnswers: [{text: String, value: Number, Users: [String]}]
 }, { timestamps: true, minimize: false });
 
 PollSchema.index({"question": 1});
