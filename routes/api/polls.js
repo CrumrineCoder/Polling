@@ -103,7 +103,7 @@ router.post("/rescind", (req, res, next) => {
         report.push(docs)
       });
   //    Polls.find({_id: ObjectId(req.body._parentID)}, function(err, docs){console.log("FIND ERR", err);console.log("FIND DOC", docs)});
-  Polls.deleteMany({"userAnswers.value": 0 }, function(err, docs){console.log("FIND ERR", err);console.log("FIND DOC", docs)});
+  Polls.updateMany({"userAnswers.value": 0 }, { $pull: {  "userAnswers.value": { $elemMatch: {value: 0, value: 1} } } }, function(err, docs){console.log("FIND ERR", err);console.log("FIND DOC", docs)});
     Polls.updateMany(
       { _id: ObjectId(req.body._parentID), "userAnswers.Users": req.body.user, "userAnswers.$.value": 1 },
       { $inc: { "userAnswers.$.value": -1, "value": -1 } },
