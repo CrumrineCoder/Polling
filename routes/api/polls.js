@@ -42,7 +42,7 @@ router.post("/voteAnswer", (req, res, next) => {
 })
 
 router.post("/voteUserAnswer", (req, res, next) => {
-  Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body._id) }, { $push: { "userAnswers.$.Users": req.body.user}, $inc: { "userAnswers.$.value": 1, "value": 1 } }, function (err, docs) { res.json(docs) });
+  Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body._id) }, { $push: { "userAnswers.$.Users": req.body.user }, $inc: { "userAnswers.$.value": 1, "value": 1 } }, function (err, docs) { res.json(docs) });
 })
 
 router.post("/userVote", (req, res, next) => {
@@ -84,7 +84,6 @@ router.post("/voteMultiple", (req, res, next) => {
   }
   return res.json(report);
 });
-mongoose.set('debug', true);
 
 router.post("/rescind", (req, res, next) => {
   var report = [];
@@ -103,7 +102,17 @@ router.post("/rescind", (req, res, next) => {
       function (err, docs) {
         report.push(docs)
       });
+      Polls.find({_id: ObjectId(req.body._parentID)}, function(err, docs){console.log("FIND ERR", err);console.log("FIND DOC", docs)});
+    Polls.updateMany(
+      { _id: ObjectId(req.body._parentID), "userAnswers.Users": req.body.user, "userAnswers.$.value": 1 },
+      { $inc: { "userAnswers.$.value": -1, "value": -1 } },
+      function (err, docs) {
+        if (err) { console.log("ER ER ER", err); }; report.push(docs);
+      });
   }
+  console.log("Try to delete");
+  // { $pull: {  "userAnswers.$.value": { $elemMatch: {value: 0, value: 1} } } },
+
   return res.json(report);
 })
 
