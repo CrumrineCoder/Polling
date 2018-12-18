@@ -15,6 +15,11 @@ class Polls extends Component {
 		dispatch: PropTypes.func.isRequired
 	}
 
+	constructor(props) {
+		super(props);
+		this.handleBackClick = this.handleBackClick.bind(this);
+	}
+
 	componentDidMount() {
 		this.props.dispatch(pollActions.selectPoll(this.props.id));
 		this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
@@ -27,10 +32,16 @@ class Polls extends Component {
 		}
 	}
 
+	handleBackClick(e) {
+		e.preventDefault();
+		history.push("");
+		history.push(this.props.id + "/results");
+	}
 
 	render() {
 		let { votes } = this.props;
 		let pageContent = '';
+		let Back; 
 		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
@@ -55,6 +66,10 @@ class Polls extends Component {
 					history.push(votes._id + "/results");
 
 				}
+			} 
+			console.log(this.props)
+			if(this.props.votes.options.SeeResults){
+				Back = (<button onClick={this.handleBackClick}{...this.props}>Back</button>);
 			}
 			pageContent = (
 				<ul className="polls">
@@ -64,6 +79,7 @@ class Polls extends Component {
 		}
 		return (
 			<div className="poll">
+				{Back}
 				{pageContent}
 			</div>
 		);

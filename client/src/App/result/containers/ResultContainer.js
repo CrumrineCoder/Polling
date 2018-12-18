@@ -19,6 +19,7 @@ class Results extends Component {
 	constructor(props) {
 		super(props);
 		this.handleRescindClick = this.handleRescindClick.bind(this);
+		this.handleBackClick = this.handleBackClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -31,6 +32,11 @@ class Results extends Component {
 			this.props.dispatch(pollActions.selectPoll(this.props.id));
 			this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
 		}
+	}	
+	handleBackClick(e) {
+		e.preventDefault();
+		history.push("");
+		history.push(this.props.id + "/vote");
 	}
 
 	handleRescindClick(e) {
@@ -77,7 +83,7 @@ class Results extends Component {
 					history.push(polls.id + "/vote");
 				}
 			} else{
-				Back = (<button onClick={this.handleClick}>Back</button>);
+				Back = (<button onClick={this.handleBackClick}{...this.props}>Back</button>);
 			}
 			pageContent = (
 				<ul className="polls">
