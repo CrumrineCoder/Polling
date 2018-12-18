@@ -20,7 +20,6 @@ function createPoll(poll) {
 }
 
 function votePollAnswer(poll) {
-    console.log(poll);
      const requestOptions = {
          method: 'POST',
          headers: { 'Content-Type': 'application/json' },
@@ -30,7 +29,6 @@ function votePollAnswer(poll) {
  }
 
  function votePollUserAnswer(poll) {
-    console.log(poll);
      const requestOptions = {
          method: 'POST',
          headers: { 'Content-Type': 'application/json' },

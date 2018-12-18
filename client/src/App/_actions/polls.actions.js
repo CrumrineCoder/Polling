@@ -36,13 +36,11 @@ function createPoll(poll) {
 }
 
 function votePollAnswer(poll) {
-    console.log(poll);
     return dispatch => {
         dispatch(request(poll));
         pollService.votePollAnswer(poll)
             .then(
                 poll => {
-                    console.log(poll);
                     dispatch(success());
                     history.push("");
                     history.push(poll._id + "/results/");
@@ -61,13 +59,11 @@ function votePollAnswer(poll) {
 
 
 function votePollUserAnswer(poll) {
-    console.log(poll);
     return dispatch => {
         dispatch(request(poll));
         pollService.votePollUserAnswer(poll)
             .then(
                 poll => {
-                    console.log(poll);
                     dispatch(success());
                     history.push("");
                     history.push(poll._id + "/results/");
@@ -85,7 +81,6 @@ function votePollUserAnswer(poll) {
 }
 
 function votePollCreateUserAnswer(poll) {
-    console.log(poll);
     return dispatch => {
         var id = poll._parentID;
         dispatch(request(poll));

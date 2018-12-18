@@ -42,19 +42,14 @@ class Poll extends Component {
 
 	handleSubmit() {
 		var { selected, _parentID, _id, userAnswer, submissionType } = this.state;
-		console.log(selected); 
-		console.log("WILBUR", this.props); 
 		const { dispatch } = this.props;
 		let user = JSON.parse(localStorage.getItem('user'));
 		user = user.id;
 		if (submissionType == "toSubmit") {
-			console.log("submission Type", submissionType);
 			dispatch(pollActions.votePollCreateUserAnswer({ userAnswer, _parentID, user, submissionType }));
 		} else if(submissionType == "userAnswer") {
-			console.log("submission Type", submissionType);
 			dispatch(pollActions.votePollUserAnswer({ _id, selected, user, submissionType }));
 		} else if(submissionType == "answer"){
-			console.log("submission Type", submissionType);
 			dispatch(pollActions.votePollAnswer({ _id, selected, user, submissionType }));
 		}
 	}
@@ -70,7 +65,6 @@ class Poll extends Component {
 	}
 
 	handleOptionChange(evt) {
-		console.log(evt.target.getAttribute("submissionType"));
 		this.setState({ selected: evt.target.value, _id: evt.target.id, submissionType: evt.target.getAttribute("submissionType") });
 	}
 
@@ -102,8 +96,6 @@ class Poll extends Component {
 
 	render() {
 		const { isLoggedIn } = this.state;
-		console.log("POLL RENDER PROPS", this.props);
-		console.log(this.state.choiceType); 
 		let button;
 		let userAnswers = [];
 		if (isLoggedIn) {
@@ -115,7 +107,6 @@ class Poll extends Component {
 			userAnswers.push (
 				<h4>User Answers </h4>
 			)
-			console.log(this.props.userAnswers); 
 			{
 				this.props.userAnswers.map(function (answer) {
 					userAnswers.push (
@@ -128,7 +119,7 @@ class Poll extends Component {
 			}
 			userAnswers.push(
 				<div>
-					<input type={this.state.choiceType} onChange={this.handleMultipleOptionChange} submitted="toSubmit" name="answer"  submissionType="toSubmit" value={this.state.userAnswer} id="Other" ></input>
+					<input type={this.state.choiceType} onChange={this.state.optionChangeType}  submitted="toSubmit" name="answer"  submissionType="toSubmit" value={this.state.userAnswer} id="Other" ></input>
 					<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" />
 				</div>
 			)
