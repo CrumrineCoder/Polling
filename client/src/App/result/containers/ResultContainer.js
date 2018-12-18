@@ -48,6 +48,7 @@ class Results extends Component {
 	render() {
 		let polls = this.props;
 		let pageContent = '';
+		let button; 
 		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
@@ -55,6 +56,9 @@ class Results extends Component {
       		    </div>
 			)
 		} else {
+			if(this.props.votes.options.Rescind){
+				button = (<button onClick={this.handleClick}>Rescind</button>);
+			}
 			let id = [];
 			for (var i = 0; i < this.props.votes.answers.length; i++) {
 				for (var j = 0; j < this.props.votes.answers[i].Users.length; j++) {
@@ -80,7 +84,7 @@ class Results extends Component {
 
 		return (
 			<div className="poll">
-				<button onClick={this.handleClick}>Rescind</button>
+				{button}
 				{pageContent}
 			</div>
 		);
