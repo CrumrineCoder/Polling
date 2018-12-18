@@ -18,7 +18,7 @@ class Results extends Component {
 
 	constructor(props) {
 		super(props);
-		this.handleClick = this.handleClick.bind(this);
+		this.handleRescindClick = this.handleRescindClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -33,7 +33,7 @@ class Results extends Component {
 		}
 	}
 
-	handleClick(e) {
+	handleRescindClick(e) {
 		e.preventDefault();
 		let user = JSON.parse(localStorage.getItem('user'));
 		let answersLength = this.props.votes.answers.length;
@@ -48,7 +48,8 @@ class Results extends Component {
 	render() {
 		let polls = this.props;
 		let pageContent = '';
-		let button; 
+		let Rescind; 
+		let Back; 
 		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
@@ -57,7 +58,7 @@ class Results extends Component {
 			)
 		} else {
 			if(this.props.votes.options.Rescind){
-				button = (<button onClick={this.handleClick}>Rescind</button>);
+				Rescind = (<button onClick={this.handleRescindClick}>Rescind</button>);
 			}
 			let id = [];
 			for (var i = 0; i < this.props.votes.answers.length; i++) {
@@ -70,10 +71,13 @@ class Results extends Component {
 					id.push(this.props.votes.userAnswers[k].Users[l]);
 				}
 			}
-			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
-				history.push("");
-				history.push(polls.id + "/vote");
-			
+			if(!this.props.votes.options.SeeResults){
+				if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
+					history.push("");
+					history.push(polls.id + "/vote");
+				}
+			} else{
+				Back = (<button onClick={this.handleClick}>Back</button>);
 			}
 			pageContent = (
 				<ul className="polls">
@@ -84,7 +88,8 @@ class Results extends Component {
 
 		return (
 			<div className="poll">
-				{button}
+				{Back}
+				{Rescind}
 				{pageContent}
 			</div>
 		);
