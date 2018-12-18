@@ -49,11 +49,12 @@ class Polls extends Component {
 					id.push(this.props.votes.userAnswers[k].Users[l]);
 				}
 			}
+			if (localStorage.getItem('user')) {
+				if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) !== -1) {
+					history.push("");
+					history.push(votes._id + "/results");
 
-			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) !== -1) {
-				history.push("");
-				history.push(votes._id + "/results");
-			
+				}
 			}
 			pageContent = (
 				<ul className="polls">
