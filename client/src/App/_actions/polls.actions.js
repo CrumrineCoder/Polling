@@ -5,8 +5,9 @@ import { history } from '../store.js';
 
 export const pollActions = {
     createPoll,
-    votePoll,
+    votePollAnswer,
     votePollUserAnswer,
+    votePollCreateUserAnswer,
     votePollMultiple,
     fetchVotesIfNeeded,
     selectPoll,
@@ -34,12 +35,14 @@ function createPoll(poll) {
     function failure(error) { return { type: pollConstants.POLL_REGISTER_FAILURE, error } }
 }
 
-function votePoll(poll) {
+function votePollAnswer(poll) {
+    console.log(poll);
     return dispatch => {
         dispatch(request(poll));
-        pollService.votePoll(poll)
+        pollService.votePollAnswer(poll)
             .then(
                 poll => {
+                    console.log(poll);
                     dispatch(success());
                     history.push("");
                     history.push(poll._id + "/results/");
@@ -51,17 +54,42 @@ function votePoll(poll) {
                 }
             )
     }
-    function request(poll) { return { type: pollConstants.POLL_VOTE_REQUEST, poll } }
-    function success(poll) { return { type: pollConstants.POLL_VOTE_SUCCESS, poll } }
-    function failure(error) { return { type: pollConstants.POLL_VOTE_FAILURE, error } }
+    function request(poll) { return { type: pollConstants.POLL_VOTE_ANSWER_REQUEST, poll } }
+    function success(poll) { return { type: pollConstants.POLL_VOTE_ANSWER_SUCCESS, poll } }
+    function failure(error) { return { type: pollConstants.POLL_VOTE_ANSWER_FAILURE, error } }
 }
+
 
 function votePollUserAnswer(poll) {
     console.log(poll);
     return dispatch => {
-        var id = poll._parentID;
         dispatch(request(poll));
         pollService.votePollUserAnswer(poll)
+            .then(
+                poll => {
+                    console.log(poll);
+                    dispatch(success());
+                    history.push("");
+                    history.push(poll._id + "/results/");
+                    dispatch(alertActions.success('Vote Poll Successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            )
+    }
+    function request(poll) { return { type: pollConstants.POLL_VOTE_USERANSWER_REQUEST, poll } }
+    function success(poll) { return { type: pollConstants.POLL_VOTE_USERANSWER_SUCCESS, poll } }
+    function failure(error) { return { type: pollConstants.POLL_VOTE_USERANSWER_FAILURE, error } }
+}
+
+function votePollCreateUserAnswer(poll) {
+    console.log(poll);
+    return dispatch => {
+        var id = poll._parentID;
+        dispatch(request(poll));
+        pollService.votePollCreateUserAnswer(poll)
             .then(
                 poll => {
                     dispatch(success());
@@ -75,9 +103,9 @@ function votePollUserAnswer(poll) {
                 }
             )
     }
-    function request(poll) { return { type: pollConstants.POLL_USER_VOTE_REQUEST, poll } }
-    function success(poll) { return { type: pollConstants.POLL_USER_VOTE_SUCCESS, poll } }
-    function failure(error) { return { type: pollConstants.POLL_USER_VOTE_FAILURE, error } }
+    function request(poll) { return { type: pollConstants.POLL_VOTE_CREATEUSERANSWER_REQUEST, poll } }
+    function success(poll) { return { type: pollConstants.POLL_VOTE_CREATEUSERANSWER_SUCCESS, poll } }
+    function failure(error) { return { type: pollConstants.POLL_VOTE_CREATEUSERANSWER_FAILURE, error } }
 }
 
 function votePollMultiple(poll) {

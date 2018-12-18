@@ -37,8 +37,14 @@ router.get('/get/:id', (req, res, next) => {
   return Polls.findOne({ _id: req.params.id }, function (err, docs) { res.json(docs) });
 });
 
-router.post("/vote", (req, res, next) => {
+router.post("/voteAnswer", (req, res, next) => {
+  console.log("Vote Body", req.body);
   Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id) }, { $push: { "answers.$.Users": req.body.user }, $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) { res.json(docs) });
+})
+
+router.post("/voteUserAnswer", (req, res, next) => {
+  console.log("Vote Body", req.body);
+  Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body._id) }, { $push: { "userAnswers.$.Users": req.body.user}, $inc: { "userAnswers.$.value": 1, "value": 1 } }, function (err, docs) { res.json(docs) });
 })
 
 router.post("/userVote", (req, res, next) => {
@@ -57,6 +63,7 @@ router.post("/userVote", (req, res, next) => {
 });
 
 router.post("/voteMultiple", (req, res, next) => {
+  console.log("VOTE", req.body); 
   var report = [];
   //const user = {userID: req.body.user._id, email: req.body.user.email, token: req.body.user.token};
   for (var i = 0; i < req.body.selected.length; i++) {

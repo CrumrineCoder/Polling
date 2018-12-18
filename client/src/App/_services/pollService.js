@@ -2,8 +2,9 @@ import mongoose from 'mongoose';
 
 export const pollService = {
     createPoll, 
-    votePoll,
+    votePollAnswer,
     votePollUserAnswer,
+    votePollCreateUserAnswer,
     votePollMultiple,
     get,
     rescind
@@ -18,17 +19,27 @@ function createPoll(poll) {
     return fetch(`/api/polls/createPoll`, requestOptions).then(handleResponse);
 }
 
-function votePoll(poll) {
+function votePollAnswer(poll) {
     console.log(poll);
      const requestOptions = {
          method: 'POST',
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(poll)
      };
-     return fetch(`/api/polls/vote`, requestOptions).then(handleResponse);
+     return fetch(`/api/polls/voteAnswer`, requestOptions).then(handleResponse);
  }
 
-function votePollUserAnswer(poll) {
+ function votePollUserAnswer(poll) {
+    console.log(poll);
+     const requestOptions = {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify(poll)
+     };
+     return fetch(`/api/polls/voteUserAnswer`, requestOptions).then(handleResponse);
+ }
+
+function votePollCreateUserAnswer(poll) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
