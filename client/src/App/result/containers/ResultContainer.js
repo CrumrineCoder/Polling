@@ -77,14 +77,15 @@ class Results extends Component {
 					id.push(this.props.votes.userAnswers[k].Users[l]);
 				}
 			}
-			if(!this.props.votes.options.SeeResults){
-				if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
+			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
+				if(!this.props.votes.options.SeeResults){
 					history.push("");
 					history.push(polls.id + "/vote");
+				} else{
+					Back = (<button onClick={this.handleBackClick}{...this.props}>Back</button>);
 				}
-			} else{
-				Back = (<button onClick={this.handleBackClick}{...this.props}>Back</button>);
 			}
+
 			pageContent = (
 				<ul className="polls">
 					<Result {...polls} />
