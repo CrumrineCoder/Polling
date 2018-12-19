@@ -11,16 +11,26 @@ class LoginForm extends Component {
         this.props.dispatch(userActions.logout());
         
         this.state = {
-            email: '', password: ''
+            email: '', password: '', from: ''
         };
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount(){
+        let { from } = this.props.location.state || { from: { pathname: '' } }
+        if(from.pathname=="/login" || from.pathname =="/"){
+            from = { from: { pathname: '' }}
+        }
+        this.setState({from: from})
+    }
+
+
     handleSubmit() {
-        var { email, password } = this.state;
+        var { email, password, from} = this.state;
         const { dispatch } = this.props;
-        dispatch(userActions.login({ email, password }));
+       
+        dispatch(userActions.login({ email, password, from }));
     }
     // For Question
     handleChangeField(key, event) {
@@ -30,8 +40,6 @@ class LoginForm extends Component {
     }
 
     render() {
-        //    <button onClick={this.handleSearchChange}>Search</button>
-        //value={this.state.inputValue}
         const { email, password } = this.state;
         return (
             <div className="form">

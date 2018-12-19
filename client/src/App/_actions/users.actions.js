@@ -16,13 +16,15 @@ export const userActions = {
 };
 
 function login(user) {
+    let from = user.from.pathname; 
     return dispatch => {
         dispatch(request(user));
         userService.login(user)
             .then(
                 user => {
+                    console.log(user); 
                     dispatch(success(user));
-                    history.push('/success');
+                    history.push(from);
                 },
                 error => {
                     dispatch(failure(error.toString()));
