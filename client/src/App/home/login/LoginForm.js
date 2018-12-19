@@ -9,7 +9,7 @@ class LoginForm extends Component {
         super(props);
 
         this.props.dispatch(userActions.logout());
-        
+
         this.state = {
             email: '', password: '', from: ''
         };
@@ -17,19 +17,19 @@ class LoginForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         let { from } = this.props.location.state || { from: { pathname: '' } }
-        if(from.pathname=="/login" || from.pathname =="/"){
-            from = { from: { pathname: '' }}
+        if (from.pathname === "/login" || from.pathname === "/") {
+            from = { from: { pathname: '' } }
         }
-        this.setState({from: from})
+        this.setState({ from: from })
     }
 
 
     handleSubmit() {
-        var { email, password, from} = this.state;
+        var { email, password, from } = this.state;
         const { dispatch } = this.props;
-       
+
         dispatch(userActions.login({ email, password, from }));
     }
     // For Question

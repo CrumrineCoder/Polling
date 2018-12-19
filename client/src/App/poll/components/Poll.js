@@ -45,11 +45,11 @@ class Poll extends Component {
 		const { dispatch } = this.props;
 		let user = JSON.parse(localStorage.getItem('user'));
 		user = user.id;
-		if (submissionType == "toSubmit") {
+		if (submissionType === "toSubmit") {
 			dispatch(pollActions.votePollCreateUserAnswer({ userAnswer, _parentID, user, submissionType }));
-		} else if(submissionType == "userAnswer") {
+		} else if (submissionType === "userAnswer") {
 			dispatch(pollActions.votePollUserAnswer({ _id, selected, user, submissionType }));
-		} else if(submissionType == "answer"){
+		} else if (submissionType === "answer") {
 			dispatch(pollActions.votePollAnswer({ _id, selected, user, submissionType }));
 		}
 	}
@@ -104,22 +104,27 @@ class Poll extends Component {
 			button = <button > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</button>;
 		}
 		if (this.props.options.UserAnswers) {
-			userAnswers.push (
+			userAnswers.push(
 				<h4>User Answers </h4>
 			)
-			{
-				this.props.userAnswers.map(function (answer) {
-					userAnswers.push (
-						<div key={answer._id}>
-							<input type={this.state.choiceType} name="answer" submitted="userAnswer" submissionType="userAnswer" onChange={this.state.optionChangeType} value={answer.text} id={answer._id} />
-							<label>{answer.text}</label>
-						</div>
-					)
-				}, this);
+
+			for (var answer in this.props.userAnswers) {
+				userAnswers.push(
+					<div key={answer._id}>
+						<input type={this.state.choiceType} name="answer" submitted="userAnswer" submissionType="userAnswer" onChange={this.state.optionChangeType} value={answer.text} id={answer._id} />
+						<label>{answer.text}</label>
+					</div>
+				)
 			}
+
+			this.props.userAnswers.map(function (answer) {
+
+				return null;
+			}, this);
+
 			userAnswers.push(
 				<div>
-					<input type={this.state.choiceType} onChange={this.state.optionChangeType}  submitted="toSubmit" name="answer"  submissionType="toSubmit" value={this.state.userAnswer} id="Other" ></input>
+					<input type={this.state.choiceType} onChange={this.state.optionChangeType} submitted="toSubmit" name="answer" submissionType="toSubmit" value={this.state.userAnswer} id="Other" ></input>
 					<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" />
 				</div>
 			)
