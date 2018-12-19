@@ -19,7 +19,7 @@ class Header extends Component {
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false
-	//		isLoggedIn: typeof localStorage["user"] !== 'undefined'
+			//		isLoggedIn: typeof localStorage["user"] !== 'undefined'
 		};
 	}
 
@@ -33,9 +33,25 @@ class Header extends Component {
 		const { isLoggedIn } = this.props
 		let userLinks;
 		if (isLoggedIn) {
-			userLinks = <NavItem> <NavLink href="#/login">Logout</NavLink>		</NavItem>
+			userLinks = 
+			<div>
+				<NavItem> 
+					<NavLink href="#/profile">Profile</NavLink>
+				</NavItem>	
+				<NavItem>
+					<NavLink href="#/login">Logout</NavLink>	
+				</NavItem>
+			</div>
 		} else {
-			userLinks = <div><NavItem> <NavLink href="#/login">Login</NavLink>		</NavItem>	<NavItem>		<NavLink href="#/register">Register</NavLink>	</NavItem></div>
+			userLinks = 
+			<div>
+				<NavItem> 
+					<NavLink href="#/login">Login</NavLink>		
+				</NavItem>
+				<NavItem>	
+					<NavLink href="#/register">Register</NavLink>	
+				</NavItem>
+			</div>
 		}
 		return (
 			<header>
@@ -47,9 +63,6 @@ class Header extends Component {
 							<Nav className="ml-auto" navbar>
 								<NavItem>
 									<NavLink href="#/">Home</NavLink>
-								</NavItem>
-								<NavItem>
-									<NavLink href="#/about">About</NavLink>
 								</NavItem>
 								{userLinks}
 							</Nav>
@@ -66,8 +79,8 @@ Header.propTypes = {
 }
 
 function mapStateToProps(state) {
-	const isLoggedIn = state.home.authenticate.loggedIn; 
-	return {isLoggedIn};
+	const isLoggedIn = state.home.authenticate.loggedIn;
+	return { isLoggedIn };
 }
 
 export default connect(mapStateToProps)(Header);
