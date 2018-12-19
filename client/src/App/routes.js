@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 
 // Import modules/routes
 import Home from "./home";
-import About from "./about";
 //import Login from "./login";
 import PollShow from "./poll";
 import Result from "./result";
@@ -80,7 +79,6 @@ PrivateRoute = withRouter(connect(mapStateToProps)(PrivateRoute));
 export default (
   <Switch>
     <Route exact path="/" component={Home} />
-    <Route path="/about" component={About} />
     <Route path="/register" component={Register} />
     <Route path="/login" component={Login} />
     <Route path="/:id/vote/" component={PollShow} />
