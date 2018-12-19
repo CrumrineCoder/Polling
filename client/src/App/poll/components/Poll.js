@@ -117,11 +117,6 @@ class Poll extends Component {
 				)
 			}
 
-			this.props.userAnswers.map(function (answer) {
-
-				return null;
-			}, this);
-
 			userAnswers.push(
 				<div>
 					<input type={this.state.choiceType} onChange={this.state.optionChangeType} submitted="toSubmit" name="answer" submissionType="toSubmit" value={this.state.userAnswer} id="Other" ></input>

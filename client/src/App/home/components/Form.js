@@ -8,22 +8,24 @@ class Form extends Component {
         super(props);
         this.state = {
             question: '',
-             answers: [
-                 { text: '', value: 0 }, 
-                 { text: '', value: 0 }
+            answers: [
+                { text: '', value: 0 },
+                { text: '', value: 0 }
             ],
             options: {
-				MultipleAnswers: false,
-				UserAnswers: false, 
-				Rescind: false, 
-				SeeResults: false
-			},
+                MultipleAnswers: false,
+                UserAnswers: false,
+                Rescind: false,
+                SeeResults: false
+            },
+            linked: false,
             submitted: false
         };
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.goToResults = this.goToResults.bind(this);
         this.handleOptionChange = this.handleOptionChange.bind(this);
+        this.handleLinkedClick = this.handleLinkedClick.bind(this);
     }
 
     goToResults(id) {
@@ -31,8 +33,9 @@ class Form extends Component {
     }
 
     handleSubmit() {
-        var { question, answers, options } = this.state;
+        var { question, answers, options, linked } = this.state;
         const { dispatch } = this.props;
+        let creator;
 
 
         // Remove empty answers
@@ -54,7 +57,12 @@ class Form extends Component {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
         } else {
             this.setState({ submitted: true });
-            dispatch(pollActions.createPoll({ question, answers, options }));
+            if (linked) {
+                creator = JSON.parse(localStorage.getItem('user')).id;
+            } else {
+                creator = undefined;
+            }
+            dispatch(pollActions.createPoll({ question, answers, options, creator }));
         }
     }
 
@@ -68,11 +76,15 @@ class Form extends Component {
         this.setState({ answers: newAnswers });
     }
 
+    handleLinkedClick() {
+        this.setState({ linked: !this.state.linked });
+    }
+
     // For Options
-    handleOptionChange(e){
-        let options = {...this.state.options};
+    handleOptionChange(e) {
+        let options = { ...this.state.options };
         options[e.target.value] = !options[e.target.value];
-        this.setState({options});
+        this.setState({ options });
     }
 
     // For Question
@@ -96,6 +108,18 @@ class Form extends Component {
 
     render() {
         const { question } = this.state;
+        let linkPoll;
+        if( JSON.parse(localStorage.getItem('user')) === null){
+            linkPoll = (
+                <p>
+                    If you log in, you'll be able to link this poll to your account.
+                </p>
+            )
+        } else{
+            linkPoll = (
+                <label><input type="checkbox" checked={this.state.linked} onChange={this.handleLinkedClick} name="user" value="LinkPoll" /> Link Poll to my user account </label>
+            )
+        }
         return (
             <div className="form">
                 <input
@@ -116,10 +140,12 @@ class Form extends Component {
                     </div>
                 ))}
                 <button type="button" onClick={this.handleAddAnswer} className="small">Add Answer</button>
+                {linkPoll}
                 <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Multiple Answers </label>
                 <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> UserAnswers </label>
                 <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Rescind </label>
                 <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> SeeResults </label>
+
                 <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
             </div>
         )

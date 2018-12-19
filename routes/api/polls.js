@@ -5,6 +5,7 @@ var ObjectId = require('mongodb').ObjectID;
 
 router.post('/createPoll', (req, res, next) => {
   const { body } = req;
+  console.log('LOG THE BODY', body);
   const finalPoll = new Polls(body);
   return finalPoll.save()
     .then(() => res.json({ poll: finalPoll.toJSON() }))

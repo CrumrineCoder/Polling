@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import PollMini from '../components/PollMini';
+import PollLink from '../components/PollLink';
 import Tags from '../components/Tag';
 import Search from '../components/Search';
 import Form from '../components/Form';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { withRouter } from 'react-router-dom';
 
-class Polls extends Component {
+class Home extends Component {
 
 	constructor(props) {
 		super(props);
@@ -78,7 +78,7 @@ class Polls extends Component {
 		} else {
 			pageContent = (
 				<ul className="polls">
-					{polls.map((poll, i) => <PollMini update={this.update} key={i} {...poll} />)}
+					{polls.map((poll, i) => <PollLink update={this.update} key={i} {...poll} />)}
 				</ul>
 			)
 		}
@@ -95,7 +95,7 @@ class Polls extends Component {
 	}
 }
 
-Polls.propTypes = {
+Home.propTypes = {
 	selectedPoll: PropTypes.string.isRequired,
 	polls: PropTypes.array.isRequired,
 	isFetching: PropTypes.bool.isRequired,
@@ -117,6 +117,7 @@ function mapStateToProps(state) {
 		isFetching,
 		lastUpdated
 	}
+
 }
 
-export default withRouter(connect(mapStateToProps)(Polls));
+export default withRouter(connect(mapStateToProps)(Home));

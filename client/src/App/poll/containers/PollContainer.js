@@ -67,7 +67,6 @@ class Polls extends Component {
 
 				}
 			} 
-			console.log(this.props)
 			if(this.props.votes.options.SeeResults){
 				Back = (<button onClick={this.handleBackClick}{...this.props}>Back</button>);
 			}
