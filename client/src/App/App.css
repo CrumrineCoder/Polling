@@ -5,6 +5,10 @@ body {
   background: #EBEBEB !important;
 }
 
+body, html, #root, .App, .wrap, #pollIndex, .container, .poll, .polls{
+  height: 100%; 
+}
+
 footer {
 	position: fixed;
 	bottom: 0;
@@ -20,7 +24,7 @@ header{
 }
 
 .navbar{
-  padding: 0px 10px;
+  padding: 0px 10px !important;
 }
 
 #footerCredit{
@@ -92,6 +96,25 @@ header{
 .continueReading:hover{
   color: #720000; 
   cursor: pointer; 
+}
+
+.pollInput{
+  width: 20px;
+  height: 20px;
+}
+
+.pollInputLabel{
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.pollVotingSquare{
+  overflow: hidden;
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  margin: 20px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -186,6 +209,10 @@ li{
 
 #pollSubmitButton{
   margin-top:  5px;
+}
+
+#otherSpecify{
+  margin-left: 10px;
 }
 /*
 background-color: #6e6e6d;

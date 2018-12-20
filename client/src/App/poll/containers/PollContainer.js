@@ -41,7 +41,7 @@ class Polls extends Component {
 	render() {
 		let { votes } = this.props;
 		let pageContent = '';
-		let Back; 
+
 		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
@@ -67,9 +67,7 @@ class Polls extends Component {
 
 				}
 			} 
-			if(this.props.votes.options.SeeResults){
-				Back = (<button onClick={this.handleBackClick}{...this.props}>Back</button>);
-			}
+
 			pageContent = (
 				<ul className="polls">
 					<Poll {...votes} />
@@ -78,7 +76,6 @@ class Polls extends Component {
 		}
 		return (
 			<div className="poll">
-				{Back}
 				{pageContent}
 			</div>
 		);
