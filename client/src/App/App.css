@@ -250,6 +250,10 @@ background-color: #6e6e6d;
 Railscasts-like style (c) Visoft, Inc. (Damien White)
 */
 
+.poll .btn{
+  margin: 10px; 
+}
+
 .hljs {
   display: block;
   overflow-x: auto;
