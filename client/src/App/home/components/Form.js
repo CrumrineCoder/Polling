@@ -128,10 +128,9 @@ class Form extends Component {
                     <h4>Options</h4>
                     {linkPoll}
                     <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Allow multiple poll answers </label>
-                    <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> Allow user poll answers </label>
+                    <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> Allow users to create poll answers </label>
                     <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Allow users to rescind their vote </label>
                     <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> Allow users to see the results before voting </label>
-                    <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
                 </div>
                 <div id="leftPoll">
                     <h3>Question and Answers</h3>
@@ -141,7 +140,7 @@ class Form extends Component {
                         className="form-control my-3"
                         placeholder="Poll Question"
                     />
-                    <button type="button" onClick={this.handleAddAnswer} className="small btn btn-secondary" id="addAnswer">Add Answer</button>
+
                     {this.state.answers.map((answer, idx) => (
                         <div className="answer" key={idx}>
                             <input
@@ -154,8 +153,10 @@ class Form extends Component {
                             <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     ))}
-
+                    <button type="button" onClick={this.handleAddAnswer} className="small btn btn-secondary" id="addAnswer">Add Answer</button>
+                    <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
                 </div>
+
             </div>
         )
     }

@@ -1,15 +1,26 @@
 body {
-  font-family: sans-serif;
+  font-family: "Droid Sans",sans-serif;
+  color: #333;
+  word-wrap: break-word;
+  background: #EBEBEB !important;
 }
 
 footer {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-  background: #9f9f9fa2;
+  background: rgb(212, 212, 212);
   
   padding: 5px 0;
   height: 30px; 
+}
+
+header{
+  background: rgb(212, 212, 212);
+}
+
+.navbar{
+  padding: 0px 10px;
 }
 
 #footerCredit{
@@ -59,13 +70,6 @@ footer {
 	margin-bottom: 50px; 
 }
 
-.articleLink {
-	margin: 0 0 2em 0;
-    padding: 0 0 2em 0;
-	border-bottom: 1px solid #ddd;
-}
-
-
 .footerLink:hover{
   color: #720000; 
   cursor: pointer; 
@@ -109,17 +113,17 @@ li{
   margin: .5em 0p;
 }
 
-body {
-  font-family: "Droid Sans",sans-serif;
-  color: #333;
-  word-wrap: break-word;
-}
-
 #leftPoll{
   overflow: hidden;
     min-height: 50px;
     background: white;
     padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.pollsContainer h1{
+  margin-top: 25px;
 }
 
 #rightPoll{
@@ -129,6 +133,8 @@ body {
     margin-left: 10px;
     background: white;
     padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
 #rightPoll label{
@@ -167,6 +173,14 @@ body {
 
 #addAnswer{
   margin-bottom:10px;
+}
+
+.pollLink{
+  background: white; 
+  padding: 10px; 
+  margin: 10px auto; 
+  border-radius: 5px;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 /*
 background-color: #6e6e6d;
