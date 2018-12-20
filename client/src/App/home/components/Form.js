@@ -125,7 +125,7 @@ class Form extends Component {
             <div className="form">
                 <h1>Create Poll</h1> 
                 <div id="rightPoll">
-                    <h3>Options</h3>
+                    <h4>Options</h4>
                     {linkPoll}
                     <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Multiple Answers </label>
                     <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> UserAnswers </label>
@@ -148,8 +148,9 @@ class Form extends Component {
                                 placeholder={`Answer #${idx + 1}`}
                                 value={answer.text}
                                 onChange={this.handleAnswerTextChange(idx)}
+                                className="form-control"
                             />
-                            <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small">-</button>
+                            <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton">-</button>
                         </div>
                     ))}
                     <button type="button" onClick={this.handleAddAnswer} className="small">Add Answer</button>
