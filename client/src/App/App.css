@@ -137,6 +137,7 @@ body {
 
 .answer{
   position: relative; 
+  margin-bottom: 10px;
 }
 
 .answerDeleteButton{
@@ -147,6 +148,25 @@ body {
   height: 38px;
   width: 30px;
   cursor: pointer;
+  background: none;
+  border: 1px solid red;
+}
+
+.answerDeleteButton:hover{
+  background:  rgba(255, 0, 0, 0.258);
+}
+
+.form-control{
+  font-size: 18px;
+}
+
+.answerDeleteButton i{
+  color: red;
+  font-size: 18px;
+}
+
+#addAnswer{
+  margin-bottom:10px;
 }
 /*
 background-color: #6e6e6d;

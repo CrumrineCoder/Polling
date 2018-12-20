@@ -110,37 +110,38 @@ class Form extends Component {
     render() {
         const { question } = this.state;
         let linkPoll;
-        if( JSON.parse(localStorage.getItem('user')) === null){
+        if (JSON.parse(localStorage.getItem('user')) === null) {
             linkPoll = (
                 <div>
                     <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to link this poll with your account and edit the poll after creation.
                 </div>
             )
-        } else{
+        } else {
             linkPoll = (
                 <label><input type="checkbox" checked={this.state.linked} onChange={this.handleLinkedClick} name="user" value="LinkPoll" /> Link Poll to my user account </label>
             )
         }
         return (
             <div className="form">
-                <h1>Create Poll</h1> 
+                <h1>Create Poll</h1>
                 <div id="rightPoll">
                     <h4>Options</h4>
                     {linkPoll}
-                    <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Multiple Answers </label>
-                    <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> UserAnswers </label>
-                    <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Rescind </label>
-                    <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> SeeResults </label>
+                    <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Allow multiple poll answers </label>
+                    <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> Allow user poll answers </label>
+                    <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Allow users to rescind their vote </label>
+                    <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> Allow users to see the results before voting </label>
                     <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
                 </div>
                 <div id="leftPoll">
-                  <h3>Question and Answers</h3>
+                    <h3>Question and Answers</h3>
                     <input
                         onChange={(ev) => this.handleChangeField('question', ev)}
                         value={question}
                         className="form-control my-3"
                         placeholder="Poll Question"
                     />
+                    <button type="button" onClick={this.handleAddAnswer} className="small btn btn-secondary" id="addAnswer">Add Answer</button>
                     {this.state.answers.map((answer, idx) => (
                         <div className="answer" key={idx}>
                             <input
@@ -150,10 +151,10 @@ class Form extends Component {
                                 onChange={this.handleAnswerTextChange(idx)}
                                 className="form-control"
                             />
-                            <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton">-</button>
+                            <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     ))}
-                    <button type="button" onClick={this.handleAddAnswer} className="small">Add Answer</button>
+
                 </div>
             </div>
         )
