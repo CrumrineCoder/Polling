@@ -34,28 +34,27 @@ class Header extends Component {
 		let userLinks;
 		if (isLoggedIn) {
 			userLinks = 
-			<div>
+			<>
 				<NavItem> 
 					<NavLink href="#/profile">Profile</NavLink>
 				</NavItem>	
 				<NavItem>
 					<NavLink href="#/login">Logout</NavLink>	
 				</NavItem>
-			</div>
+			</>
 		} else {
 			userLinks = 
-			<div>
+			<>
 				<NavItem> 
 					<NavLink href="#/login">Login</NavLink>		
 				</NavItem>
 				<NavItem>	
 					<NavLink href="#/register">Register</NavLink>	
 				</NavItem>
-			</div>
+			</>
 		}
 		return (
 			<header>
-				<Container>
 					<Navbar color="faded" light expand="md">
 						<NavbarBrand href="/">Nicolas Crumrine</NavbarBrand>
 						<NavbarToggler onClick={this.toggle} />
@@ -68,7 +67,6 @@ class Header extends Component {
 							</Nav>
 						</Collapse>
 					</Navbar>
-				</Container>
 			</header>
 		)
 	}
