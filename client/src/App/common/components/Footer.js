@@ -5,6 +5,7 @@ class Footer extends Component {
 	render () {
 		return (
 	    <footer>
+				<span id="footerCredit">Made by Nicolas Crumrine</span>
 	      <div id="footer" className="text-center">
 					<a className="footerLink" href="http://crumrinecoder.com/" rel="noopener noreferrer"target="_blank" ><i className="fas fa-briefcase"></i></a>
 					<a className="footerLink" href="https://github.com/CrumrineCoder" rel="noopener noreferrer"  target="_blank" ><i className="fab fa-github"></i></a>

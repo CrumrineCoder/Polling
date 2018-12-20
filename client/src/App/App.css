@@ -12,6 +12,11 @@ footer {
   height: 30px; 
 }
 
+#footerCredit{
+  left: 10px;
+  position: absolute;
+}
+
 .footerLink{
   color: black; 
 }
