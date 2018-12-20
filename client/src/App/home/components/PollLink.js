@@ -5,7 +5,7 @@ class PollMini extends Component {
 	render() {
 		return (
 			<div className="pollLink">
-				<Link className="continueReading" to={this.props._id + "/vote/"}><h1>{this.props.question}</h1></Link>
+				<Link className="continueReading" to={this.props._id + "/vote/"}><h2>{this.props.question}</h2></Link>
 			</div >
 		)
 	}

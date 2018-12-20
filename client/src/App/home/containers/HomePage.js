@@ -87,9 +87,9 @@ class Home extends Component {
 		<Tags onChangeFilter={this.changeFilter} />
 		*/
 		return (
-			<div className="pollsContainer">
-			
+			<div className="pollsContainer">	
 				<Form></Form>
+				<h1>Polls</h1>
 				{pageContent}
 			</div>
 		);
