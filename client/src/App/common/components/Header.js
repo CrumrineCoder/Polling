@@ -8,7 +8,6 @@ import {
 	NavItem,
 	NavLink
 } from 'reactstrap';
-import { Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -56,7 +55,7 @@ class Header extends Component {
 		return (
 			<header>
 					<Navbar color="faded" light expand="md">
-						<NavbarBrand href="/">Nicolas Crumrine</NavbarBrand>
+						<NavbarBrand href="/">Polling</NavbarBrand>
 						<NavbarToggler onClick={this.toggle} />
 						<Collapse isOpen={this.state.isOpen} navbar>
 							<Nav className="ml-auto" navbar>

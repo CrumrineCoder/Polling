@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pollActions } from '../../_actions/polls.actions.js';
+import { Link } from 'react-router-dom';
 
 class Form extends Component {
 
@@ -111,9 +112,9 @@ class Form extends Component {
         let linkPoll;
         if( JSON.parse(localStorage.getItem('user')) === null){
             linkPoll = (
-                <p>
-                    If you log in, you'll be able to link this poll to your account.
-                </p>
+                <div>
+                    <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to link this poll with your account and edit the poll after creation.
+                </div>
             )
         } else{
             linkPoll = (
@@ -122,31 +123,37 @@ class Form extends Component {
         }
         return (
             <div className="form">
-                <input
-                    onChange={(ev) => this.handleChangeField('question', ev)}
-                    value={question}
-                    className="form-control my-3"
-                    placeholder="Poll Question"
-                />
-                {this.state.answers.map((answer, idx) => (
-                    <div className="answer" key={idx}>
-                        <input
-                            type="text"
-                            placeholder={`Answer #${idx + 1}`}
-                            value={answer.text}
-                            onChange={this.handleAnswerTextChange(idx)}
-                        />
-                        <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small">-</button>
-                    </div>
-                ))}
-                <button type="button" onClick={this.handleAddAnswer} className="small">Add Answer</button>
-                {linkPoll}
-                <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Multiple Answers </label>
-                <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> UserAnswers </label>
-                <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Rescind </label>
-                <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> SeeResults </label>
-
-                <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
+                <h1>Create Poll</h1> 
+                <div id="rightPoll">
+                    <h3>Options</h3>
+                    {linkPoll}
+                    <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Multiple Answers </label>
+                    <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> UserAnswers </label>
+                    <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Rescind </label>
+                    <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> SeeResults </label>
+                    <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
+                </div>
+                <div id="leftPoll">
+                  <h3>Question and Answers</h3>
+                    <input
+                        onChange={(ev) => this.handleChangeField('question', ev)}
+                        value={question}
+                        className="form-control my-3"
+                        placeholder="Poll Question"
+                    />
+                    {this.state.answers.map((answer, idx) => (
+                        <div className="answer" key={idx}>
+                            <input
+                                type="text"
+                                placeholder={`Answer #${idx + 1}`}
+                                value={answer.text}
+                                onChange={this.handleAnswerTextChange(idx)}
+                            />
+                            <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small">-</button>
+                        </div>
+                    ))}
+                    <button type="button" onClick={this.handleAddAnswer} className="small">Add Answer</button>
+                </div>
             </div>
         )
     }

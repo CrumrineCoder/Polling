@@ -101,7 +101,7 @@ class Poll extends Component {
 		if (isLoggedIn) {
 			button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
 		} else {
-			button = <button > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</button>;
+			button = <div > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</div>;
 		}
 		if (this.props.options.UserAnswers) {
 			userAnswers.push(

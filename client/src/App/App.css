@@ -109,15 +109,27 @@ li{
   margin: .5em 0p;
 }
 
-p {
+body {
   font-family: "Droid Sans",sans-serif;
   color: #333;
-  line-height: 1.8em;
   word-wrap: break-word;
-  margin: 1.5em 0;
 }
 
+#leftPoll{
+  overflow: hidden;
+    min-height: 50px;
+    background: white;
+    padding: 10px;
+}
 
+#rightPoll{
+  float: right;
+    width: 30%;
+    min-height: 50px;
+    margin-left: 10px;
+    background: white;
+    padding: 10px;
+}
 /*
 Railscasts-like style (c) Visoft, Inc. (Damien White)
 */
