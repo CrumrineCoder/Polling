@@ -140,7 +140,7 @@ class Form extends Component {
                         className="form-control my-3"
                         placeholder="Poll Question"
                     />
-
+                    <button type="button" onClick={this.handleAddAnswer} className="small btn btn-secondary" id="addAnswer">Add Answer</button>
                     {this.state.answers.map((answer, idx) => (
                         <div className="answer" key={idx}>
                             <input
@@ -153,8 +153,7 @@ class Form extends Component {
                             <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     ))}
-                    <button type="button" onClick={this.handleAddAnswer} className="small btn btn-secondary" id="addAnswer">Add Answer</button>
-                    <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
+                    <button onClick={this.handleSubmit} className="btn btn-primary float-right" id="pollSubmitButton">Submit</button>
                 </div>
 
             </div>

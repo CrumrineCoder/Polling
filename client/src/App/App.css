@@ -183,6 +183,10 @@ li{
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   color: #d90000;
 }
+
+#pollSubmitButton{
+  margin-top:  5px;
+}
 /*
 background-color: #6e6e6d;
     color: #fff;
