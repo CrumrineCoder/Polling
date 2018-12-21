@@ -63,9 +63,7 @@ class Results extends Component {
       		    </div>
 			)
 		} else {
-			if(this.props.votes.options.Rescind){
-				Rescind = (<button className = "btn-warning btn" onClick={this.handleRescindClick}><i class="fas fa-undo-alt"></i> Rescind vote</button>);
-			}
+			
 			let id = [];
 			for (var i = 0; i < this.props.votes.answers.length; i++) {
 				for (var j = 0; j < this.props.votes.answers[i].Users.length; j++) {
@@ -79,11 +77,15 @@ class Results extends Component {
 			}
 			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
 				if(!this.props.votes.options.SeeResults){
+					console.log("NOT A TEST", this.props)
 					history.push("");
 					history.push(polls.id + "/vote");
 				} else{
+					console.log("TEST", this.props)
 					Back = (<button className = "btn-secondary btn" onClick={this.handleBackClick}{...this.props}><i class="fas fa-arrow-left"></i> Back to voting</button>);
 				}
+			} else if(this.props.votes.options.Rescind){
+				Rescind = (<button className = "btn-warning btn" onClick={this.handleRescindClick}><i class="fas fa-undo-alt"></i> Rescind vote</button>);
 			}
 
 			pageContent = (

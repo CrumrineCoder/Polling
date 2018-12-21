@@ -15,11 +15,6 @@ class Polls extends Component {
 		dispatch: PropTypes.func.isRequired
 	}
 
-	constructor(props) {
-		super(props);
-		this.handleBackClick = this.handleBackClick.bind(this);
-	}
-
 	componentDidMount() {
 		this.props.dispatch(pollActions.selectPoll(this.props.id));
 		this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
@@ -30,12 +25,6 @@ class Polls extends Component {
 			this.props.dispatch(pollActions.selectPoll(this.props.id));
 			this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
 		}
-	}
-
-	handleBackClick(e) {
-		e.preventDefault();
-		history.push("");
-		history.push(this.props.id + "/results");
 	}
 
 	render() {

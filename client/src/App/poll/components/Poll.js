@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { userActions } from '../../_actions/users.actions.js';
 import { Link } from 'react-router-dom';
+import { history } from '../../store.js';
+
 
 class Poll extends Component {
 
@@ -26,6 +28,7 @@ class Poll extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleMultipleSubmit = this.handleMultipleSubmit.bind(this);
 		this.setUserAnswer = this.setUserAnswer.bind(this);
+		this.handleBackClick = this.handleBackClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -93,6 +96,12 @@ class Poll extends Component {
 		this.setState({ userAnswer: evt.target.value });
 	}
 
+	handleBackClick(e) {
+		e.preventDefault();
+		history.push("");
+		console.log(this.props);
+		history.push(this.props._id + "/results");
+	}
 
 	render() {
 		const { isLoggedIn } = this.state;
@@ -127,7 +136,7 @@ class Poll extends Component {
 		} else{
 			userAnswers = <p>User Answers are not allowed for this poll.</p>
 		}
-
+		console.log("TEST", this.props)
 		if(this.props.options.SeeResults){
 			Results = (<button className="float-left btn btn-secondary" onClick={this.handleBackClick}{...this.props}>Results <i class="fas fa-poll-h"></i></button>);
 		}
