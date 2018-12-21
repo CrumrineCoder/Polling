@@ -54,16 +54,23 @@ class Poll extends Component {
 			dispatch(pollActions.votePollUserAnswer({ _id, selected, user, submissionType }));
 		} else if (submissionType === "answer") {
 			dispatch(pollActions.votePollAnswer({ _id, selected, user, submissionType }));
+		} else{
+			alert("You must select an option.")
 		}
 	}
 
 	handleMultipleSubmit() {
-		var { selected, _id, _parentID, isLoggedIn } = this.state;
+		var { selected, _id, _parentID, isLoggedIn, submissionType } = this.state;
+		console.log(this.state.submissionType);
 		const { dispatch } = this.props;
-		if (isLoggedIn) {
-			let user = JSON.parse(localStorage.getItem('user'));
-			user = user.id;
-			dispatch(pollActions.votePollMultiple({ selected, _id, _parentID, user }))
+		if(submissionType){
+			if (isLoggedIn) {
+				let user = JSON.parse(localStorage.getItem('user'));
+				user = user.id;
+				dispatch(pollActions.votePollMultiple({ selected, _id, _parentID, user }))
+			}
+		} else{ 
+			alert("You must select at least one option.")
 		}
 	}
 
