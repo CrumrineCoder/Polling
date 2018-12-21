@@ -88,16 +88,6 @@ header{
 	text-align: center;
 }
 
-.continueReading {
-  text-decoration: none;
-  color: #d90000;
-}
-
-.continueReading:hover{
-  color: #720000; 
-  cursor: pointer; 
-}
-
 .pollInput{
   width: 20px;
   height: 20px;
@@ -144,14 +134,17 @@ li{
 }
 
 .pollsContainer h1{
-  margin-top: 25px;
+  margin-top: 60px;
+}
+
+#rightPollWrapper{
+  float: right;
+  width: 30%;
+  min-height: 50px;
+  margin-left: 10px;
 }
 
 #rightPoll{
-  float: right;
-    width: 30%;
-    min-height: 50px;
-    margin-left: 10px;
     background: white;
     padding: 10px;
     border-radius: 5px;
@@ -202,7 +195,11 @@ li{
   margin: 10px auto; 
   border-radius: 5px;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-  color: #d90000;
+  color: #007bff;
+}
+
+.pollLink:hover{
+  background: rgb(206, 206, 206); 
 }
 
 #pollSubmitButton{
