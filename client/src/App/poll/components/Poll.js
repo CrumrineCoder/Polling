@@ -144,7 +144,7 @@ class Poll extends Component {
 		return (
 			<div class="container">
 				<div class="row h-100 justify-content-center align-self-center">
-					<div class="col-md-8 jumbotron vertical-center">
+					<div class="col-md-8">
 						<h1 className="pollVotingSquare">{this.props.question}</h1>
 						<div className="pollVotingSquare">
 							<h4 class="">Answers</h4>

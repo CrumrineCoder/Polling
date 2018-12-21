@@ -89,7 +89,7 @@ class Home extends Component {
 		return (
 			<div className="pollsContainer">	
 				<Form></Form>
-				<h1>Polls</h1>
+				<h1>All Polls Listing</h1>
 				{pageContent}
 			</div>
 		);
