@@ -153,7 +153,7 @@ class Form extends Component {
                                 onChange={this.handleAnswerTextChange(idx)}
                                 className="form-control"
                             />
-                            <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton"><i class="fas fa-trash-alt"></i></button>
+                            <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton"><i className="fas fa-trash-alt"></i></button>
                         </div>
                     ))}
                          <button type="button" onClick={this.handleAddAnswer} className="small btn btn-secondary float-right" id="addAnswer">Add Answer</button>

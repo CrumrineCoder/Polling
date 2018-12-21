@@ -8,7 +8,7 @@ import { history } from '../../store.js';
 class Polls extends Component {
 
 	static propTypes = {
-		selectedPoll: PropTypes.string.isRequired,
+
 		votes: PropTypes.object.isRequired,
 		isFetching: PropTypes.bool.isRequired,
 		lastUpdated: PropTypes.number,
@@ -73,7 +73,6 @@ class Polls extends Component {
 }
 
 Polls.propTypes = {
-	selectedPoll: PropTypes.string.isRequired,
 	votes: PropTypes.object.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	lastUpdated: PropTypes.number,

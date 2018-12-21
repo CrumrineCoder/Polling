@@ -62,7 +62,7 @@ class Poll extends Component {
 	handleMultipleSubmit() {
 		var { selected, _id, _parentID, isLoggedIn, submissionType } = this.state;
 		const { dispatch } = this.props;
-		if(submissionType){
+		if(selected !== undefined && selected.length !== 0){
 			if (isLoggedIn) {
 				let user = JSON.parse(localStorage.getItem('user'));
 				user = user.id;
@@ -113,7 +113,7 @@ class Poll extends Component {
 		let button;
 		let userAnswers = [];
 		let Results; 
-		
+
 		if (isLoggedIn) {
 			button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
 		} else {
@@ -144,16 +144,16 @@ class Poll extends Component {
 		}
 
 		if(this.props.options.SeeResults){
-			Results = (<button className="float-left btn btn-secondary" onClick={this.handleBackClick}{...this.props}>Results <i class="fas fa-poll-h"></i></button>);
+			Results = (<button className="float-left btn btn-secondary" onClick={this.handleBackClick}{...this.props}>Results <i className="fas fa-poll-h"></i></button>);
 		}
 
 		return (
-			<div class="container">
-				<div class="row h-100 justify-content-center align-self-center">
-					<div class="col-md-8">
+			<div className="container">
+				<div className="row h-100 justify-content-center align-self-center">
+					<div className="col-md-8">
 						<h1 className="pollVotingSquare">{this.props.question}</h1>
 						<div className="pollVotingSquare">
-							<h4 class="">Answers</h4>
+							<h4 className="">Answers</h4>
 							{
 								this.props.answers.map(function (answer) {
 									return (

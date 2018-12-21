@@ -80,10 +80,10 @@ class Results extends Component {
 					history.push("");
 					history.push(polls.id + "/vote");
 				} else{
-					Back = (<button className = "btn-secondary btn" onClick={this.handleBackClick}{...this.props}><i class="fas fa-arrow-left"></i> Back to voting</button>);
+					Back = (<button className = "btn-secondary btn" onClick={this.handleBackClick}{...this.props}><i className="fas fa-arrow-left"></i> Back to voting</button>);
 				}
 			} else if(this.props.votes.options.Rescind){
-				Rescind = (<button className = "btn btn-outline-warning" onClick={this.handleRescindClick}><i class="fas fa-undo-alt"></i> Rescind vote</button>);
+				Rescind = (<button className = "btn btn-outline-warning" onClick={this.handleRescindClick}><i className="fas fa-undo-alt"></i> Rescind vote</button>);
 			}
 
 			pageContent = (
