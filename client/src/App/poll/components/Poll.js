@@ -105,7 +105,7 @@ class Poll extends Component {
 	handleBackClick(e) {
 		e.preventDefault();
 		history.push("");
-		history.push(this.props.value + "/results");
+		history.push(this.props._id + "/results");
 	}
 
 	render() {
@@ -117,7 +117,7 @@ class Poll extends Component {
 		if (isLoggedIn) {
 			button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
 		} else {
-			button = <div className ="float-right" > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</div>;
+			button = <div className ="float-right" id="pleaseLoginOrRegister" > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</div>;
 		}
 
 		if (this.props.options.UserAnswers) {

@@ -246,7 +246,7 @@ background-color: #6e6e6d;
 Railscasts-like style (c) Visoft, Inc. (Damien White)
 */
 
-.poll .btn{
+.poll .btn, #pleaseLoginOrRegister{
   margin: 20px;
 }
 
