@@ -61,7 +61,6 @@ class Poll extends Component {
 
 	handleMultipleSubmit() {
 		var { selected, _id, _parentID, isLoggedIn, submissionType } = this.state;
-		console.log(this.state.submissionType);
 		const { dispatch } = this.props;
 		if(submissionType){
 			if (isLoggedIn) {
@@ -106,7 +105,6 @@ class Poll extends Component {
 	handleBackClick(e) {
 		e.preventDefault();
 		history.push("");
-		console.log(this.props);
 		history.push(this.props._id + "/results");
 	}
 
@@ -115,17 +113,18 @@ class Poll extends Component {
 		let button;
 		let userAnswers = [];
 		let Results; 
+		
 		if (isLoggedIn) {
 			button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
 		} else {
 			button = <div className ="float-right" > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</div>;
 		}
+
 		if (this.props.options.UserAnswers) {
 			userAnswers.push(
 				<h4>User Answers </h4>
 
 			)
-			console.log(this.props.userAnswers); 
 			for (var i=0; i< this.props.userAnswers.length; i++) {
 				userAnswers.push(
 					<div key={this.props.userAnswers[i]._id}>
@@ -143,7 +142,7 @@ class Poll extends Component {
 		} else{
 			userAnswers = <p>User Answers are not allowed for this poll.</p>
 		}
-		console.log("TEST", this.props)
+
 		if(this.props.options.SeeResults){
 			Results = (<button className="float-left btn btn-secondary" onClick={this.handleBackClick}{...this.props}>Results <i class="fas fa-poll-h"></i></button>);
 		}

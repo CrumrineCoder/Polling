@@ -77,11 +77,9 @@ class Results extends Component {
 			}
 			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
 				if(!this.props.votes.options.SeeResults){
-					console.log("NOT A TEST", this.props)
 					history.push("");
 					history.push(polls.id + "/vote");
 				} else{
-					console.log("TEST", this.props)
 					Back = (<button className = "btn-secondary btn" onClick={this.handleBackClick}{...this.props}><i class="fas fa-arrow-left"></i> Back to voting</button>);
 				}
 			} else if(this.props.votes.options.Rescind){

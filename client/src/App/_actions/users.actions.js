@@ -21,8 +21,7 @@ function login(user) {
         dispatch(request(user));
         userService.login(user)
             .then(
-                user => {
-                    console.log(user); 
+                user => { 
                     dispatch(success(user));
                     history.push(from);
                 },

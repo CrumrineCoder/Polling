@@ -5,7 +5,6 @@ var ObjectId = require('mongodb').ObjectID;
 
 router.post('/createPoll', (req, res, next) => {
   const { body } = req;
-  console.log('LOG THE BODY', body);
   const finalPoll = new Polls(body);
   return finalPoll.save()
     .then(() => res.json({ poll: finalPoll.toJSON() }))
@@ -18,23 +17,8 @@ router.get('/get/', (req, res, next) => {
     .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
     .catch(next);
 });
-/*
-router.param('id', (req, res, next, id) => {
-  console.log("DONKEY KONG", id); 
-
-  
-  return Polls.findById( ObjectId(id), (err, poll) => {
-    if (err) {
-      return res.sendStatus(404);
-    } else if (poll) {
-      req.poll = poll;
-      return next();
-    }
-  }).catch(next); 
-}); */
 
 router.get('/get/:id', (req, res, next) => {
-  // res.send("Ok"); 
   return Polls.findOne({ _id: req.params.id }, function (err, docs) { res.json(docs) });
 });
 
@@ -73,7 +57,7 @@ router.post("/voteMultiple", (req, res, next) => {
       }
       Polls.update(
         { _id: req.body._parentID },
-        { $push: { userAnswers: userVote }, $inc: { "value": 1 } }, function (err, docs) { if (err) { console.log("ER ER ER", err); }; report.push(docs); });
+        { $push: { userAnswers: userVote }, $inc: { "value": 1 } }, function (err, docs) { if (err) { console.log("Error in Vote Multiple", err); }; report.push(docs); });
       //   Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body.selected[i]._id) }, { $push: { "answers.$.users": req.body.user }  }, function(err, docs){ report.push(docs)});
     } else {
       if (req.body.selected[i].submitted === "answer") {
@@ -115,19 +99,6 @@ router.post("/rescind", (req, res, next) => {
 })
 
 /*
-router.param('id', (req, res, next, id) => {
-
-  return Articles.findById(id, (err, article) => {
-    if (err) {
-      return res.sendStatus(404);
-    } else if (article) {
-      console.log("param", article);
-      req.article = article;
-      return next();
-    }
-  }).catch(next);
-});
-
 router.patch('/:id', (req, res, next) => {
   const { body } = req;
 
@@ -147,13 +118,6 @@ router.patch('/:id', (req, res, next) => {
     .then(() => res.json({ article: req.article.toJSON() }))
     .catch(next);
 });
-
-router.delete('/:id', (req, res, next) => {
-  return Articles.findByIdAndRemove(req.article._id)
-    .then(() => res.sendStatus(200))
-    .catch(next);
-});
-
 */
 
 module.exports = router;
