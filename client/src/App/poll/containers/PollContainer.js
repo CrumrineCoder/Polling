@@ -8,8 +8,8 @@ import { history } from '../../store.js';
 class Polls extends Component {
 
 	static propTypes = {
-
-		votes: PropTypes.object.isRequired,
+		// selectedPoll: PropTypes.string.isRequired,
+		// votes: PropTypes.object.isRequired,
 		isFetching: PropTypes.bool.isRequired,
 		lastUpdated: PropTypes.number,
 		dispatch: PropTypes.func.isRequired
@@ -73,7 +73,8 @@ class Polls extends Component {
 }
 
 Polls.propTypes = {
-	votes: PropTypes.object.isRequired,
+	// selectedPoll: PropTypes.string.isRequired,
+	// votes: PropTypes.object.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	lastUpdated: PropTypes.number,
 	dispatch: PropTypes.func.isRequired

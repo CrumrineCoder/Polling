@@ -31,7 +31,7 @@ class Poll extends Component {
 		this.handleBackClick = this.handleBackClick.bind(this);
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		if (this.props.options.MultipleAnswers) {
 			this.setState({ choiceType: "checkbox" });
 			this.setState({ optionChangeType: this.handleMultipleOptionChange });
@@ -60,7 +60,7 @@ class Poll extends Component {
 	}
 
 	handleMultipleSubmit() {
-		var { selected, _id, _parentID, isLoggedIn, submissionType } = this.state;
+		var { selected, _id, _parentID, isLoggedIn } = this.state;
 		const { dispatch } = this.props;
 		if(selected !== undefined && selected.length !== 0){
 			if (isLoggedIn) {
@@ -74,7 +74,7 @@ class Poll extends Component {
 	}
 
 	handleOptionChange(evt) {
-		this.setState({ selected: evt.target.value, _id: evt.target.id, submissionType: evt.target.getAttribute("submissionType") });
+		this.setState({ selected: evt.target.value, _id: evt.target.id, submissionType: evt.target.getAttribute("submissiontype") });
 	}
 
 	handleMultipleOptionChange(evt) {
@@ -105,13 +105,13 @@ class Poll extends Component {
 	handleBackClick(e) {
 		e.preventDefault();
 		history.push("");
-		history.push(this.props._id + "/results");
+		history.push(this.props.value + "/results");
 	}
 
 	render() {
 		const { isLoggedIn } = this.state;
 		let button;
-		let userAnswers = [];
+		let useranswers = [];
 		let Results; 
 
 		if (isLoggedIn) {
@@ -121,30 +121,30 @@ class Poll extends Component {
 		}
 
 		if (this.props.options.UserAnswers) {
-			userAnswers.push(
-				<h4>User Answers </h4>
+			useranswers.push(
+				<h4 key="userAnswersHeader">User Answers </h4>
 
 			)
 			for (var i=0; i< this.props.userAnswers.length; i++) {
-				userAnswers.push(
+				useranswers.push(
 					<div key={this.props.userAnswers[i]._id}>
-						<input type={this.state.choiceType} name="answer" submitted="userAnswer" submissionType="userAnswer" onChange={this.state.optionChangeType} value={this.props.userAnswers[i].text} id={this.props.userAnswers[i]._id}  className="pollInput"/>
+						<input type={this.state.choiceType} name="answer" submitted="userAnswer" submissiontype="userAnswer" onChange={this.state.optionChangeType} value={this.props.userAnswers[i].text} id={this.props.userAnswers[i]._id}  className="pollInput"/>
 						<label className="pollInputLabel">{this.props.userAnswers[i].text}</label>
 					</div>
 				)
 			}
-			userAnswers.push(
-				<div>
-					<input type={this.state.choiceType} onChange={this.state.optionChangeType} submitted="toSubmit" name="answer" submissionType="toSubmit" value={this.state.userAnswer} id="Other" className="pollInput"></input>
-					<input type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" className="pollInputLabel" id="otherSpecify" />
+			useranswers.push(
+				<div key="userAnswersPleaseSpecifyDiv">
+					<input key="userAnswersPleaseSpecifyRadio" type={this.state.choiceType} onChange={this.state.optionChangeType} submitted="toSubmit" name="answer" submissiontype="toSubmit" value={this.state.userAnswer} id="Other" className="pollInput"></input>
+					<input key="userAnswersPleaseSpecifyTextArea" type="text" onChange={this.setUserAnswer} value={this.state.userAnswer} placeholder="Other, please specify" className="pollInputLabel" id="otherSpecify" />
 				</div>
 			)
 		} else{
-			userAnswers = <p>User Answers are not allowed for this poll.</p>
+			useranswers = <p  key="userAnswersDisclaimer">User Answers are not allowed for this poll.</p>
 		}
 
 		if(this.props.options.SeeResults){
-			Results = (<button className="float-left btn btn-secondary" onClick={this.handleBackClick}{...this.props}>Results <i className="fas fa-poll-h"></i></button>);
+			Results = (<button className="float-left btn btn-secondary"  key="seeResultsButton" onClick={this.handleBackClick} value={this.props._id}>Results <i className="fas fa-poll-h"></i></button>);
 		}
 
 		return (
@@ -158,7 +158,7 @@ class Poll extends Component {
 								this.props.answers.map(function (answer) {
 									return (
 										<div key={answer._id}>
-											<input type={this.state.choiceType} name="answer" submitted="answer" submissionType="answer" onChange={this.state.optionChangeType} value={answer.text} id={answer._id} className="pollInput" />
+											<input type={this.state.choiceType} name="answer" submitted="answer" submissiontype="answer" onChange={this.state.optionChangeType} value={answer.text} id={answer._id} className="pollInput" />
 											<label className="pollInputLabel">{answer.text}</label>
 										</div>
 									)
@@ -166,7 +166,7 @@ class Poll extends Component {
 							}
 						</div>
 						<div className="pollVotingSquare">
-							{userAnswers}
+							{useranswers}
 						</div>
 							{Results}
 							{button}

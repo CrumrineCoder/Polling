@@ -17,8 +17,8 @@ class Home extends Component {
 	}
 
 	static propTypes = {
-		selectedPoll: PropTypes.string.isRequired,
-		polls: PropTypes.array.isRequired,
+	//	selectedPoll: PropTypes.string.isRequired,
+	//	polls: PropTypes.array.isRequired,
 		isFetching: PropTypes.bool.isRequired,
 		lastUpdated: PropTypes.number,
 		dispatch: PropTypes.func.isRequired
@@ -98,8 +98,8 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-	selectedPoll: PropTypes.string.isRequired,
-	polls: PropTypes.array.isRequired,
+	//selectedPoll: PropTypes.string.isRequired,
+	//polls: PropTypes.array.isRequired,
 	isFetching: PropTypes.bool.isRequired,
 	lastUpdated: PropTypes.number,
 	dispatch: PropTypes.func.isRequired
