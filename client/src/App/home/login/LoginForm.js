@@ -56,6 +56,7 @@ class LoginForm extends Component {
                         value={password}
                         className="form-control my-3"
                         placeholder="password"
+                        type="password" 
                     />
                     <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
                 </Container>
