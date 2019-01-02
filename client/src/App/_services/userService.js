@@ -15,7 +15,9 @@ export const userService = {
     logout
 };
 
+// login the user
 function login(user) {
+    // make a post request
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -25,6 +27,7 @@ function login(user) {
     return fetch(`api/users/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
+            // Upon getting data from the backend, get the user
             user = user.user;
             // login successful if there's a jwt token in the response
             if (user.token) {
@@ -35,12 +38,13 @@ function login(user) {
         });
 }
 
+// log out the user
 function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
 }
 
-
+// get the current user
 function getCurrent() {
     const requestOptions = {
         method: 'GET',
@@ -58,6 +62,7 @@ function getById(id) {
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 } */
 
+//  registera user
 function register(user) {
     const requestOptions = {
         method: 'POST',
@@ -88,6 +93,7 @@ function _delete(id) {
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 } */
 
+// handle errors and if there's a 401 (unauthorized response), log the user out, otherwise send the data to the frontend
 function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
