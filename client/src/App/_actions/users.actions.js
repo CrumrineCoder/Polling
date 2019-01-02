@@ -11,10 +11,13 @@ export const userActions = {
      delete: _delete */
     register,
     login,
-    getAll,
+    getCurrent,
     logout
 };
 
+// Dispatched from: LoginForm.js
+// Param: username and password object with a location of where the user was before  coming to  the login page
+// Function: Send a login request to the back end and redirect the user to where they came from
 function login(user) {
     let from = user.from.pathname; 
     return dispatch => {
@@ -37,11 +40,17 @@ function login(user) {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
+// Dispatched from: LoginForm.js
+// Param:
+// Function: Remove the user from local storage
 function logout() {
     userService.logout();
     return { type: userConstants.LOGOUT };
 }
 
+// Dispatched from: RegisterForm.js
+// Param: username and password
+// Function: Send a register request to the back end and redirect the user to the login page
 function register(user) {
     return dispatch => {
         dispatch(request(user));
@@ -65,21 +74,23 @@ function register(user) {
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
-
-function getAll() {
+// Dispatched from: routes.js, Poll.js
+// Param:
+// Function: Return the user who is logged in
+function getCurrent() {
     return dispatch => {
         dispatch(request());
 
-        userService.getAll()
+        userService.getCurrent()
             .then(
                 users => dispatch(success(users)),
                 error => dispatch(failure(error.toString()))
             );
     };
 
-    function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
-    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+    function request() { return { type: userConstants.GETCURRENT_REQUEST } }
+    function success(users) { return { type: userConstants.GETCURRENT_SUCCESS, users } }
+    function failure(error) { return { type: userConstants.GETCURRENT_FAILURE, error } }
 }
 /*
 // prefixed function name with underscore because delete is a reserved word in javascript

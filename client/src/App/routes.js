@@ -20,7 +20,7 @@ class PrivateRoute extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(userActions.getAll());
+    dispatch(userActions.getCurrent());
   }
 
   render() {

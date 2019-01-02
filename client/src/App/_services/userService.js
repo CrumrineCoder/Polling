@@ -11,7 +11,7 @@ export const userService = {
      delete: _delete */
     register,
     login,
-    getAll,
+    getCurrent,
     logout
 };
 
@@ -41,7 +41,7 @@ function logout() {
 }
 
 
-function getAll() {
+function getCurrent() {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()

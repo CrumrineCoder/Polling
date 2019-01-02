@@ -11,7 +11,7 @@ class Poll extends Component {
 	constructor(props) {
 		super(props);
 		const { dispatch } = this.props;
-		dispatch(userActions.getAll());
+		dispatch(userActions.getCurrent());
 		//_id: [],, checkboxes: this.props.answers, userCheckboxes: this.props.answers 
 		this.state = {
 			selected: [],
