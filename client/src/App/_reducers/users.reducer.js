@@ -1,25 +1,34 @@
 import { userConstants } from '../_constants/user.constants.js';
+
+// isFetchingCurrentUser is a loading variable and initially set to false
+// didInvalidateCurrentUser is a variable for error handling and initially set to false
+// currentUer is an object to store the current user and is initially empty
 const initialState = {
   isFetchingCurrentUser: false,
   didInvalidateCurrentUser: false,
   currentUser: {}
 }
+
+// get the current user 
 export default function users(state = initialState, action) {
   switch (action.type) {
-    case userConstants.GETALL_REQUEST:
+    // Upon requesting the current user, set the loading variable to true and errors to false
+    case userConstants.GETCURRENT_REQUEST:
       return {
         ...state,
         isFetchingCurrentUser: true,
         didInvalidateCurrentUser: false
       };
-    case userConstants.GETALL_SUCCESS:
+    // Upon getting the current user, return it and set loading and error to false
+    case userConstants.GETCURRENT_SUCCESS:
       return {
         ...state,
         isFetchingCurrentUser: false,
         didInvalidateCurrentUser: false,
         currentUser: action.users
       };
-    case userConstants.GETALL_FAILURE:
+    // Upon failing to get the current user, set errors to true
+    case userConstants.GETCURRENT_FAILURE:
       return { 
         ...state,
         didInvalidateCurrentUser: true
