@@ -16,7 +16,7 @@ export const pollActions = {
 
 // Dispatched from: Form.js
 // Param: a question, a set of answers, selected options, and the user who created the poll
-// Function: call the createPoll service and handle action constants for the reducer when a user wants to create a poll. The function then redirects the user to the voting page for their poll.
+// Function: Create a poll and redirect the user to the voting page. 
 function createPoll(poll) {
     return dispatch => {
         dispatch(request(poll));
@@ -38,6 +38,9 @@ function createPoll(poll) {
     function failure(error) { return { type: pollConstants.POLL_REGISTER_FAILURE, error } }
 }
 
+// Dispatched from: Poll.js
+// Param: id of the answer, the polls that have been selected, and the user who voted 
+// Function: Vote on a poll-creator answer poll and redirect the user to the results page. 
 function votePollAnswer(poll) {
     return dispatch => {
         dispatch(request(poll));
@@ -60,7 +63,9 @@ function votePollAnswer(poll) {
     function failure(error) { return { type: pollConstants.POLL_VOTE_ANSWER_FAILURE, error } }
 }
 
-
+// Dispatched from: Poll.js
+// Param: id of the answer, the polls that have been selected, and the user who voted 
+// Function: Vote on a user answer for a poll and redirect the user to the results page. 
 function votePollUserAnswer(poll) {
     return dispatch => {
         dispatch(request(poll));
@@ -83,6 +88,9 @@ function votePollUserAnswer(poll) {
     function failure(error) { return { type: pollConstants.POLL_VOTE_USERANSWER_FAILURE, error } }
 }
 
+// Dispatched from: Poll.js
+// Param: id of the answer, the polls that have been selected, and the user who voted 
+// Function: Create a user answer for a poll and redirect to the results page.
 function votePollCreateUserAnswer(poll) {
     return dispatch => {
         var id = poll._parentID;
@@ -106,6 +114,9 @@ function votePollCreateUserAnswer(poll) {
     function failure(error) { return { type: pollConstants.POLL_VOTE_CREATEUSERANSWER_FAILURE, error } }
 }
 
+// Dispatched from: Poll.js
+// Param: id of the poll, the poll answer to be submitted, and the user who voted 
+// Function: Vote on a user answer for a poll and redirect the user to the results page. 
 function votePollMultiple(poll) {
     return dispatch => {
         var id = poll._parentID;
@@ -129,6 +140,9 @@ function votePollMultiple(poll) {
     function failure(error) { return { type: pollConstants.POLL_VOTE_MULTIPLE_FAILURE, error } }
 }
 
+// Dispatched from: ResultContainer.js
+// Param: user who is rescinding, the id of the poll, the number of answers, the number of user answers.
+// Function: Rescind a user's vote and redirect the user to the voting page. 
 function rescind(poll) {
     return dispatch => {
         var id = poll._parentID;
@@ -152,7 +166,12 @@ function rescind(poll) {
     function failure(error) { return { type: pollConstants.POLL_RESCIND_FAILURE, error } }
 }
 
-function selectPoll(poll) { return { type: pollConstants.GET_SELECT, poll } }
+// Dispatched from: HomePage.js, PollContainer.js, ResultContainer.js
+// Param: id of a poll or the string "All"
+// Function: Select a poll in the Redux state for use getting polls from the back end. 
+function selectPoll(poll) {
+     return { type: pollConstants.GET_SELECT, poll } 
+}
 
 function receiveVotes(poll, json) {
     if (poll === "All") {
@@ -166,8 +185,10 @@ function receiveVotes(poll, json) {
     }
 }
 
+// Dispatched from: poll.actions.js
+// Param: id of a poll or the string "All"
+// Function: Get  polls from the backend. 
 function fetchVotes(poll) {
-
     return dispatch => {
         dispatch(requestVotes(poll))
         pollService.get(poll)
@@ -176,6 +197,9 @@ function fetchVotes(poll) {
     function requestVotes(poll) { return { type: pollConstants.GET_REQUEST, poll } }
 }
 
+// Dispatched from: poll.actions.js
+// Param: Redux state, id of a poll or the string "All"
+// Function: If there's no votes already, return true. If we're fetching votes, return false. If there's an error, return it. 
 function shouldFetchVotes(state, poll) {
     const votes = state.home.votesByPoll[poll]
     if (!votes) {
@@ -187,6 +211,9 @@ function shouldFetchVotes(state, poll) {
     }
 }
 
+// Dispatched from: HomePage.js, PollContainer.js, ResultContainer.js
+// Param: id of a poll or the string "All"
+// Function: Check if we should fetch votes, and if so, fetch votes. 
 function fetchVotesIfNeeded(poll) {
     return (dispatch, getState) => {
         if (shouldFetchVotes(getState(), poll)) {

@@ -49,11 +49,11 @@ class Poll extends Component {
 		let user = JSON.parse(localStorage.getItem('user'));
 		user = user.id;
 		if (submissionType === "toSubmit") {
-			dispatch(pollActions.votePollCreateUserAnswer({ userAnswer, _parentID, user, submissionType }));
+			dispatch(pollActions.votePollCreateUserAnswer({ _parentID, userAnswer, user }));
 		} else if (submissionType === "userAnswer") {
-			dispatch(pollActions.votePollUserAnswer({ _id, selected, user, submissionType }));
+			dispatch(pollActions.votePollUserAnswer({ _id, selected, user }));
 		} else if (submissionType === "answer") {
-			dispatch(pollActions.votePollAnswer({ _id, selected, user, submissionType }));
+			dispatch(pollActions.votePollAnswer({ _id, selected, user }));
 		} else{
 			alert("You must select an option.")
 		}
