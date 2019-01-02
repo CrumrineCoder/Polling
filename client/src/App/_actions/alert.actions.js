@@ -1,3 +1,5 @@
+// To be used for setting up alerts, such as when a user creates a poll or logs out. 
+
 import { alertConstants } from '../_constants/alertConstants.js';
 
 export const alertActions = {

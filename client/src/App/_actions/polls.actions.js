@@ -14,6 +14,9 @@ export const pollActions = {
     rescind
 }
 
+// Dispatched from: Form.js
+// Param: a question, a set of answers, selected options, and the user who created the poll
+// Function: call the createPoll service and handle action constants for the reducer when a user wants to create a poll. The function then redirects the user to the voting page for their poll.
 function createPoll(poll) {
     return dispatch => {
         dispatch(request(poll));
