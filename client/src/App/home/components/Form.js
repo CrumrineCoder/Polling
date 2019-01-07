@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { Link } from 'react-router-dom';
 
+// Form for creating polls
 class Form extends Component {
 
     constructor(props) {
         super(props);
+        // initial state stores the questions, an array of answers the user will input, options the user will make true or false, linked represents if the user will be linked, and submitted checks if the poll has been submitted yet. 
         this.state = {
             question: '',
             answers: [
@@ -22,6 +24,7 @@ class Form extends Component {
             linked: false,
             submitted: false
         };
+        // Bind action creators to the state
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.goToResults = this.goToResults.bind(this);
@@ -29,10 +32,12 @@ class Form extends Component {
         this.handleLinkedClick = this.handleLinkedClick.bind(this);
     }
 
+    // History reroute, takes in a string for a location. In this case, it's  the id of the poll that was just created.
     goToResults(id) {
         this.props.history.push("polls/" + id);
     }
 
+    // Submit a poll 
     handleSubmit() {
         var { question, answers, options, linked } = this.state;
         const { dispatch } = this.props;
@@ -51,18 +56,23 @@ class Form extends Component {
             ))
         )
 
+        // Removev empty questions
         if (question === "") {
             alert("You must supply a question.");
         }
+        // Force the user to have at least 2 answers
         else if (answers.length < 2) {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
         } else {
+            // Poll will be submitted
             this.setState({ submitted: true });
+            // If the user wants this poll to be linked to their account, then send the user to the backend
             if (linked) {
                 creator = JSON.parse(localStorage.getItem('user')).id;
             } else {
                 creator = undefined;
             }
+            // Dispatch to the create poll action in poll.actions.js
             dispatch(pollActions.createPoll({ question, answers, options, creator }));
         }
     }
@@ -77,6 +87,7 @@ class Form extends Component {
         this.setState({ answers: newAnswers });
     }
 
+    // Set whether the user wants the poll to be linked to their account true or false
     handleLinkedClick() {
         this.setState({ linked: !this.state.linked });
     }
@@ -95,12 +106,14 @@ class Form extends Component {
         });
     }
 
+    // Add an answer
     handleAddAnswer = () => {
         this.setState({
             answers: this.state.answers.concat([{ text: '', value: 0 }])
         });
     }
 
+    // Removve an answer
     handleRemoveAnswer = (idx) => () => {
         this.setState({
             answers: this.state.answers.filter((s, sidx) => idx !== sidx)
@@ -110,12 +123,14 @@ class Form extends Component {
     render() {
         const { question } = this.state;
         let linkPoll;
+        // If there's no one logged in, suggest them to login so they can add this poll to their account
         if (JSON.parse(localStorage.getItem('user')) === null) {
             linkPoll = (
                 <div>
                     <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to link this poll with your account and edit the poll after creation.
                 </div>
             )
+        // If they are logged in, make a link this button to my account button
         } else {
             linkPoll = (
                 <label><input type="checkbox" checked={this.state.linked} onChange={this.handleLinkedClick} name="user" value="LinkPoll" /> Link Poll to my user account </label>
@@ -164,6 +179,7 @@ class Form extends Component {
     }
 }
 
+// get the create poll actions for dispatching
 function mapStateToProps(state) {
     const { creating } = state.home.createPoll;
     return {
