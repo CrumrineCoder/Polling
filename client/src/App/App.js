@@ -10,7 +10,11 @@ import Footer from './common/components/Footer'
 
 
 class App extends Component {
-
+  // Provider is for redux store
+  // connectedrouter is for history & router
+  // header is always on top of hte page
+  // routes is whatever routes.js brings back
+  // footer is always on the bottom of the page
   render() {
     return (
       <Provider store={store}>

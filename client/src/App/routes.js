@@ -16,8 +16,10 @@ import Login from "./home/login/LoginForm";
 import Register from "./home/login/RegisterForm";
 import { userActions } from '../App/_actions/users.actions.js';
 
+// Private route that redirects the user if they're not logged in to the login page
 class PrivateRoute extends React.Component {
 
+  // Upon the first render, check if the user is logged in 
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(userActions.getCurrent());
@@ -28,7 +30,9 @@ class PrivateRoute extends React.Component {
     const { didInvalidateCurrentUser, isFetchingCurrentUser } = this.props.users;
     let pageContent = '';
 
+    // If there is no current user
     if(didInvalidateCurrentUser){
+      // Reroute the user to the login page, and send data about where they came from
       pageContent = (
         (
           <Route {...rest} render={props => (
@@ -39,7 +43,7 @@ class PrivateRoute extends React.Component {
         )
       )
     }
-
+    // If we're still checking who is logged in, tell the user we're validating
     else if (isFetchingCurrentUser) {
       pageContent = (
         <div className="pollsLoader">
@@ -47,7 +51,7 @@ class PrivateRoute extends React.Component {
       	</div>
       )
     } 
-
+    // The user is logged in, so show them the route as normal
     else{
       pageContent = (
         (

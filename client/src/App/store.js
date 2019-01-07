@@ -10,6 +10,7 @@ import { createLogger } from 'redux-logger';
 // import root epics/reducer
 import rootReducer from './rootReducer.js';
 
+// For logging routing
 const loggerMiddleware = createLogger();
 
 // export `history` to use in index.js, we using `createBrowserHistory`
