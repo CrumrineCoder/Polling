@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { PieChart, Pie, Cell, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
+// Rechart vars
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const RADIAN = Math.PI / 180;
 
@@ -17,7 +18,7 @@ var renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, perce
 	);
 };
 
-
+// Bar chart for votes
 class SimpleBarChart extends Component {
 	render() {
 		var data = Object.values(this.props);
@@ -42,6 +43,7 @@ class SimpleBarChart extends Component {
 	}
 }
 
+// Pie chart for votes
 class SimplePieChart extends Component {
 	render() {
 		var data = Object.values(this.props);
@@ -73,6 +75,7 @@ class Result extends Component {
 	render() {
 		var data = [];
 
+		// Get all votes
 		for (var i = 0; i < this.props.votes.answers.length; i++) {
 			var fullData = this.props.votes.answers;
 			var insert = { name: fullData[i].text, votes: fullData[i].value };
@@ -85,6 +88,7 @@ class Result extends Component {
 			data.push(userInsert);
 		}
 
+		// Input all votes into the simple bar and pie charts
 		return (
 			<div>
 				<h1>{this.props.votes.question}</h1>
