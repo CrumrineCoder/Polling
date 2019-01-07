@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+// Footer hosts my contact info at the bottom of the screen. It appears on all pages. 
 class Footer extends Component {
 
 	render () {

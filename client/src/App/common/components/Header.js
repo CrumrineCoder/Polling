@@ -11,6 +11,8 @@ import {
 import { connect } from 'react-redux';
 //import PropTypes from 'prop-types';
 
+// Header hosts navigation info at the top of the screen. It appears on all pages.
+// Redirects to landing page, and depending on if the user is logged in redirect to either the profile or logout page, or if they're not logged in then login or register page 
 class Header extends Component {
 
 	constructor(props) {
@@ -22,6 +24,7 @@ class Header extends Component {
 		};
 	}
 
+	// Toggle the collapsed navbar
 	toggle() {
 		this.setState({
 			isOpen: !this.state.isOpen
@@ -31,6 +34,7 @@ class Header extends Component {
 	render() {
 		const { isLoggedIn } = this.props
 		let userLinks;
+		//Conditional rendering
 		if (isLoggedIn) {
 			userLinks = 
 			<>

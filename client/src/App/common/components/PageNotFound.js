@@ -1,5 +1,6 @@
 import React from 'react'
 
+/// 404
 class PageNotFound extends React.Component {
 
   render() {
