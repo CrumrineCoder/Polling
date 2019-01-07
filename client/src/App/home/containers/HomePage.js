@@ -26,7 +26,7 @@ class Home extends Component {
 		dispatch: PropTypes.func.isRequired
 	}
 
-	// Upon mounting, tell the back end to get all polls
+	// Upon first render,  tell the back end to get all polls
 	componentDidMount() {
 		this.props.dispatch(pollActions.selectPoll("All"));
 		this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
