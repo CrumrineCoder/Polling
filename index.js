@@ -9,7 +9,6 @@ const passport = require('passport');
 
 require('dotenv').config();
 
-
 mongoose.promise = global.Promise;
 
 const isProduction = process.env.NODE_ENV === 'production';
