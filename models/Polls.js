@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+// Mongoose Schema for polls. Names are self-explanatory generally, but we're storing the question of the poll, the numbers of total votes, the options turned on and off by the poll creator, the answers in a poll, the user answers in a poll, and the poll creator (optional typically)
 const PollSchema = new Schema({
   question: String,
-  user: String,
   value: Number, 
   options: {
     MultipleAnswers: Boolean,
@@ -18,8 +18,10 @@ const PollSchema = new Schema({
   creator: String
 }, { timestamps: true, minimize: false });
 
+// For searching purposes
 PollSchema.index({"question": 1});
 
+// Outputting the schema
 PollSchema.methods.toJSON = function() {
   return {
     _id: this._id,

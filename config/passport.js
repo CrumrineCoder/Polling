@@ -4,6 +4,7 @@ const LocalStrategy = require('passport-local');
 
 const Users = mongoose.model('Users');
 
+// If we see usernameField and passwordField, then find that user and validate them, for authentication purposes
 passport.use(new LocalStrategy({
   usernameField: 'user[email]',
   passwordField: 'user[password]',
