@@ -8,6 +8,7 @@ const Users = mongoose.model('Users');
 //POST new user route (optional, everyone has access)
 router.post('/register', auth.optional, (req, res, next) => {
   const user = req.body;
+  // Validate the user created an email and password
   if (!user.email) {
     return res.status(422).json({
       errors: {
@@ -24,9 +25,11 @@ router.post('/register', auth.optional, (req, res, next) => {
     });
   }
 
+  // Create a new user
   const finalUser = new Users(user);
   finalUser.setPassword(user.password);
 
+  // Save user with mongooose
   return finalUser.save()
     .then(() => res.json({ user: finalUser.toAuthJSON() }));
 });
@@ -34,6 +37,7 @@ router.post('/register', auth.optional, (req, res, next) => {
 //POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
   let user = req.body.user;
+  // Validate the user login is filled out
   if (!user.email) {
     return res.status(422).json({
       errors: {
@@ -50,6 +54,7 @@ router.post('/login', auth.optional, (req, res, next) => {
     });
   }
 
+  // Use Passport's local strategy to authenticate. If so, return a token. 
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
     if (err) {
       return next(err);
@@ -67,6 +72,7 @@ router.post('/login', auth.optional, (req, res, next) => {
 //GET current route (required, only authenticated users have access)
 router.get('/current', auth.required, (req, res, next) => {
   const id = req.payload.id;
+  // Check if the user is actually in the database. 
   return Users.findById(id)
     .then((user) => {
       if (!user) {
