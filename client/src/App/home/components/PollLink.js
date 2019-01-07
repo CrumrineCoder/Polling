@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+// Links on main page that redirect the user to a poll if clicked on
 class PollMini extends Component {
 	render() {
 		return (

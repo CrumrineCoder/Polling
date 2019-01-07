@@ -8,10 +8,12 @@ import Form from '../components/Form';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { withRouter } from 'react-router-dom';
 
+// Landing page 
 class Home extends Component {
 
 	constructor(props) {
 		super(props);
+		// Used for when searching and tagging functionality whenever that comes
 		this.state = { filter: "", query: "" };
 		this.changeFilter = this.changeFilter.bind(this);
 	}
@@ -24,11 +26,13 @@ class Home extends Component {
 		dispatch: PropTypes.func.isRequired
 	}
 
+	// Upon mounting, tell the back end to get all polls
 	componentDidMount() {
 		this.props.dispatch(pollActions.selectPoll("All"));
 		this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
 	}
 
+	// Upon updating, tell the back end to get all polls (if there's been any change)
 	componentDidUpdate(prevProps) {
 		if (this.props.selectedPoll !== prevProps.selectedPoll) {
 			this.props.dispatch(pollActions.selectPoll("All"));
@@ -69,13 +73,15 @@ class Home extends Component {
 			polls = find(polls, this.state.query);
 		}
 
+		// If we're fetching polls, tell the user why
 		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
 					The content is loading, but because this site uses a free Heroku server it has to warm up before it can get the data. This will take only 10 seconds to a minute, so please be patient! Once the servers are warmed up, the site will load content like normal.
       		    </div>
 			)
-		} else {
+		} // Show all polls as poll links 
+		else {
 			pageContent = (
 				<ul className="polls">
 					{polls.map((poll, i) => <PollLink update={this.update} key={i} {...poll} />)}
@@ -86,6 +92,7 @@ class Home extends Component {
 		<Search onSearch={this.handleSearchBar} />
 		<Tags onChangeFilter={this.changeFilter} />
 		*/
+		// Display the Form, header for polls listing, and all poll links
 		return (
 			<div className="pollsContainer">	
 				<Form></Form>
@@ -107,6 +114,7 @@ Home.propTypes = {
 
 function mapStateToProps(state) {
 	const { selectedPoll, votesByPoll } = state.home
+	// If we're still fetching polls, then let isFetching be true and polls be empty, else get information from the backend and put it in Redux state
 	const { isFetching, lastUpdated, votes: polls } = votesByPoll[
 		selectedPoll
 	] || {
