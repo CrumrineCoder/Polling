@@ -3,6 +3,7 @@ import { Container } from 'reactstrap';
 import ResultContainer from './containers/ResultContainer';
 //import './style.css';
 
+// for router.js
 class pollIndex extends Component {
 
 	render() {
