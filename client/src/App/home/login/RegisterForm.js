@@ -7,20 +7,24 @@ class RegisterForm extends Component {
 
     constructor(props) {
         super(props);
+        // User's email, password, and if the form is submitted or not. 
         this.state = {
             email: '', password: '', submitted: false
         };
+        // Bind action creators to state. 
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Submit a registration request
     handleSubmit() {
         var { email, password } = this.state;
         const { dispatch } = this.props;
         this.setState({ submitted: true });
         dispatch(userActions.register({ email, password }));
     }
-    // For Question
+
+    // For form control
     handleChangeField(key, event) {
         this.setState({
             [key]: event.target.value,
@@ -53,6 +57,7 @@ class RegisterForm extends Component {
     }
 }
 
+// Register actions, from register.reducer.js
 function mapStateToProps(state) {
     const { registration } = state.home.register;
     return {

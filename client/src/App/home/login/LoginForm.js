@@ -7,16 +7,19 @@ class LoginForm extends Component {
 
     constructor(props) {
         super(props);
-
+        // Log out the user upon entering (When logged in, they'll see this page as 'logout', and when not logged in, well it doesn't matter)
         this.props.dispatch(userActions.logout());
 
+        // User's email, password, and where they came from are stored
         this.state = {
             email: '', password: '', from: ''
         };
+        // Action creators are bound to the state
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Upon mounting, get where the user came from and set it to the state. This is used for redirecting the user after logging in. 
     componentDidMount() {
         let { from } = this.props.location.state || { from: { pathname: '' } }
         if (from.pathname === "/login" || from.pathname === "/") {
@@ -25,14 +28,16 @@ class LoginForm extends Component {
         this.setState({ from: from })
     }
 
-
+    // Submit a login request
     handleSubmit() {
         var { email, password, from } = this.state;
         const { dispatch } = this.props;
-
+        // TO DO: VALIDATION
+        // Request the back end to login the user
         dispatch(userActions.login({ email, password, from }));
     }
-    // For Question
+
+     // For form control
     handleChangeField(key, event) {
         this.setState({
             [key]: event.target.value,
@@ -65,6 +70,7 @@ class LoginForm extends Component {
     }
 }
 
+// Authentication actions, from authentication.reducers.js
 function mapStateToProps(state) {
     const { logging } = state.home.authenticate;
     return {
