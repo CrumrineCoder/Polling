@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import { userActions } from '../../_actions/users.actions.js';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
 
 class LoginForm extends Component {
 
@@ -32,6 +34,9 @@ class LoginForm extends Component {
     handleSubmit() {
         var { email, password, from } = this.state;
         const { dispatch } = this.props;
+        if(email == ""){
+
+        }
         // TO DO: VALIDATION
         // Request the back end to login the user
         dispatch(userActions.login({ email, password, from }));
