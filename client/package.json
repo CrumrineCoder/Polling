@@ -37,7 +37,8 @@
     "redux-observable": "1.0.0-alpha.2",
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.2.0",
-    "rxjs-compat": "^6.3.3"
+    "rxjs-compat": "^6.3.3",
+    "validator": "^10.10.0"
   },
   "devDependencies": {
     "redux-devtools": "3.4.1",

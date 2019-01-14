@@ -79,6 +79,10 @@ header{
   cursor: pointer; 
 }
 
+.warning{
+  color: red; 
+}
+
 .footerLink i{
   margin-right: 30px; 
   font-size: 20px;

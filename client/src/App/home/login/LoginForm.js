@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import { userActions } from '../../_actions/users.actions.js';
+
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
+import validator from 'validator';
+
 
 class LoginForm extends Component {
 
@@ -51,26 +54,40 @@ class LoginForm extends Component {
 
     render() {
         const { email, password } = this.state;
+        const required = (value) => {
+            if (!value.toString().trim().length) {
+              // We can return string or jsx as the 'error' prop for the validated Component
+              return <p class="warning">This value is required.</p>
+            }
+          };
+           
+          const requireEmail = (value) => {
+            if (!validator.isEmail(value)) {
+                return <p class="warning">{value} is not a valid email.</p>
+            }
+          };
         return (
-            <div className="form">
+            <Form className="form">
                 <Container>
                     <h3>Login</h3>
-                    <input
+                    <Input 
                         onChange={(ev) => this.handleChangeField('email', ev)}
                         value={email}
                         className="form-control my-3"
                         placeholder="Email"
+                        validations={[required, requireEmail]}
                     />
-                    <input
+                    <Input 
                         onChange={(ev) => this.handleChangeField('password', ev)}
                         value={password}
                         className="form-control my-3"
                         placeholder="password"
                         type="password" 
+                        validations={[required]}
                     />
                     <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
                 </Container>
-            </div>
+            </Form>
         )
     }
 }
