@@ -37,10 +37,7 @@ class LoginForm extends Component {
     handleSubmit() {
         var { email, password, from } = this.state;
         const { dispatch } = this.props;
-        if(email == ""){
 
-        }
-        // TO DO: VALIDATION
         // Request the back end to login the user
         dispatch(userActions.login({ email, password, from }));
     }

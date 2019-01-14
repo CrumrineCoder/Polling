@@ -17,7 +17,7 @@ This is a remake of an old project I had built without AngularJS or React.js, so
 * Comment on Polls
 * Graph Colors
 * Hide user answers button
-* Validate Login and Register Forms
+* Validate user doesn't already exist when registering.
 * Profile page
 * Validate created user answers
 * Alert messaging
