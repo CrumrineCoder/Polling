@@ -11,7 +11,8 @@ export const pollActions = {
     votePollMultiple,
     fetchVotesIfNeeded,
     selectPoll,
-    rescind
+    rescind,
+    checkExistence
 }
 
 // Dispatched from: Form.js
@@ -195,6 +196,15 @@ function fetchVotes(poll) {
             .then(json => dispatch(receiveVotes(poll, json)))
     }
     function requestVotes(poll) { return { type: pollConstants.GET_REQUEST, poll } }
+}
+//dispatch(receiveCheck(boolean))
+function checkExistence(question) {
+    return dispatch => {
+        dispatch(requestCheck(question))
+        pollService.checkExistence(question)
+            .then(response => console.log("Repsonse!" + response))
+    }
+    function requestCheck(question) { return { type: pollConstants.CHECK_REQUEST, question } }
 }
 
 // Dispatched from: poll.actions.js

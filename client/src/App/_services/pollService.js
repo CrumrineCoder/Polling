@@ -7,7 +7,8 @@ export const pollService = {
     votePollCreateUserAnswer,
     votePollMultiple,
     get,
-    rescind
+    rescind,
+    checkExistence
 }
 
 // make a post request with a created poll to the backend
@@ -85,6 +86,14 @@ function get(poll) {
         var id = mongoose.Types.ObjectId(poll);
          return fetch("api/polls/get/"+id, requestOptions).then(handleResponse);
     }
+}
+
+// make a GET request to get poll(s) data
+function checkExistence(question) {
+    const requestOptions = {
+        method: 'GET'
+    };
+    return fetch("api/polls/checkExistence/"+question, requestOptions).then(handleResponse);
 }
 
 // error handling if there is one and returning data to the front end after getting it from the backend

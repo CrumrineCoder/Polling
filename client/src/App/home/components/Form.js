@@ -43,6 +43,7 @@ class Form extends Component {
         const { dispatch } = this.props;
         let creator;
 
+        this.props.dispatch(pollActions.checkExistence(question));
 
         // Remove empty answers
         answers = answers.filter(function (el) {

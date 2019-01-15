@@ -22,6 +22,10 @@ router.get('/get/:id', (req, res, next) => {
   return Polls.findOne({ _id: req.params.id }, function (err, docs) { res.json(docs) });
 });
 
+router.get('/checkExistence/:question', (req, res, next) => {
+  return Polls.find({ qty: { $exists: true, question: req.params.question } } , function (err, docs) { console.log("HERE IT IS!" + docs); res.json(docs) });
+});
+
 router.post("/voteAnswer", (req, res, next) => {
   Polls.findOneAndUpdate({ "answers._id": ObjectId(req.body._id) }, { $push: { "answers.$.Users": req.body.user }, $inc: { "answers.$.value": 1, "value": 1 } }, function (err, docs) { res.json(docs) });
 })
