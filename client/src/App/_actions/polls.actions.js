@@ -199,6 +199,7 @@ function fetchVotes(poll) {
 }
 //dispatch(receiveCheck(boolean))
 function checkExistence(question) {
+    console.log("QUESTION INA CTIONS", question);
     return dispatch => {
         dispatch(requestCheck(question))
         pollService.checkExistence(question)
