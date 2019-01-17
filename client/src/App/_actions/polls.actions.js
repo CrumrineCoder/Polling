@@ -211,7 +211,7 @@ function checkExistence(question) {
         //console.log("Repsonse!" + response))
     }
     function requestCheck(question) { return { type: pollConstants.CHECK_REQUEST, question } }
-    function success(response) { return { type: pollConstants.CHECK_SUCCESS, response } }
+    function success(exists) { return { type: pollConstants.CHECK_SUCCESS, exists } }
     function failure(error) { return { type: pollConstants.CHECK_FAILURE, error } }
 }
 
