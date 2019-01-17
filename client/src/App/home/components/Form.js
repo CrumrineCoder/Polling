@@ -44,7 +44,8 @@ class Form extends Component {
         let creator;
 
         this.props.dispatch(pollActions.checkExistence(question));
-        console.log("Beanus", this.props.createPoll, this.props.createPoll.response);
+        console.log("Beanus", this.props);
+        console.log("this", this.props.checkPolls)
 
         // Remove empty answers
         answers = answers.filter(function (el) {
@@ -183,9 +184,9 @@ class Form extends Component {
 
 // get the create poll actions for dispatching
 function mapStateToProps(state) {
-    const  createPoll  = state.home.createPoll;
+    const  checkPolls  = state.home.checkPolls;
     return {
-        createPoll
+        checkPolls
     };
 }
 
