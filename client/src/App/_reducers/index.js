@@ -8,10 +8,10 @@ import votePoll from "./votePoll.reducer.js";
 import register from "./register.reducer.js";
 import authenticate from "./authentication.reducer.js";
 import users from "./users.reducer.js";
-import checkPolls from "./checkPolls.reducer.js";
+
 
 const home = combineReducers({
-	votesByPoll, selectedPoll, createPoll, votePoll, register, authenticate, users, checkPolls
+	votesByPoll, selectedPoll, createPoll, votePoll, register, authenticate, users
 });
 
 export default home;

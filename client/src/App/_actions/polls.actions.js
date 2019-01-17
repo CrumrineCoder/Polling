@@ -15,10 +15,21 @@ export const pollActions = {
     checkExistence
 }
 
+function checkExistence(question, poll) {
+    return dispatch => {
+        dispatch(requestCheck(question))
+        pollService.checkExistence(question)
+            .then(exists => { if (!exists) { dispatch(createPoll(poll)) }})
+        //console.log("Repsonse!" + response))
+    }
+    function requestCheck(question) { return { type: pollConstants.CHECK_REQUEST, question } }
+}
+
 // Dispatched from: Form.js
 // Param: a question, a set of answers, selected options, and the user who created the poll
 // Function: Create a poll and redirect the user to the voting page. 
 function createPoll(poll) {
+    console.log(poll);
     return dispatch => {
         dispatch(request(poll));
         pollService.createPoll(poll)
@@ -196,23 +207,6 @@ function fetchVotes(poll) {
             .then(json => dispatch(receiveVotes(poll, json)))
     }
     function requestVotes(poll) { return { type: pollConstants.GET_REQUEST, poll } }
-}
-//dispatch(receiveCheck(boolean))
-function checkExistence(question) {
-    return dispatch => {
-        dispatch(requestCheck(question))
-        pollService.checkExistence(question)
-            .then(response => {
-                dispatch(success(response));
-            },
-                error => {
-                    dispatch(failure(error.toString()));
-                })
-        //console.log("Repsonse!" + response))
-    }
-    function requestCheck(question) { return { type: pollConstants.CHECK_REQUEST, question } }
-    function success(exists) { return { type: pollConstants.CHECK_SUCCESS, exists } }
-    function failure(error) { return { type: pollConstants.CHECK_FAILURE, error } }
 }
 
 // Dispatched from: poll.actions.js

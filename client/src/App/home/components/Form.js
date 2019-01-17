@@ -22,9 +22,7 @@ class Form extends Component {
                 SeeResults: false
             },
             linked: false,
-            submitted: false,
-            isChecking: true,
-            exists: null
+            submitted: false
         };
         // Bind action creators to the state
         this.handleChangeField = this.handleChangeField.bind(this);
@@ -39,18 +37,18 @@ class Form extends Component {
         this.props.history.push("polls/" + id);
     }
 
-    componentWillReceiveProps() {
-        if (!this.props.checkPolls.isChecking) {
-            this.setState({ isChecking: false });
-            if (this.props.checkPolls.exists) {
-                this.setState({ exists: true });
-            } else {
-                this.setState({ exists: false });
-            }
-        } else {
-            this.setState({ isChecking: true });
-        }
-    }
+    // componentWillReceiveProps() {
+    //     if (!this.props.checkPolls.isChecking) {
+    //         this.setState({ isChecking: false });
+    //         if (this.props.checkPolls.exists) {
+    //             this.setState({ exists: true });
+    //         } else {
+    //             this.setState({ exists: false });
+    //         }
+    //     } else {
+    //         this.setState({ isChecking: true });
+    //     }
+    // }
 
     // Submit a poll 
     handleSubmit() {
@@ -58,9 +56,9 @@ class Form extends Component {
         const { dispatch } = this.props;
         let creator;
 
-        this.props.dispatch(pollActions.checkExistence(question));
-        console.log("Beanus", this.props);
-        console.log("this", this.props.checkPolls)
+    //    this.props.dispatch(pollActions.checkExistence(question));
+      //  console.log("Beanus", this.props);
+       // console.log("this", this.props.checkPolls)
 
         // Remove empty answers
         answers = answers.filter(function (el) {
@@ -81,13 +79,9 @@ class Form extends Component {
         // Force the user to have at least 2 answers
         else if (answers.length < 2) {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
-        } else if (this.props.checkPolls.exists) {
-            alert("Your question already exists!");
         } else {
             // Poll will be submitted
             this.setState({ submitted: true });
-            console.log(this.state.isChecking);
-            console.log(this.state.exists);
             // If the user wants this poll to be linked to their account, then send the user to the backend
             if (linked) {
                 creator = JSON.parse(localStorage.getItem('user')).id;
@@ -95,7 +89,7 @@ class Form extends Component {
                 creator = undefined;
             }
             // Dispatch to the create poll action in poll.actions.js
-            dispatch(pollActions.createPoll({ question, answers, options, creator }));
+            dispatch(pollActions.checkExistence(question, { question, answers, options, creator }));
         }
     }
 
@@ -203,10 +197,7 @@ class Form extends Component {
 
 // get the create poll actions for dispatching
 function mapStateToProps(state) {
-    const checkPolls = state.home.checkPolls;
-    return {
-        checkPolls
-    };
+    
 }
 
 export default connect(mapStateToProps)(Form);
