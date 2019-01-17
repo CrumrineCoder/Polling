@@ -171,7 +171,7 @@ function rescind(poll) {
 // Param: id of a poll or the string "All"
 // Function: Select a poll in the Redux state for use getting polls from the back end. 
 function selectPoll(poll) {
-     return { type: pollConstants.GET_SELECT, poll } 
+    return { type: pollConstants.GET_SELECT, poll }
 }
 
 function receiveVotes(poll, json) {
@@ -199,13 +199,20 @@ function fetchVotes(poll) {
 }
 //dispatch(receiveCheck(boolean))
 function checkExistence(question) {
-    console.log("QUESTION INA CTIONS", question);
     return dispatch => {
         dispatch(requestCheck(question))
         pollService.checkExistence(question)
-            .then(response => console.log("Repsonse!" + response))
+            .then(response => {
+                dispatch(success(response));
+            },
+                error => {
+                    dispatch(failure(error.toString()));
+                })
+        //console.log("Repsonse!" + response))
     }
     function requestCheck(question) { return { type: pollConstants.CHECK_REQUEST, question } }
+    function success(response) { return { type: pollConstants.CHECK_SUCCESS, response } }
+    function failure(error) { return { type: pollConstants.CHECK_FAILURE, error } }
 }
 
 // Dispatched from: poll.actions.js
