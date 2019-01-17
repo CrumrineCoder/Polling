@@ -22,7 +22,9 @@ class Form extends Component {
                 SeeResults: false
             },
             linked: false,
-            submitted: false
+            submitted: false,
+            isChecking: true,
+            exists: null
         };
         // Bind action creators to the state
         this.handleChangeField = this.handleChangeField.bind(this);
@@ -35,6 +37,19 @@ class Form extends Component {
     // History reroute, takes in a string for a location. In this case, it's  the id of the poll that was just created.
     goToResults(id) {
         this.props.history.push("polls/" + id);
+    }
+
+    componentWillReceiveProps() {
+        if (!this.props.checkPolls.isChecking) {
+            this.setState({ isChecking: false });
+            if (this.props.checkPolls.exists) {
+                this.setState({ exists: true });
+            } else {
+                this.setState({ exists: false });
+            }
+        } else {
+            this.setState({ isChecking: true });
+        }
     }
 
     // Submit a poll 
@@ -66,9 +81,13 @@ class Form extends Component {
         // Force the user to have at least 2 answers
         else if (answers.length < 2) {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
+        } else if (this.props.checkPolls.exists) {
+            alert("Your question already exists!");
         } else {
             // Poll will be submitted
             this.setState({ submitted: true });
+            console.log(this.state.isChecking);
+            console.log(this.state.exists);
             // If the user wants this poll to be linked to their account, then send the user to the backend
             if (linked) {
                 creator = JSON.parse(localStorage.getItem('user')).id;
@@ -133,7 +152,7 @@ class Form extends Component {
                     <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to link this poll with your account and edit the poll after creation.
                 </div>
             )
-        // If they are logged in, make a link this button to my account button
+            // If they are logged in, make a link this button to my account button
         } else {
             linkPoll = (
                 <label><input type="checkbox" checked={this.state.linked} onChange={this.handleLinkedClick} name="user" value="LinkPoll" /> Link Poll to my user account </label>
@@ -161,7 +180,7 @@ class Form extends Component {
                         className="form-control my-3"
                         placeholder="Poll Question"
                     />
-            
+
                     {this.state.answers.map((answer, idx) => (
                         <div className="answer" key={idx}>
                             <input
@@ -174,9 +193,9 @@ class Form extends Component {
                             <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton"><i className="fas fa-trash-alt"></i></button>
                         </div>
                     ))}
-                         <button type="button" onClick={this.handleAddAnswer} className="small btn btn-secondary float-right" id="addAnswer">Add Answer</button>
+                    <button type="button" onClick={this.handleAddAnswer} className="small btn btn-secondary float-right" id="addAnswer">Add Answer</button>
                 </div>
-     
+
             </div>
         )
     }
@@ -184,7 +203,7 @@ class Form extends Component {
 
 // get the create poll actions for dispatching
 function mapStateToProps(state) {
-    const  checkPolls  = state.home.checkPolls;
+    const checkPolls = state.home.checkPolls;
     return {
         checkPolls
     };
