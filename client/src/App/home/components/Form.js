@@ -38,8 +38,9 @@ class Form extends Component {
     }
 
     componentWillReceiveProps(){
-        console.log("BEAR DOG DOG");
-        console.log(this.props); 
+        if(this.props.checkPolls.isChecking){
+            alert("Your question already exists as a Poll.");
+        }
     }
     // componentWillReceiveProps() {
     //     if (!this.props.checkPolls.isChecking) {
