@@ -11,22 +11,22 @@
   "keywords": [],
   "license": "ISC",
   "dependencies": {
+    "webpack-dev-server": "*",
     "body-parser": "*",
     "cors": "*",
-    "crypto": "^1.0.1",
+    "crypto":"*",
     "dotenv": "*",
     "errorhandler": "*",
     "express": "^4.16.3",
     "express-jwt": "^5.3.1",
     "express-session": "*",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "*",
     "mongoose": "*",
     "morgan": "*",
-    "node": "^11.3.0",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
+    "node": "*",
+    "passport": "*",
+    "passport-local": "*",
     "path": "*",
-    "react-scripts": "^2.0.4",
-    "webpack-dev-server": "*"
+    "react-scripts": "*"
   }
 }
