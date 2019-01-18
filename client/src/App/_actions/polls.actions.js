@@ -19,10 +19,18 @@ function checkExistence(question, poll) {
     return dispatch => {
         dispatch(requestCheck(question))
         pollService.checkExistence(question)
-            .then(exists => { if (!exists) { dispatch(createPoll(poll)) }})
+            .then(exists => { 
+                if (!exists) {
+                     dispatch(createPoll(poll)) 
+                }
+                 else { 
+                     dispatch(pollExists(exists))
+                }
+            })
         //console.log("Repsonse!" + response))
     }
     function requestCheck(question) { return { type: pollConstants.CHECK_REQUEST, question } }
+    function pollExists(exists) { return { type: pollConstants.CHECK_SUCCESS, exists } }
 }
 
 // Dispatched from: Form.js

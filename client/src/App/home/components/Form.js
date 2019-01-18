@@ -37,6 +37,10 @@ class Form extends Component {
         this.props.history.push("polls/" + id);
     }
 
+    componentWillReceiveProps(){
+        console.log("BEAR DOG DOG");
+        console.log(this.props); 
+    }
     // componentWillReceiveProps() {
     //     if (!this.props.checkPolls.isChecking) {
     //         this.setState({ isChecking: false });
@@ -197,7 +201,10 @@ class Form extends Component {
 
 // get the create poll actions for dispatching
 function mapStateToProps(state) {
-    
+    const checkPolls = state.home.checkPolls;
+    return {
+        checkPolls
+    };
 }
 
 export default connect(mapStateToProps)(Form);
