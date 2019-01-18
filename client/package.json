@@ -38,7 +38,8 @@
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.2.0",
     "rxjs-compat": "^6.3.3",
-    "validator": "^10.10.0"
+    "validator": "^10.10.0",
+    "webpack-dev-server": "*"
   },
   "devDependencies": {
     "redux-devtools": "3.4.1",
