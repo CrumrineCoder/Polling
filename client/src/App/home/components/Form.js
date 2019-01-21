@@ -38,8 +38,6 @@ class Form extends Component {
     }
 
     componentWillReceiveProps(newProps){
-        console.log("Poll props", this.props.checkPolls)
-        console.log("New Props", newProps.checkPolls);
         if(newProps.checkPolls.exists && this.props.checkPolls.isChecking){
             alert("Your question already exists as a Poll.");
         }

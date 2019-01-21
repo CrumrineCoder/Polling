@@ -65,7 +65,6 @@ function getById(id) {
 
 // make a GET request to get poll(s) data
 function checkExistence(user) {
-    console.log("CHECKSERVICE", user); 
     const requestOptions = {
         method: 'GET'
     };

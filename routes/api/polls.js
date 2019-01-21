@@ -23,14 +23,8 @@ router.get('/get/:id', (req, res, next) => {
 });
 
 router.get('/checkExistence/:question', (req, res, next) => {
-  console.log("YOU CANNOT LIVE WITHOUT", req.params.question)
   return Polls.find({ question: { $exists: true, $eq: req.params.question } } , function (err, docs) {
-     console.log("HERE IT IS!" + docs);
-     if(docs.length == 0){
-       res.json(false);
-     } else{
-       res.json(true);
-     }
+    res.json(docs.length !== 0);
   });
 });
 

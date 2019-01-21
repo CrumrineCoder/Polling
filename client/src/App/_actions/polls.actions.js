@@ -16,12 +16,10 @@ export const pollActions = {
 }
 
 function checkExistence(question, poll) {
-    console.log("CHECKACTION", poll); 
     return dispatch => {
         dispatch(requestCheck(question))
         pollService.checkExistence(question)
             .then(exists => { 
-                console.log("EXISTS POLLS", exists);
                 if (!exists) {
                      dispatch(createPoll(poll)) 
                 }

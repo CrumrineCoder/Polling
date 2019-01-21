@@ -11,11 +11,8 @@ const initialState = {
 
 // Upon receiving all the  votes for the poll(s), save them to the Redux state by calling the votes() function below (this reducer is mainly used to access the votes for the votes() function for readability)
 export default function checkUsers(state = initialState, action) {
-   // console.log("ACTION TYPE", action.type); 
-    console.log("Are we getting the variable?", action.exists);
     switch (action.type) {
         case userConstants.CHECK_USER_REQUEST:
-            console.log("REQUEST USER");
             return {
                 ...state,
                 isChecking: true,
@@ -23,7 +20,6 @@ export default function checkUsers(state = initialState, action) {
                 exists: null
             }
         case userConstants.CHECK_USER_SUCCESS:
-            console.log("SUCCESS USER");
             return {
                 ...state,
                 isChecking: false,

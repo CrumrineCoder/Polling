@@ -35,16 +35,8 @@ router.post('/register', auth.optional, (req, res, next) => {
 });
 
 router.get('/checkExistence/:user', (req, res, next) => {
-  console.log("YOU CANNOT LIVE WITHOUT", req.params.user)
   return Users.find({ email: { $exists: true, $eq: req.params.user } } , function (err, docs) {
-     console.log("HERE IT IS!" + docs);
-     if(docs.length == 0){
-       console.log("RETURN FALSE");
-       res.json(false);
-     } else{
-       console.log("RETURN TRUE");
-       res.json(true);
-     }
+     res.json(docs.length !== 0);
   });
 });
 
