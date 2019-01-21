@@ -55,11 +55,12 @@ function checkExistence(user) {
         dispatch(requestCheck(user))
         userService.checkExistence(user.email)
             .then(exists => { 
+                console.log("EXISTS USERS", exists);
                 if (!exists) {
                      dispatch(register(user)) 
                 }
                  else { 
-                     dispatch(userExists(user))
+                     dispatch(userExists(exists))
                 }
             })
         //console.log("Repsonse!" + response))
