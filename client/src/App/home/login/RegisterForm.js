@@ -21,7 +21,6 @@ class RegisterForm extends Component {
     }
 
     componentWillReceiveProps(){
-        console.log("RECEIVED PROPS", this.props); 
         if(this.props.checkUsers.isChecking){
             alert("Your username is taken.");
         }

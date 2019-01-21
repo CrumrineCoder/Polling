@@ -52,7 +52,7 @@ function logout() {
 function checkExistence(user) {
     console.log("CHECKACTION", user); 
     return dispatch => {
-        dispatch(requestCheck(user))
+        dispatch(requestCheck(user.email))
         userService.checkExistence(user.email)
             .then(exists => { 
                 console.log("EXISTS USERS", exists);
