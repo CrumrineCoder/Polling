@@ -13,14 +13,17 @@ const initialState = {
 export default function checkPolls(state = initialState, action) {
    // console.log("ACTION TYPE", action.type); 
     console.log("Are we getting the variable?", action.exists);
+    console.log(action.type);
     switch (action.type) {
         case pollConstants.CHECK_POLL_REQUEST:
+        console.log("REQUEST POLL");
             return {
                 ...state,
                 isChecking: true,
                 didInvalidate: false
             }
         case pollConstants.CHECK_POLL_SUCCESS:
+        console.log("SUCCESS POLL");
             return {
                 ...state,
                 isChecking: false,

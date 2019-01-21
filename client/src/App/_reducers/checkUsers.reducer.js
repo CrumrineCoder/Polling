@@ -20,6 +20,7 @@ export default function checkUsers(state = initialState, action) {
                 ...state,
                 isChecking: true,
                 didInvalidate: false, 
+                exists: null
             }
         case userConstants.CHECK_USER_SUCCESS:
             console.log("SUCCESS USER");

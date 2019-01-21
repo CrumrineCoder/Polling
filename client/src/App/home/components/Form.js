@@ -37,8 +37,10 @@ class Form extends Component {
         this.props.history.push("polls/" + id);
     }
 
-    componentWillReceiveProps(){
-        if(this.props.checkPolls.isChecking){
+    componentWillReceiveProps(newProps){
+        console.log("Poll props", this.props.checkPolls)
+        console.log("New Props", newProps.checkPolls);
+        if(newProps.checkPolls.exists && this.props.checkPolls.isChecking){
             alert("Your question already exists as a Poll.");
         }
     }

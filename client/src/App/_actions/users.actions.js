@@ -49,11 +49,11 @@ function logout() {
     return { type: userConstants.LOGOUT };
 }
 
-function checkExistence(user) {
+function checkExistence(email, user) {
     console.log("CHECKACTION", user); 
     return dispatch => {
-        dispatch(requestCheck(user.email))
-        userService.checkExistence(user.email)
+        dispatch(requestCheck(email))
+        userService.checkExistence(email)
             .then(exists => { 
                 console.log("EXISTS USERS", exists);
                 if (!exists) {
@@ -65,7 +65,7 @@ function checkExistence(user) {
             })
         //console.log("Repsonse!" + response))
     }
-    function requestCheck(user) { return { type: userConstants.CHECK_USER_REQUEST, user } }
+    function requestCheck(email) { return { type: userConstants.CHECK_USER_REQUEST, email } }
     function userExists(exists) { return { type: userConstants.CHECK_USER_SUCCESS, exists } }
 }
 

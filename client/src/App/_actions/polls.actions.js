@@ -16,6 +16,7 @@ export const pollActions = {
 }
 
 function checkExistence(question, poll) {
+    console.log("CHECKACTION", poll); 
     return dispatch => {
         dispatch(requestCheck(question))
         pollService.checkExistence(question)

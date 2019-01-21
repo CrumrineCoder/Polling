@@ -90,6 +90,7 @@ function get(poll) {
 
 // make a GET request to get poll(s) data
 function checkExistence(question) {
+    console.log("CHECK SERVICE", question)
     const requestOptions = {
         method: 'GET'
     };

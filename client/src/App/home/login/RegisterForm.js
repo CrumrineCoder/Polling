@@ -20,8 +20,11 @@ class RegisterForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillReceiveProps(){
-        if(this.props.checkUsers.isChecking){
+    componentWillReceiveProps(newProps){
+        console.log("Receive", this.props.checkUsers);
+        console.log("Receive new", newProps); 
+      // if(this.props.checkUsers.isChecking){
+        if(newProps.checkUsers.exists){
             alert("Your username is taken.");
         }
     }
@@ -31,7 +34,7 @@ class RegisterForm extends Component {
         var { email, password } = this.state;
         const { dispatch } = this.props;
         this.setState({ submitted: true });
-        dispatch(userActions.checkExistence({ email, password }));
+        dispatch(userActions.checkExistence(email, { email, password }));
     }
 
     // For form control
