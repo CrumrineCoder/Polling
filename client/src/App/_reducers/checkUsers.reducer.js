@@ -1,4 +1,4 @@
-import { pollConstants } from '../_constants/pollConstants.js';
+import { userConstants } from '../_constants/user.constants.js';
 
 // isFetching is a loading variable and is iniitally set to false
 // didInvalidate is a variable for error handling and is initially set to false
@@ -10,15 +10,15 @@ const initialState = {
 }
 
 // Upon receiving all the  votes for the poll(s), save them to the Redux state by calling the votes() function below (this reducer is mainly used to access the votes for the votes() function for readability)
-export default function checkPolls(state = initialState, action) {
+export default function checkUsers(state = initialState, action) {
     switch (action.type) {
-        case pollConstants.CHECK_POLL_REQUEST:
+        case userConstants.CHECK_USER_REQUEST:
             return {
                 ...state,
                 isChecking: true,
                 didInvalidate: false
             }
-        case pollConstants.CHECK_POLL_SUCCESS:
+        case userConstants.CHECK_USER_SUCCESS:
         console.log("Are we getting the variable?", action.exists);
             return {
                 ...state,
@@ -26,7 +26,7 @@ export default function checkPolls(state = initialState, action) {
                 didInvalidate: false,
                 exists: action.exists
             }
-        case pollConstants.CHECK_POLL_FAILURE:
+        case userConstants.CHECK_USER_FAILURE:
             return {
                 ...state,
                 didInvalidate: true

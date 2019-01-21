@@ -20,12 +20,18 @@ class RegisterForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillReceiveProps(){
+        if(this.props.checkUsers.isChecking){
+            alert("Your username is taken.");
+        }
+    }
+
     // Submit a registration request
     handleSubmit() {
         var { email, password } = this.state;
         const { dispatch } = this.props;
         this.setState({ submitted: true });
-        dispatch(userActions.register({ email, password }));
+        dispatch(userActions.checkExistence({ email, password }));
     }
 
     // For form control
@@ -75,11 +81,11 @@ class RegisterForm extends Component {
     }
 }
 
-// Register actions, from register.reducer.js
+// get the create poll actions for dispatching
 function mapStateToProps(state) {
-    const { registration } = state.home.register;
+    const checkUsers = state.home.checkUsers;
     return {
-        registration
+        checkUsers
     };
 }
 

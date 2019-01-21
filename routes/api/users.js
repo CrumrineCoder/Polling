@@ -34,6 +34,20 @@ router.post('/register', auth.optional, (req, res, next) => {
     .then(() => res.json({ user: finalUser.toAuthJSON() }));
 });
 
+router.get('/checkExistence/:user', (req, res, next) => {
+  console.log("YOU CANNOT LIVE WITHOUT", req.params.user)
+  return Users.find({ email: { $exists: true, $eq: req.params.user } } , function (err, docs) {
+     console.log("HERE IT IS!" + docs);
+     if(docs.length == 0){
+       console.log("RETURN FALSE");
+       res.json(false);
+     } else{
+       console.log("RETURN TRUE");
+       res.json(true);
+     }
+  });
+});
+
 //POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
   let user = req.body.user;

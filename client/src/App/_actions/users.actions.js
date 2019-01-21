@@ -12,7 +12,8 @@ export const userActions = {
     register,
     login,
     getCurrent,
-    logout
+    logout,
+    checkExistence
 };
 
 // Dispatched from: LoginForm.js
@@ -48,10 +49,30 @@ function logout() {
     return { type: userConstants.LOGOUT };
 }
 
+function checkExistence(user) {
+    console.log("CHECKACTION", user); 
+    return dispatch => {
+        dispatch(requestCheck(user))
+        userService.checkExistence(user.email)
+            .then(exists => { 
+                if (!exists) {
+                     dispatch(register(user)) 
+                }
+                 else { 
+                     dispatch(userExists(user))
+                }
+            })
+        //console.log("Repsonse!" + response))
+    }
+    function requestCheck(user) { return { type: userConstants.CHECK_USER_REQUEST, user } }
+    function userExists(exists) { return { type: userConstants.CHECK_USER_SUCCESS, exists } }
+}
+
 // Dispatched from: RegisterForm.js
 // Param: username and password
 // Function: Send a register request to the back end and redirect the user to the login page
 function register(user) {
+    console.log("registeraction", user); 
     return dispatch => {
         dispatch(request(user));
 

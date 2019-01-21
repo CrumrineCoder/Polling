@@ -12,7 +12,8 @@ export const userService = {
     register,
     login,
     getCurrent,
-    logout
+    logout,
+    checkExistence
 };
 
 // login the user
@@ -61,6 +62,15 @@ function getById(id) {
 
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 } */
+
+// make a GET request to get poll(s) data
+function checkExistence(user) {
+    console.log("CHECKSERVICE", user); 
+    const requestOptions = {
+        method: 'GET'
+    };
+    return fetch("api/users/checkExistence/"+user, requestOptions).then(handleResponse);
+}
 
 //  registera user
 function register(user) {

@@ -29,8 +29,8 @@ function checkExistence(question, poll) {
             })
         //console.log("Repsonse!" + response))
     }
-    function requestCheck(question) { return { type: pollConstants.CHECK_REQUEST, question } }
-    function pollExists(exists) { return { type: pollConstants.CHECK_SUCCESS, exists } }
+    function requestCheck(question) { return { type: pollConstants.CHECK_POLL_REQUEST, question } }
+    function pollExists(exists) { return { type: pollConstants.CHECK_POLL_SUCCESS, exists } }
 }
 
 // Dispatched from: Form.js
