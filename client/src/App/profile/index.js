@@ -1,15 +1,16 @@
 import React from 'react'
 import { Container } from 'reactstrap';
+import Profile from './containers/Profile';
 //import './style.css';
 
-class Profile extends React.Component {
+class ProfilePage extends React.Component {
 
 	render() {
 
 		return (
 			<div id="profile">
 				<Container>
-					<h1>PAGE UNDER CONSTRUCTION</h1>
+					<Profile></Profile>
 				</Container>
 			</div>
 		);
@@ -17,4 +18,4 @@ class Profile extends React.Component {
 
 }
 
-export default Profile;
+export default ProfilePage;
