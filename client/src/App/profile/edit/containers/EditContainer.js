@@ -53,15 +53,8 @@ class EditContainer extends Component {
 				for (var l = 0; l < this.props.votes.userAnswers[k].Users.length; l++) {
 					id.push(this.props.votes.userAnswers[k].Users[l]);
 				}
-			}
-			// If the current user matches ANY of the votes, redirect them to the results
-			if (localStorage.getItem('user')) {
-				if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) !== -1) {
-					history.push("");
-					history.push(votes._id + "/results");
-				}
-			} 
-
+            }
+            
 			// Redirect all poll data to the Poll component. 
 			pageContent = (
 				<ul className="polls">
