@@ -18,11 +18,7 @@ class Edit extends Component {
 			selected: [],
 			userAnswer: '',
 			_parentID: this.props._id,
-			isLoggedIn: typeof localStorage["user"] !== 'undefined',
-			choiceType: '',
-			optionChangeType: undefined,
-			submitType: undefined,
-			submissionType: undefined
+			isLoggedIn: typeof localStorage["user"] !== 'undefined'
 		};
 		// Bind action creators to the state. 
 		this.handleOptionChange = this.handleOptionChange.bind(this);
@@ -31,43 +27,6 @@ class Edit extends Component {
 		this.handleMultipleSubmit = this.handleMultipleSubmit.bind(this);
 		this.setUserAnswer = this.setUserAnswer.bind(this);
 		this.handleBackClick = this.handleBackClick.bind(this);
-	}
-
-	// Before the first render, determine the variables for the rendered componenets whether they'll be checkboxes or radio and which optionChange and submit logic they'll  use. 
-	componentWillMount() {
-		if (this.props.options.MultipleAnswers) {
-			this.setState({ choiceType: "checkbox" });
-			this.setState({ optionChangeType: this.handleMultipleOptionChange });
-			this.setState({ submitType: this.handleMultipleSubmit });
-		} else {
-			this.setState({ choiceType: "radio" });
-			this.setState({ optionChangeType: this.handleOptionChange });
-			this.setState({ submitType: this.handleSubmit });
-		}
-	}
-
-	//Single vote submission logic
-	handleSubmit() {
-		var { selected, _parentID, _id, userAnswer, submissionType, isLoggedIn } = this.state;
-		const { dispatch } = this.props;
-		// If the user is logged in 
-		if (isLoggedIn) {
-			let user = JSON.parse(localStorage.getItem('user'));
-			user = user.id;
-			// User is submitting  a user answer 
-			if (submissionType === "toSubmit") {
-				dispatch(pollActions.votePollCreateUserAnswer({ _parentID, userAnswer, user }));
-			} // User is voting on a user answer
-			else if (submissionType === "userAnswer") {
-				dispatch(pollActions.votePollUserAnswer({ _id, selected, user }));
-			} // User is voting on a poll answer
-			else if (submissionType === "answer") {
-				dispatch(pollActions.votePollAnswer({ _id, selected, user }));
-			} // User didn't select an option
-			else {
-				alert("You must select an option.")
-			}
-		}
 	}
 
 	// Multiple vote submission logic 
@@ -86,12 +45,6 @@ class Edit extends Component {
 		else {
 			alert("You must select at least one option.")
 		}
-	}
-
-	// Single vote option change logic
-	handleOptionChange(evt) {
-		// Change which select poll is to the value of the poll option, get the id of that poll option, and change the submissionType to the one on the poll option
-		this.setState({ selected: evt.target.value, _id: evt.target.id, submissionType: evt.target.getAttribute("submissiontype") });
 	}
 
 	// Multiple vote option change logic
@@ -114,18 +67,6 @@ class Edit extends Component {
 
 		// update the state with the new array of options
 		this.setState({ selected: selected })
-	}
-
-	// update the state with new user created answer
-	setUserAnswer(evt) {
-		this.setState({ userAnswer: evt.target.value });
-	}
-
-	// Button to go to results (will only show if poll creator set SeeResults to true)
-	handleBackClick(e) {
-		e.preventDefault();
-		history.push("");
-		history.push(this.props._id + "/results");
 	}
 
 	render() {
