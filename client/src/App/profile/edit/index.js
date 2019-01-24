@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { Container } from 'reactstrap';
-import PollContainer from './containers/PollContainer';
+import EditContainer from './containers/EditContainer';
 //import './style.css';
 
 // Needed for router.js
-class pollIndex extends Component {
+class editIndex extends Component {
 	render() {
 		return (
 			<div id="pollIndex">
 				<Container>
-					<PollContainer id={this.props.match.params.id} />
+					<EditContainer id={this.props.match.params.id} />
 				</Container>
 			</div>
 		);
 	}
 }
 
-export default pollIndex;
+export default editIndex;

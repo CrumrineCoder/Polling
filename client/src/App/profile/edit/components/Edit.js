@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { pollActions } from '../../_actions/polls.actions.js';
-import { userActions } from '../../_actions/users.actions.js';
+import { pollActions } from '../../../_actions/polls.actions.js';
+import { userActions } from '../../../_actions/users.actions.js';
 import { Link } from 'react-router-dom';
-import { history } from '../../store.js';
+import { history } from '../../../store.js';
 
 
-class Poll extends Component {
+class Edit extends Component {
 
 	constructor(props) {
 		super(props);
@@ -214,4 +214,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(Poll);
+export default connect(mapStateToProps)(Edit);

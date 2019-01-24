@@ -10,6 +10,7 @@ import Home from "./home";
 //import Login from "./login";
 import Profile from "./profile";
 import PollShow from "./poll";
+import Edit from "./profile/edit";
 import Result from "./result";
 import PageNotFound from "./common/components/PageNotFound";
 import Login from "./home/login/LoginForm";
@@ -88,6 +89,7 @@ export default (
     <Route path="/register" component={Register} />
     <Route path="/login" component={Login} />
     <Route path="/:id/vote/" component={PollShow} />
+    <Route path="/:id/edit/" component={Edit} />
     <PrivateRoute path="/:id/results/" component={Result} />
     <Route component={PageNotFound} />
   </Switch>

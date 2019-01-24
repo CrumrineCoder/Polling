@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Poll from '../components/Poll';
-import { pollActions } from '../../_actions/polls.actions.js';
-import { history } from '../../store.js';
+import Edit from '../components/Edit';
+import { pollActions } from '../../../_actions/polls.actions.js';
+import { history } from '../../../store.js';
 
-class Polls extends Component {
+class EditContainer extends Component {
 
 	static propTypes = {
 		// selectedPoll: PropTypes.string.isRequired,
@@ -65,7 +65,7 @@ class Polls extends Component {
 			// Redirect all poll data to the Poll component. 
 			pageContent = (
 				<ul className="polls">
-					<Poll {...votes} />
+					<Edit {...votes} />
 				</ul>
 			)
 		}
@@ -78,7 +78,7 @@ class Polls extends Component {
 	}
 }
 
-Polls.propTypes = {
+EditContainer.propTypes = {
 	// selectedPoll: PropTypes.string.isRequired,
 	// votes: PropTypes.object.isRequired,
 	isFetching: PropTypes.bool.isRequired,
@@ -104,4 +104,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps)(Polls);
+export default connect(mapStateToProps)(EditContainer);
