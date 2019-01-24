@@ -79,6 +79,10 @@ header{
   cursor: pointer; 
 }
 
+#userAnswersBox{
+  clear: both;
+}
+
 .warning{
   color: red; 
 }
@@ -246,7 +250,7 @@ background-color: #6e6e6d;
 Railscasts-like style (c) Visoft, Inc. (Damien White)
 */
 
-.poll .btn, #pleaseLoginOrRegister{
+.poll .btn:not(.editButton), #pleaseLoginOrRegister{
   margin: 20px;
 }
 

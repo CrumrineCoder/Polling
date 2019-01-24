@@ -13,7 +13,7 @@ class Edit extends Component {
         const { dispatch } = this.props;
         // Get the current user, authentication
         dispatch(userActions.getCurrent());
-        console.log("TELL ME THE PROPS", this.props); 
+        console.log("TELL ME THE PROPS", this.props);
         // selected is the votes selected by the user, userAnswer is the user created answer, _parentID is the id of the poll itself, isLoggedIn checks if the user is logged in, choiceType is whether the inputs to select votes are radio (single vote) or checkbox (multiple votes), optionChangeType keeps track of whether we're using multipleOptionChange or optionChange, submitType is  handleSubmit or handleMultipleSubmit, and submissionType is whether the user is voting on a poll answer, a user answer, creating a user answer, or multiple. 
         this.state = {
             selected: [],
@@ -93,15 +93,15 @@ class Edit extends Component {
         });
     }
 
-      // For Options
-      handleOptionChange(e) {
+    // For Options
+    handleOptionChange(e) {
         let options = { ...this.state.options };
         options[e.target.value] = !options[e.target.value];
         this.setState({ options });
     }
 
-     // For Answers
-     handleAnswerTextChange = (idx) => (evt) => {
+    // For Answers
+    handleAnswerTextChange = (idx) => (evt) => {
         const newAnswers = this.state.answers.map((answer, sidx) => {
             if (idx !== sidx) return answer;
             return { ...answer, text: evt.target.value };
@@ -122,10 +122,11 @@ class Edit extends Component {
                         <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Allow users to rescind their vote </label>
                         <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> Allow users to see the results before voting </label>
                     </div>
-                    <button onClick={this.handleSubmit} className="btn btn-primary float-right" id="pollSubmitButton">Submit</button>
+                    <button onClick={this.handleSubmit} className="btn btn-primary float-right editButton" id="pollSubmitButton">Submit</button>
                 </div>
 
                 <div id="leftPoll">
+                    <h3>Question</h3>
                     <input
                         onChange={(ev) => this.handleChangeField('question', ev)}
                         value={this.state.question}
@@ -133,6 +134,7 @@ class Edit extends Component {
                         placeholder="Poll Question"
                     />
 
+                    <h3>Answers</h3>
                     {this.state.answers.map((answer, idx) => (
                         <div className="answer" key={idx}>
                             <input
@@ -145,19 +147,23 @@ class Edit extends Component {
                             <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton"><i className="fas fa-trash-alt"></i></button>
                         </div>
                     ))}
-                      {this.state.userAnswers.map((answer, idx) => (
-                        <div className="answer" key={idx}>
-                            <input
-                                type="text"
-                                placeholder={`Answer #${idx + 1}`}
-                                value={answer.text}
-                                onChange={this.handleAnswerTextChange(idx)}
-                                className="form-control"
-                            />
-                            <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton"><i className="fas fa-trash-alt"></i></button>
-                        </div>
-                    ))}
-                    <button type="button" onClick={this.handleAddAnswer} className="small btn btn-secondary float-right" id="addAnswer">Add Answer</button>
+
+                    <button type="button" onClick={this.handleAddAnswer} className="small btn btn-secondary float-right editButton" id="addAnswer">Add Answer</button>
+                    <div id='userAnswersBox'>
+                        <h3>User Answers</h3>
+                        {this.state.userAnswers.map((answer, idx) => (
+                            <div className="answer" key={idx}>
+                                <input
+                                    type="text"
+                                    placeholder={`Answer #${idx + 1}`}
+                                    value={answer.text}
+                                    onChange={this.handleAnswerTextChange(idx)}
+                                    className="form-control"
+                                />
+                                <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton"><i className="fas fa-trash-alt"></i></button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
             </div>
