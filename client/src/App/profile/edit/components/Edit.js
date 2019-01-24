@@ -16,7 +16,6 @@ class Edit extends Component {
         console.log("TELL ME THE PROPS", this.props);
         // selected is the votes selected by the user, userAnswer is the user created answer, _parentID is the id of the poll itself, isLoggedIn checks if the user is logged in, choiceType is whether the inputs to select votes are radio (single vote) or checkbox (multiple votes), optionChangeType keeps track of whether we're using multipleOptionChange or optionChange, submitType is  handleSubmit or handleMultipleSubmit, and submissionType is whether the user is voting on a poll answer, a user answer, creating a user answer, or multiple. 
         this.state = {
-            selected: [],
             _parentID: this.props._id,
             isLoggedIn: typeof localStorage["user"] !== 'undefined',
             question: this.props.question,
@@ -26,50 +25,24 @@ class Edit extends Component {
             submitted: false
         };
         // Bind action creators to the state. 
-        this.handleMultipleOptionChange = this.handleMultipleOptionChange.bind(this);
-        this.handleMultipleSubmit = this.handleMultipleSubmit.bind(this);
+        this.handleEditSubmit = this.handleEditSubmit.bind(this);
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleOptionChange = this.handleOptionChange.bind(this);
+        this.handleRemoveUserAnswer = this.handleRemoveUserAnswer.bind(this);
     }
 
     // Multiple vote submission logic 
-    handleMultipleSubmit() {
+    handleEditSubmit() {
         var { selected, _id, _parentID, isLoggedIn } = this.state;
         const { dispatch } = this.props;
         // If the user selected at least one option to vote
-        if (selected !== undefined && selected.length !== 0) {
-            // If the user is logged in 
-            if (isLoggedIn) {
-                let user = JSON.parse(localStorage.getItem('user'));
-                user = user.id;
-                dispatch(pollActions.votePollMultiple({ selected, _id, _parentID, user }))
-            }
-        } // User selected nothing
-        else {
-            alert("You must select at least one option.")
+        // If the user is logged in 
+        if (isLoggedIn) {
+            let user = JSON.parse(localStorage.getItem('user'));
+            user = user.id;
+            console.log(this.state);
+            //  dispatch(pollActions.votePollMultiple({ selected, _id, _parentID, user }))
         }
-    }
-
-    // Multiple vote option change logic
-    handleMultipleOptionChange(evt) {
-        let selectedIndex;
-        var insert = { value: evt.target.value, _id: evt.target.id, submitted: evt.target.getAttribute("submitted") }
-        //	let idIndex;
-        var selected = this.state.selected;
-        //	var _id = this.state._id;
-        // check if the check box is checked or unchecked
-        if (evt.target.checked) {
-            // add the numerical value of the checkbox to options array
-            selected.push(insert);
-            //		_id.push(evt.target.id);
-        } else {
-            // or remove the value from the unchecked checkbox from the array
-            selectedIndex = selected.indexOf(insert);
-            selected.splice(selectedIndex, 1)
-        }
-
-        // update the state with the new array of options
-        this.setState({ selected: selected })
     }
 
     // For Question
@@ -90,6 +63,12 @@ class Edit extends Component {
     handleRemoveAnswer = (idx) => () => {
         this.setState({
             answers: this.state.answers.filter((s, sidx) => idx !== sidx)
+        });
+    }
+
+    handleRemoveUserAnswer = (idx) => () => {
+        this.setState({
+            userAnswers: this.state.userAnswers.filter((s, sidx) => idx !== sidx)
         });
     }
 
@@ -122,7 +101,7 @@ class Edit extends Component {
                         <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Allow users to rescind their vote </label>
                         <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> Allow users to see the results before voting </label>
                     </div>
-                    <button onClick={this.handleSubmit} className="btn btn-primary float-right editButton" id="pollSubmitButton">Submit</button>
+                    <button onClick={this.handleEditSubmit} className="btn btn-primary float-right editButton" id="pollSubmitButton">Save Changes</button>
                 </div>
 
                 <div id="leftPoll">
@@ -160,7 +139,7 @@ class Edit extends Component {
                                     onChange={this.handleAnswerTextChange(idx)}
                                     className="form-control"
                                 />
-                                <button type="button" onClick={this.handleRemoveAnswer(idx)} className="small answerDeleteButton"><i className="fas fa-trash-alt"></i></button>
+                                <button type="button" onClick={this.handleRemoveUserAnswer(idx)} className="small answerDeleteButton"><i className="fas fa-trash-alt"></i></button>
                             </div>
                         ))}
                     </div>
