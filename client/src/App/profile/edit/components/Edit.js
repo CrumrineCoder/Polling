@@ -33,16 +33,25 @@ class Edit extends Component {
 
     // Multiple vote submission logic 
     handleEditSubmit() {
-        var { selected, _id, _parentID, isLoggedIn } = this.state;
-        const { dispatch } = this.props;
-        // If the user selected at least one option to vote
-        // If the user is logged in 
-        if (isLoggedIn) {
-            let user = JSON.parse(localStorage.getItem('user'));
-            user = user.id;
-            console.log(this.state);
-            //  dispatch(pollActions.votePollMultiple({ selected, _id, _parentID, user }))
+        var { answers} = this.state;
+        
+        answers = answers.filter(function (el) {
+            return el.text !== "";
+        });
+
+        // Remove duplicate answers
+        answers = answers.filter((answer, index, self) =>
+            index === self.findIndex((a) => (
+                a.text === answer.text
+            ))
+        )
+        // If there are less than 2 answers, say there has to be at least 2
+        if(answers.length < 2){
+            alert("Too few answers!");
         }
+        // If the props for anything other than user answers are different, set a variable that'll tell the back end to reset data. 
+
+        // Send a dispatch to edit the poll. 
     }
 
     // For Question
