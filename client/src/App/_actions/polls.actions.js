@@ -12,7 +12,8 @@ export const pollActions = {
     fetchVotesIfNeeded,
     selectPoll,
     rescind,
-    checkExistence
+    checkExistence,
+    editPoll
 }
 
 function checkExistence(question, poll) {
@@ -56,6 +57,29 @@ function createPoll(poll) {
     function request(poll) { return { type: pollConstants.POLL_REGISTER_REQUEST, poll } }
     function success(poll) { return { type: pollConstants.POLL_REGISTER_SUCCESS, poll } }
     function failure(error) { return { type: pollConstants.POLL_REGISTER_FAILURE, error } }
+}
+
+
+function editPoll(poll) {
+    console.log(poll);
+    return dispatch => {
+        dispatch(request(poll));
+        pollService.editPoll(poll)
+            .then(
+                poll => {
+                    dispatch(success());
+                    history.push(poll.poll._id + "/vote");
+                    dispatch(alertActions.success('Edit Poll Successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            )
+    }
+    function request(poll) { return { type: pollConstants.EDIT_POLL_REQUEST, poll } }
+    function success(poll) { return { type: pollConstants.EDIT_POLL_SUCCESS, poll } }
+    function failure(error) { return { type: pollConstants.EDIT_POLL_FAILURE, error } }
 }
 
 // Dispatched from: Poll.js

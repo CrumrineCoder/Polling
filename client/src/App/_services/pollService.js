@@ -8,7 +8,8 @@ export const pollService = {
     votePollMultiple,
     get,
     rescind,
-    checkExistence
+    checkExistence,
+    editPoll
 }
 
 // make a post request with a created poll to the backend
@@ -19,6 +20,15 @@ function createPoll(poll) {
         body: JSON.stringify(poll)
     };
     return fetch(`/api/polls/createPoll`, requestOptions).then(handleResponse);
+}
+
+function editPoll(poll) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(poll)
+    };
+    return fetch(`/api/polls/editPoll`, requestOptions).then(handleResponse);
 }
 
 // make a post request with a single vote on a poll creator answer
