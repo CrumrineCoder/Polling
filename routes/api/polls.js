@@ -11,6 +11,15 @@ router.post('/createPoll', (req, res, next) => {
     .catch(next);
 });
 
+router.post('/editPoll', (req, res, next) => {
+  const { body } = req;
+  console.log(body);
+  //const finalPoll = new Polls(body);
+ // return finalPoll.findOneAndUpdate()
+   /* .then(() => res.json({ poll: finalPoll.toJSON() }))
+    .catch(next); */
+});
+
 router.get('/get/', (req, res, next) => {
   return Polls.find()
     .sort({ createdAt: 'descending' })

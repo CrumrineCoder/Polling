@@ -34,7 +34,7 @@ class Edit extends Component {
     // Multiple vote submission logic 
     handleEditSubmit() {
         var { _parentID, answers, userAnswers, options, question } = this.state;
-
+        const { dispatch }  = this.props;
         var shouldReset = false; 
 
         // If the props for anything other than user answers are different, set a variable that'll tell the back end to reset data. 
@@ -62,7 +62,7 @@ class Edit extends Component {
         }
 
         // Send a dispatch to edit the poll. 
-        // dispatch(pollActions.edit({_parentID, answers, userAnswers, options, question});
+        dispatch(pollActions.editPoll({_parentID, answers, userAnswers, options, question}));
     }
 
     // For Question
