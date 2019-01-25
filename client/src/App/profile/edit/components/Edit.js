@@ -33,11 +33,13 @@ class Edit extends Component {
 
     // Multiple vote submission logic 
     handleEditSubmit() {
-        var { answers, userAnswers, options, question } = this.state;
+        var { _parentID, answers, userAnswers, options, question } = this.state;
+
+        var shouldReset = false; 
 
         // If the props for anything other than user answers are different, set a variable that'll tell the back end to reset data. 
         if (answers !== this.props.answers || options !== this.props.options || question !== this.props.question) {
-            alert("DIFFERENT!");
+            shouldReset = true;
         }
 
         answers = answers.filter(function (el) {
@@ -60,6 +62,7 @@ class Edit extends Component {
         }
 
         // Send a dispatch to edit the poll. 
+        // dispatch(pollActions.edit({_parentID, answers, userAnswers, options, question});
     }
 
     // For Question
