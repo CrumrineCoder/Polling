@@ -33,8 +33,13 @@ class Edit extends Component {
 
     // Multiple vote submission logic 
     handleEditSubmit() {
-        var { answers} = this.state;
-        
+        var { answers, userAnswers, options, question } = this.state;
+
+        // If the props for anything other than user answers are different, set a variable that'll tell the back end to reset data. 
+        if (answers !== this.props.answers || options !== this.props.options || question !== this.props.question) {
+            alert("DIFFERENT!");
+        }
+
         answers = answers.filter(function (el) {
             return el.text !== "";
         });
@@ -45,11 +50,14 @@ class Edit extends Component {
                 a.text === answer.text
             ))
         )
-        // If there are less than 2 answers, say there has to be at least 2
-        if(answers.length < 2){
-            alert("Too few answers!");
+        // Remove empty questions
+        if (question === "") {
+            alert("You must supply a question.");
         }
-        // If the props for anything other than user answers are different, set a variable that'll tell the back end to reset data. 
+        // Force the user to have at least 2 answers
+        else if (answers.length < 2) {
+            alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
+        }
 
         // Send a dispatch to edit the poll. 
     }
