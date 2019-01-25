@@ -15,9 +15,15 @@ router.post('/editPoll', (req, res, next) => {
   const { body } = req;
   console.log(body);
   //const finalPoll = new Polls(body);
- // return finalPoll.findOneAndUpdate()
-   /* .then(() => res.json({ poll: finalPoll.toJSON() }))
-    .catch(next); */
+  Polls.findOneAndUpdate({ _id: body._parentID }, body, function (err, doc) {
+    if (err){
+      console.log("ERRORS", err)
+    };
+    console.log("DOC", doc);
+    return res.json(doc);
+  });
+  /* .then(() => res.json({ poll: finalPoll.toJSON() }))
+   .catch(next); */
 });
 
 router.get('/get/', (req, res, next) => {
@@ -32,7 +38,7 @@ router.get('/get/:id', (req, res, next) => {
 });
 
 router.get('/checkExistence/:question', (req, res, next) => {
-  return Polls.find({ question: { $exists: true, $eq: req.params.question } } , function (err, docs) {
+  return Polls.find({ question: { $exists: true, $eq: req.params.question } }, function (err, docs) {
     res.json(docs.length !== 0);
   });
 });
