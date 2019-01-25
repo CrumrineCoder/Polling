@@ -223,6 +223,7 @@ function receiveVotes(poll, json) {
     if (poll === "All") {
         json = json.polls;
     }
+    console.log("IS THE CREATOR HERE?", json);
     return {
         type: pollConstants.GET_SUCCESS,
         poll,

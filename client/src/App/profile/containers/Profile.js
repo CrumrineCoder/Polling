@@ -34,10 +34,15 @@ class Profile extends Component {
 		}
 	}
 
+	filterByValue(array, string) {
+		return array.filter(o =>
+			Object.keys(o).some(k => o[k].toString().toLowerCase().includes(string.toLowerCase())));
+	}
+
 	render() {
 		let { polls } = this.props;
 		let pageContent = '';
-
+	
 		// If we're fetching polls, tell the user why
 		if (this.props.isFetching) {
 			pageContent = (
@@ -47,6 +52,9 @@ class Profile extends Component {
 			)
 		} // Show all polls as poll links 
 		else {
+			console.log(polls);
+			console.log(JSON.parse(localStorage.getItem('user')));
+			console.log(this.filterByValue(polls, JSON.parse(localStorage.getItem('user')).email));
 			pageContent = (
 				<ul className="polls">
 					{polls.map((poll, i) => <EditLink update={this.update} key={i} {...poll} />)}
