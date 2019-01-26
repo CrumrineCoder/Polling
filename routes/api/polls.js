@@ -44,7 +44,7 @@ router.get('/get/', (req, res, next) => {
         polls[poll._id] = poll;
       });
       console.log("STILL HERE?", polls);
-      res.send({polls});  
+      res.json(polls);  
     }); 
 });
 

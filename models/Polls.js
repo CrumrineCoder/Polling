@@ -31,6 +31,8 @@ PollSchema.methods.toJSON = function() {
     userAnswers: this.userAnswers,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
+    creator: this.creator, 
+    value: this.value
   };
 
   
