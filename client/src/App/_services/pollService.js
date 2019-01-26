@@ -14,11 +14,13 @@ export const pollService = {
 
 // make a post request with a created poll to the backend
 function createPoll(poll) {
+    console.log(poll);
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
+    console.log(JSON.parse(requestOptions.body));
     return fetch(`/api/polls/createPoll`, requestOptions).then(handleResponse);
 }
 

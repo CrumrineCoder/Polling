@@ -91,10 +91,13 @@ class Form extends Component {
             if (linked) {
                 creator = JSON.parse(localStorage.getItem('user')).id;
             } else {
-                creator = undefined;
+                creator = "";
             }
+
+            let value = 0;
+
             // Dispatch to the create poll action in poll.actions.js
-            dispatch(pollActions.checkExistence(question, { question, answers, options, creator }));
+            dispatch(pollActions.checkExistence(question, { question, answers, options, creator, value }));
         }
     }
 

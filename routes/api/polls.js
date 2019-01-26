@@ -6,6 +6,8 @@ var ObjectId = require('mongodb').ObjectID;
 router.post('/createPoll', (req, res, next) => {
   const { body } = req;
   const finalPoll = new Polls(body);
+  console.log("body", body);
+  console.log("finalPoll", finalPoll); 
   return finalPoll.save()
     .then(() => res.json({ poll: finalPoll.toJSON() }))
     .catch(next);
@@ -30,20 +32,20 @@ router.get('/get/', (req, res, next) => {
   //Polls.findOne({ creator: "5c4618928665512ec004db32" }, function (err, docs) { console.log("IS THERE A CREATOR HERE?", docs) });
 
   //return Polls.find({}, function(err, docs){console.log("DOCS", docs)}); 
- /*return Polls.find()
+ return Polls.find()
     .sort({ createdAt: 'descending' })
     .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
-    .catch(next); */
+    .catch(next); 
 
-    Polls.find({}, function(err, param) {
+   /* Polls.find({}, function(err, param) {
       var polls = {};
-  
+      console.log("GET", param);
       param.forEach(function(poll) {
         polls[poll._id] = poll;
       });
-  
+      console.log("STILL HERE?", polls);
       res.send({polls});  
-    });
+    }); */
 });
 
 router.get('/get/:id', (req, res, next) => {
