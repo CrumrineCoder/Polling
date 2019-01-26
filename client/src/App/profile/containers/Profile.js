@@ -53,13 +53,19 @@ class Profile extends Component {
 		} // Show all polls as poll links 
 		else {
 			console.log(polls);
+			console.log(this.props);
+		/*	console.log((polls).find(x => x.creator == JSON.parse(localStorage.getItem('user')).id))
 			console.log(JSON.parse(localStorage.getItem('user')));
 			console.log(this.filterByValue(polls, JSON.parse(localStorage.getItem('user')).email));
-			pageContent = (
+			var cut = polls.filter(function(poll) {
+				return poll.creator == "5c489f668665512ec004db37";
+			  })
+			console.log(cut);  */
+		/*	pageContent = (
 				<ul className="polls">
 					{polls.map((poll, i) => <EditLink update={this.update} key={i} {...poll} />)}
 				</ul>
-			)
+			) */
 		}
 		/*
 		<Search onSearch={this.handleSearchBar} />

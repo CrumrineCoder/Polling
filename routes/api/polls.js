@@ -27,10 +27,23 @@ router.post('/editPoll', (req, res, next) => {
 });
 
 router.get('/get/', (req, res, next) => {
-  return Polls.find()
+  //Polls.findOne({ creator: "5c4618928665512ec004db32" }, function (err, docs) { console.log("IS THERE A CREATOR HERE?", docs) });
+
+  //return Polls.find({}, function(err, docs){console.log("DOCS", docs)}); 
+ /*return Polls.find()
     .sort({ createdAt: 'descending' })
     .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
-    .catch(next);
+    .catch(next); */
+
+    Polls.find({}, function(err, param) {
+      var polls = {};
+  
+      param.forEach(function(poll) {
+        polls[poll._id] = poll;
+      });
+  
+      res.send({polls});  
+    });
 });
 
 router.get('/get/:id', (req, res, next) => {

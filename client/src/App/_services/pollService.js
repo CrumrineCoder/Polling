@@ -109,6 +109,8 @@ function checkExistence(question) {
 // error handling if there is one and returning data to the front end after getting it from the backend
 function handleResponse(response) {
     return response.text().then(text => {
+        console.log("HERE?", JSON.parse(text));
+      //  console.log((JSON.parse(text).polls).find(x => x.creator == "5c489f668665512ec004db37"))
         const data = text && JSON.parse(text);
         if (!response.ok) {
             const error = (data && data.message) || response.statusText;
