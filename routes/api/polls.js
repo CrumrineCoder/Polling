@@ -32,12 +32,12 @@ router.get('/get/', (req, res, next) => {
   //Polls.findOne({ creator: "5c4618928665512ec004db32" }, function (err, docs) { console.log("IS THERE A CREATOR HERE?", docs) });
 
   //return Polls.find({}, function(err, docs){console.log("DOCS", docs)}); 
- return Polls.find()
+/* return Polls.find()
     .sort({ createdAt: 'descending' })
     .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
-    .catch(next); 
+    .catch(next); */
 
-   /* Polls.find({}, function(err, param) {
+    Polls.find({}, function(err, param) {
       var polls = {};
       console.log("GET", param);
       param.forEach(function(poll) {
@@ -45,7 +45,7 @@ router.get('/get/', (req, res, next) => {
       });
       console.log("STILL HERE?", polls);
       res.send({polls});  
-    }); */
+    }); 
 });
 
 router.get('/get/:id', (req, res, next) => {
