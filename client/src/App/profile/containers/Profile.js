@@ -13,8 +13,8 @@ class Profile extends Component {
 	}
 
 	static propTypes = {
-	//	selectedPoll: PropTypes.string.isRequired,
-	//	polls: PropTypes.array.isRequired,
+		//	selectedPoll: PropTypes.string.isRequired,
+		//	polls: PropTypes.array.isRequired,
 		isFetching: PropTypes.bool.isRequired,
 		lastUpdated: PropTypes.number,
 		dispatch: PropTypes.func.isRequired
@@ -42,7 +42,7 @@ class Profile extends Component {
 	render() {
 		let { polls } = this.props;
 		let pageContent = '';
-	
+
 		// If we're fetching polls, tell the user why
 		if (this.props.isFetching) {
 			pageContent = (
@@ -52,20 +52,14 @@ class Profile extends Component {
 			)
 		} // Show all polls as poll links 
 		else {
-			console.log(polls);
-			console.log(this.props);
-		/*	console.log((polls).find(x => x.creator == JSON.parse(localStorage.getItem('user')).id))
-			console.log(JSON.parse(localStorage.getItem('user')));
-			console.log(this.filterByValue(polls, JSON.parse(localStorage.getItem('user')).email));
-			var cut = polls.filter(function(poll) {
-				return poll.creator == "5c489f668665512ec004db37";
-			  })
-			console.log(cut);  */
-		/*	pageContent = (
+			var pollsByUser = polls.filter(function (poll) {
+				return poll.creator ==  JSON.parse(localStorage.getItem('user')).id;
+			})
+			pageContent = (
 				<ul className="polls">
-					{polls.map((poll, i) => <EditLink update={this.update} key={i} {...poll} />)}
+					{pollsByUser.map((poll, i) => <EditLink update={this.update} key={i} {...poll} />)}
 				</ul>
-			) */
+			)
 		}
 		/*
 		<Search onSearch={this.handleSearchBar} />
@@ -73,8 +67,8 @@ class Profile extends Component {
 		*/
 		// Display the Form, header for polls listing, and all poll links
 		return (
-			<div className="pollsContainer">	
-				<h1>All Polls Listing</h1>
+			<div className="pollsContainer">
+				<h1>Your Polls</h1>
 				{pageContent}
 			</div>
 		);

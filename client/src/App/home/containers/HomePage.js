@@ -82,7 +82,6 @@ class Home extends Component {
 			)
 		} // Show all polls as poll links 
 		else {
-			console.log(polls); 
 			pageContent = (
 				<ul className="polls">
 					{polls.map((poll, i) => <PollLink update={this.update} key={i} {...poll} />)}

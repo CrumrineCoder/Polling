@@ -38,7 +38,6 @@ function checkExistence(question, poll) {
 // Param: a question, a set of answers, selected options, and the user who created the poll
 // Function: Create a poll and redirect the user to the voting page. 
 function createPoll(poll) {
-    console.log(poll);
     return dispatch => {
         dispatch(request(poll));
         pollService.createPoll(poll)
@@ -61,13 +60,11 @@ function createPoll(poll) {
 
 
 function editPoll(poll) {
-    console.log(poll);
     return dispatch => {
         dispatch(request(poll));
         pollService.editPoll(poll)
             .then(
                 poll => {
-                    console.log("POLL!", poll); 
                     dispatch(success());
                     history.push("");
                     history.push(poll._id + "/vote");
