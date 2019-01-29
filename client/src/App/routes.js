@@ -91,7 +91,7 @@ export default (
     <Route path="/:id/vote/" component={PollShow} />
     <PrivateRoute path="/:id/results/" component={Result} />
     <PrivateRoute path="/profile" component={Profile} />
-    <PrivateRoute path="/:id/edit/" component={Edit} />
+    <Route path="/:id/edit/" component={Edit} />
     <Route component={PageNotFound} />
   </Switch>
 );
