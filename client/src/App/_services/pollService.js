@@ -22,12 +22,14 @@ function createPoll(poll) {
     return fetch(`/api/polls/createPoll`, requestOptions).then(handleResponse);
 }
 
-function editPoll(poll) {
+function editPoll(poll, shouldReset) {
+    let body = JSON.stringify({poll: poll, shouldReset: shouldReset });
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(poll)
+        body: body
     };
+    console.log(requestOptions);
     return fetch(`/api/polls/editPoll`, requestOptions).then(handleResponse);
 }
 

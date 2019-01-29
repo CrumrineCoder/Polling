@@ -59,10 +59,10 @@ function createPoll(poll) {
 }
 
 
-function editPoll(poll) {
+function editPoll(poll, shouldReset) {
     return dispatch => {
         dispatch(request(poll));
-        pollService.editPoll(poll)
+        pollService.editPoll(poll, shouldReset)
             .then(
                 poll => {
                     dispatch(success());

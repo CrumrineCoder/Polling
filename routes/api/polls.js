@@ -12,13 +12,14 @@ router.post('/createPoll', (req, res, next) => {
 });
 
 router.post('/editPoll', (req, res, next) => {
-  const { body } = req;
-  Polls.findOneAndUpdate({ _id: body._parentID }, body, function (err, doc) {
+  const poll = req.body.poll;
+  const shouldReset = req.body.shouldReset;
+  Polls.findOneAndUpdate({ _id: poll._parentID }, poll, function (err, doc) {
     if (err){
       console.log("ERRORS", err)
     };
     return res.json(doc);
-  });
+  }); 
 });
 
 router.get('/get/', (req, res, next) => {

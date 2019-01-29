@@ -35,7 +35,7 @@ class Edit extends Component {
     handleEditSubmit() {
         var { _parentID, answers, userAnswers, options, question } = this.state;
         const { dispatch }  = this.props;
-        var shouldReset = false; 
+        let shouldReset = false; 
 
         // If the props for anything other than user answers are different, set a variable that'll tell the back end to reset data. 
         if (answers !== this.props.answers || options !== this.props.options || question !== this.props.question) {
@@ -61,8 +61,10 @@ class Edit extends Component {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
         }
 
+        console.log(shouldReset);
+
         // Send a dispatch to edit the poll. 
-        dispatch(pollActions.editPoll({_parentID, answers, userAnswers, options, question}));
+        dispatch(pollActions.editPoll({_parentID, answers, userAnswers, options, question}, shouldReset));
     }
 
     // For Question
