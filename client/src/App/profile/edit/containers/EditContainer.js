@@ -42,6 +42,18 @@ class EditContainer extends Component {
 			)
 		} // Once the data is fetched... 
 		else {
+			console.log("VOTES", votes);
+			if (localStorage.getItem('user')) {
+				if (JSON.parse(localStorage.getItem('user')).id !== votes.creator) {
+					alert("This poll was not made by you. Redirecting...");
+					history.push("");
+					history.push(votes._id + "/vote");
+				}
+			} else{
+				alert("Please login to edit this poll. Redirecting...");
+				history.push("");
+				history.push("/login");
+			} 
 			// Get all of the users 
 			let id = [];
 			for (var i = 0; i < this.props.votes.answers.length; i++) {

@@ -85,12 +85,13 @@ PrivateRoute = withRouter(connect(mapStateToProps)(PrivateRoute));
 export default (
   <Switch>
     <Route exact path="/" component={Home} />
-    <Route path="/profile" component={Profile} />
+  
     <Route path="/register" component={Register} />
     <Route path="/login" component={Login} />
     <Route path="/:id/vote/" component={PollShow} />
-    <Route path="/:id/edit/" component={Edit} />
     <PrivateRoute path="/:id/results/" component={Result} />
+    <PrivateRoute path="/profile" component={Profile} />
+    <PrivateRoute path="/:id/edit/" component={Edit} />
     <Route component={PageNotFound} />
   </Switch>
 );
