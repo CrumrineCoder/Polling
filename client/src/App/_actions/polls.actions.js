@@ -59,13 +59,12 @@ function createPoll(poll) {
 }
 
 
-function editPoll(poll, shouldReset) {
+function editPoll(poll) {
     return dispatch => {
         dispatch(request(poll));
-        pollService.editPoll(poll, shouldReset)
+        pollService.editPoll(poll)
             .then(
                 poll => {
-                    console.log("Poll?", poll);
                     dispatch(success());
                     history.push("");
                     history.push(poll._id + "/vote");

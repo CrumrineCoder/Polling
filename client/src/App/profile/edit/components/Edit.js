@@ -86,7 +86,7 @@ class Edit extends Component {
         }
 
         // Send a dispatch to edit the poll. 
-        dispatch(pollActions.editPoll({_id, creator, answers, value, userAnswers, options, question}, shouldReset));
+        dispatch(pollActions.editPoll({_id, creator, answers, value, userAnswers, options, question}));
     }
 
     // For Question

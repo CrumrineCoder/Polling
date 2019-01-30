@@ -12,8 +12,9 @@ router.post('/createPoll', (req, res, next) => {
 });
 
 router.post('/editPoll', (req, res, next) => {
-  const poll = req.body.poll;
-  const shouldReset = req.body.shouldReset;
+ // const poll = req.body.poll;
+ const poll = req.body;
+ // const shouldReset = req.body.shouldReset;
   Polls.replaceOne({ _id: poll._id }, poll, function (err, doc) {
     if (err){
       console.log("ERRORS", err)
