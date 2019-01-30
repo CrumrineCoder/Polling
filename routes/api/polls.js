@@ -18,7 +18,7 @@ router.post('/editPoll', (req, res, next) => {
     if (err){
       console.log("ERRORS", err)
     };
-    return res.json(doc);
+    return res.json(poll);
   }); 
 });
 

@@ -37,9 +37,6 @@ class Edit extends Component {
         const { dispatch } = this.props;
         let shouldReset = false;
 
-        console.log(answers);
-        console.log(this.props.answers);
-
         function objectsAreSame(x, y) {
             var objectsAreSame = true;
             for(var propertyName in x) {
@@ -76,7 +73,6 @@ class Edit extends Component {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
         }
 
-        console.log(shouldReset);
         if(shouldReset){
             answers.map(function (x) {
                 x.Users = [];
@@ -84,10 +80,9 @@ class Edit extends Component {
                 return x
             });
         }
-        console.log(answers);
 
         // Send a dispatch to edit the poll. 
-        //   dispatch(pollActions.editPoll({_id, answers, userAnswers, options, question}, shouldReset));
+        dispatch(pollActions.editPoll({_id, answers, userAnswers, options, question}, shouldReset));
     }
 
     // For Question
