@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PollLink from '../components/PollLink';
 //import Tags from '../components/Tag';
-//import Search from '../components/Search';
+import Search from '../components/Search';
 import Form from '../components/Form';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { withRouter } from 'react-router-dom';
@@ -88,13 +88,15 @@ class Home extends Component {
 				</ul>
 			)
 		}
+		
+		
 		/*
-		<Search onSearch={this.handleSearchBar} />
 		<Tags onChangeFilter={this.changeFilter} />
 		*/
 		// Display the Form, header for polls listing, and all poll links
 		return (
 			<div className="pollsContainer">	
+				<Search onSearch={this.handleSearchBar} />
 				<Form></Form>
 				<h1>All Polls Listing</h1>
 				{pageContent}
