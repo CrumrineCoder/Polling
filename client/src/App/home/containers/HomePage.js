@@ -64,14 +64,12 @@ class Home extends Component {
 			text = text.split(' ');
 			return items.filter(function (item) {
 				return text.every(function (el) {
-					return (item.title.toLowerCase().indexOf(el.toLowerCase()) > -1 || item.body.toLowerCase().indexOf(el.toLowerCase()) > -1);
+					return (item.question.toLowerCase().indexOf(el.toLowerCase()) > -1);
 				});
 			});
 		}
 
-		if (this.state.query !== "") {
-			polls = find(polls, this.state.query);
-		}
+	
 
 		// If we're fetching polls, tell the user why
 		if (this.props.isFetching) {
@@ -82,6 +80,9 @@ class Home extends Component {
 			)
 		} // Show all polls as poll links 
 		else {
+			if (this.state.query !== "") {
+				polls = find(polls, this.state.query);
+			}
 			pageContent = (
 				<ul className="polls">
 					{polls.map((poll, i) => <PollLink update={this.update} key={i} {...poll} />)}
@@ -96,8 +97,8 @@ class Home extends Component {
 		// Display the Form, header for polls listing, and all poll links
 		return (
 			<div className="pollsContainer">	
-				<Search onSearch={this.handleSearchBar} />
 				<Form></Form>
+				<Search onSearch={this.handleSearchBar} />
 				<h1>All Polls Listing</h1>
 				{pageContent}
 			</div>
