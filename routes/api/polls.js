@@ -14,7 +14,7 @@ router.post('/createPoll', (req, res, next) => {
 router.post('/editPoll', (req, res, next) => {
   const poll = req.body.poll;
   const shouldReset = req.body.shouldReset;
-  Polls.findOneAndUpdate({ _id: poll._parentID }, poll, function (err, doc) {
+  Polls.replaceOne({ _id: poll._id }, poll, function (err, doc) {
     if (err){
       console.log("ERRORS", err)
     };

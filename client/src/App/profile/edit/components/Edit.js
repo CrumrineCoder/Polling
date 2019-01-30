@@ -16,7 +16,7 @@ class Edit extends Component {
         console.log("TELL ME THE PROPS", this.props);
         // selected is the votes selected by the user, userAnswer is the user created answer, _parentID is the id of the poll itself, isLoggedIn checks if the user is logged in, choiceType is whether the inputs to select votes are radio (single vote) or checkbox (multiple votes), optionChangeType keeps track of whether we're using multipleOptionChange or optionChange, submitType is  handleSubmit or handleMultipleSubmit, and submissionType is whether the user is voting on a poll answer, a user answer, creating a user answer, or multiple. 
         this.state = {
-            _parentID: this.props._id,
+            _id: this.props._id,
             isLoggedIn: typeof localStorage["user"] !== 'undefined',
             question: this.props.question,
             answers: this.props.answers,
@@ -33,12 +33,27 @@ class Edit extends Component {
 
     // Multiple vote submission logic 
     handleEditSubmit() {
-        var { _parentID, answers, userAnswers, options, question } = this.state;
-        const { dispatch }  = this.props;
-        let shouldReset = false; 
+        var { _id, answers, userAnswers, options, question } = this.state;
+        const { dispatch } = this.props;
+        let shouldReset = false;
+
+        console.log(answers);
+        console.log(this.props.answers);
+
+        function objectsAreSame(x, y) {
+            var objectsAreSame = true;
+            for(var propertyName in x) {
+               if(x[propertyName] !== y[propertyName]) {
+                  objectsAreSame = false;
+                  break;
+               }
+            }
+            return objectsAreSame;
+         }
+
 
         // If the props for anything other than user answers are different, set a variable that'll tell the back end to reset data. 
-        if (answers !== this.props.answers || options !== this.props.options || question !== this.props.question) {
+        if ( !(objectsAreSame(answers, this.props.answers)) ||  !(objectsAreSame(options, this.props.options)) || question !== this.props.question) {
             shouldReset = true;
         }
 
@@ -62,9 +77,17 @@ class Edit extends Component {
         }
 
         console.log(shouldReset);
+        if(shouldReset){
+            answers.map(function (x) {
+                x.Users = [];
+                x.value = 0;
+                return x
+            });
+        }
+        console.log(answers);
 
         // Send a dispatch to edit the poll. 
-        dispatch(pollActions.editPoll({_parentID, answers, userAnswers, options, question}, shouldReset));
+        //   dispatch(pollActions.editPoll({_id, answers, userAnswers, options, question}, shouldReset));
     }
 
     // For Question

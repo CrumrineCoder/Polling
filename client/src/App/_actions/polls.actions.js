@@ -65,9 +65,10 @@ function editPoll(poll, shouldReset) {
         pollService.editPoll(poll, shouldReset)
             .then(
                 poll => {
+                    console.log(poll);
                     dispatch(success());
                     history.push("");
-                    history.push(poll._id + "/vote");
+                    history.push(poll.poll._id + "/vote");
                     dispatch(alertActions.success('Edit Poll Successful'));
                 },
                 error => {
