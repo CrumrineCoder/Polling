@@ -22,6 +22,7 @@ class Edit extends Component {
             answers: this.props.answers,
             userAnswers: this.props.userAnswers,
             options: this.props.options,
+            value: this.props.value,
             submitted: false
         };
         // Bind action creators to the state. 
@@ -33,9 +34,10 @@ class Edit extends Component {
 
     // Multiple vote submission logic 
     handleEditSubmit() {
-        var { _id, answers, userAnswers, options, question } = this.state;
+        var { _id, answers, userAnswers, options, question, value } = this.state;
         const { dispatch } = this.props;
         let shouldReset = false;
+        let creator = JSON.parse(localStorage.getItem('user')).id;
 
         function objectsAreSame(x, y) {
             var objectsAreSame = true;
@@ -52,6 +54,7 @@ class Edit extends Component {
         // If the props for anything other than user answers are different, set a variable that'll tell the back end to reset data. 
         if ( !(objectsAreSame(answers, this.props.answers)) ||  !(objectsAreSame(options, this.props.options)) || question !== this.props.question) {
             shouldReset = true;
+           
         }
 
         answers = answers.filter(function (el) {
@@ -79,10 +82,11 @@ class Edit extends Component {
                 x.value = 0;
                 return x
             });
+            value  = 0;
         }
 
         // Send a dispatch to edit the poll. 
-        dispatch(pollActions.editPoll({_id, answers, userAnswers, options, question}, shouldReset));
+        dispatch(pollActions.editPoll({_id, creator, answers, value, userAnswers, options, question}, shouldReset));
     }
 
     // For Question
