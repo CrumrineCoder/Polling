@@ -84,7 +84,7 @@ class Result extends Component {
 
 		for (var j = 0; j < this.props.votes.userAnswers.length; j++) {
 			var fullUserData = this.props.votes.userAnswers;
-			var userInsert = { name: fullUserData[j].text, votes: fullUserData[j].value };
+			var userInsert = { name: "[User] " + fullUserData[j].text, votes: fullUserData[j].value };
 			data.push(userInsert);
 		}
 
