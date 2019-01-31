@@ -250,6 +250,30 @@ background-color: #6e6e6d;
 Railscasts-like style (c) Visoft, Inc. (Damien White)
 */
 
+.searchBar{
+  padding-inline-start: 40px;
+}
+
+.searchBar input{
+  margin: 20px 0px;
+  padding: 10px;
+  padding-left: 20px;
+  border-radius: 25px; 
+  color: rgb(128,134,139);
+  font-size: 20px;
+  display: inline-block; 
+  left: 0;
+  border: none;
+  width: 80%;
+}
+
+.searchBar input:focus{
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+}
+
 .poll .btn:not(.editButton), #pleaseLoginOrRegister{
   margin: 20px;
 }
