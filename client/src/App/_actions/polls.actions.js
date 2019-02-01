@@ -83,7 +83,6 @@ function editPoll(poll) {
 }
 
 function deletePoll(id) {
-    console.log(id);
     return dispatch => {
         dispatch(request(id));
         pollService.deletePoll(id)
@@ -91,7 +90,7 @@ function deletePoll(id) {
                 id => {
                     dispatch(success());
                     history.push("");
-                    history.push(id + "/vote");
+                    history.push("profile");
                     dispatch(alertActions.success('Edit Poll Successful'));
                 },
                 error => {

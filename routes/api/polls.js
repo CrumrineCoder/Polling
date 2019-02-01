@@ -24,9 +24,12 @@ router.post('/editPoll', (req, res, next) => {
 });
 
 router.post('/deletePoll/:id', (req, res, next) => {
-  console.log("honk");
-  console.log(req.body);
-  console.log(req.params.id);
+  Polls.remove( {"_id": req.params.id}, function (err, doc) {
+    if (err) {
+      console.log("ERRORS", err)
+    };
+    return res.json(req.param.id);
+  });
 });
 
 router.get('/get/', (req, res, next) => {

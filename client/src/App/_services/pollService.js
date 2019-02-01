@@ -34,7 +34,6 @@ function editPoll(poll) {
 }
 
 function deletePoll(id) {
-    console.log(id);
     //    let body = JSON.stringify({poll: poll, shouldReset: shouldReset });
     const requestOptions = {
         method: 'POST'
