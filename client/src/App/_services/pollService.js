@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export const pollService = {
-    createPoll, 
+    createPoll,
     votePollAnswer,
     votePollUserAnswer,
     votePollCreateUserAnswer,
@@ -9,7 +9,8 @@ export const pollService = {
     get,
     rescind,
     checkExistence,
-    editPoll
+    editPoll,
+    deletePoll
 }
 
 // make a post request with a created poll to the backend
@@ -23,7 +24,7 @@ function createPoll(poll) {
 }
 
 function editPoll(poll) {
-//    let body = JSON.stringify({poll: poll, shouldReset: shouldReset });
+    //    let body = JSON.stringify({poll: poll, shouldReset: shouldReset });
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -32,27 +33,37 @@ function editPoll(poll) {
     return fetch(`/api/polls/editPoll`, requestOptions).then(handleResponse);
 }
 
+function deletePoll(id) {
+    //    let body = JSON.stringify({poll: poll, shouldReset: shouldReset });
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: id
+    };
+    return fetch(`/api/polls/deletePoll`, requestOptions).then(handleResponse);
+}
+
 // make a post request with a single vote on a poll creator answer
 function votePollAnswer(poll) {
-     const requestOptions = {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify(poll)
-     };
-     return fetch(`/api/polls/voteAnswer`, requestOptions).then(handleResponse);
- }
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(poll)
+    };
+    return fetch(`/api/polls/voteAnswer`, requestOptions).then(handleResponse);
+}
 
- // make a post request with a single vote on a user answer
- function votePollUserAnswer(poll) {
-     const requestOptions = {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify(poll)
-     };
-     return fetch(`/api/polls/voteUserAnswer`, requestOptions).then(handleResponse);
- }
+// make a post request with a single vote on a user answer
+function votePollUserAnswer(poll) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(poll)
+    };
+    return fetch(`/api/polls/voteUserAnswer`, requestOptions).then(handleResponse);
+}
 
- // make a post request with a single created user answer
+// make a post request with a single created user answer
 function votePollCreateUserAnswer(poll) {
     const requestOptions = {
         method: 'POST',
@@ -89,13 +100,13 @@ function get(poll) {
     };
 
     // if the incoming Poll id is set to "All", that means get all polls
-    if(poll === "All"){
+    if (poll === "All") {
         return fetch("api/polls/get/", requestOptions).then(handleResponse);
-    } 
+    }
     // Or if we have just one ID, get one poll
     else {
         var id = mongoose.Types.ObjectId(poll);
-         return fetch("api/polls/get/"+id, requestOptions).then(handleResponse);
+        return fetch("api/polls/get/" + id, requestOptions).then(handleResponse);
     }
 }
 
@@ -104,14 +115,14 @@ function checkExistence(question) {
     const requestOptions = {
         method: 'GET'
     };
-    return fetch("api/polls/checkExistence/"+question, requestOptions).then(handleResponse);
+    return fetch("api/polls/checkExistence/" + question, requestOptions).then(handleResponse);
 }
 
 // error handling if there is one and returning data to the front end after getting it from the backend
 function handleResponse(response) {
-  //  console.log(response.text());
+    //  console.log(response.text());
     return response.text().then(text => {
-      //  console.log((JSON.parse(text).polls).find(x => x.creator == "5c489f668665512ec004db37"))
+        //  console.log((JSON.parse(text).polls).find(x => x.creator == "5c489f668665512ec004db37"))
         const data = text && JSON.parse(text);
         if (!response.ok) {
             const error = (data && data.message) || response.statusText;

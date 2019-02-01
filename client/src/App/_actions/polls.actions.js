@@ -13,7 +13,8 @@ export const pollActions = {
     selectPoll,
     rescind,
     checkExistence,
-    editPoll
+    editPoll,
+    deletePoll
 }
 
 function checkExistence(question, poll) {
@@ -79,6 +80,28 @@ function editPoll(poll) {
     function request(poll) { return { type: pollConstants.EDIT_POLL_REQUEST, poll } }
     function success(poll) { return { type: pollConstants.EDIT_POLL_SUCCESS, poll } }
     function failure(error) { return { type: pollConstants.EDIT_POLL_FAILURE, error } }
+}
+
+function deletePoll(id) {
+    return dispatch => {
+        dispatch(request(id));
+        pollService.deletePoll(id)
+            .then(
+                id => {
+                    dispatch(success());
+                    history.push("");
+                    history.push(id + "/vote");
+                    dispatch(alertActions.success('Edit Poll Successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            )
+    }
+    function request(id) { return { type: pollConstants.DELETE_POLL_REQUEST, id } }
+    function success(id) { return { type: pollConstants.DELETE_POLL_SUCCESS, id } }
+    function failure(error) { return { type: pollConstants.DELETE_POLL_FAILURE, error } }
 }
 
 // Dispatched from: Poll.js

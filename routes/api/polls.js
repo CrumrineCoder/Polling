@@ -12,22 +12,26 @@ router.post('/createPoll', (req, res, next) => {
 });
 
 router.post('/editPoll', (req, res, next) => {
- // const poll = req.body.poll;
- const poll = req.body;
- // const shouldReset = req.body.shouldReset;
+  // const poll = req.body.poll;
+  const poll = req.body;
+  // const shouldReset = req.body.shouldReset;
   Polls.replaceOne({ _id: poll._id }, poll, function (err, doc) {
-    if (err){
+    if (err) {
       console.log("ERRORS", err)
     };
     return res.json(poll);
-  }); 
+  });
+});
+
+router.post('/deletePoll', (req, res, next) => {
+  console.log("honk");
 });
 
 router.get('/get/', (req, res, next) => {
- return Polls.find()
+  return Polls.find()
     .sort({ createdAt: 'descending' })
     .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
-    .catch(next); 
+    .catch(next);
 });
 
 router.get('/get/:id', (req, res, next) => {

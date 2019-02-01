@@ -27,9 +27,16 @@ class Edit extends Component {
         };
         // Bind action creators to the state. 
         this.handleEditSubmit = this.handleEditSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         this.handleChangeField = this.handleChangeField.bind(this);
         this.handleOptionChange = this.handleOptionChange.bind(this);
         this.handleRemoveUserAnswer = this.handleRemoveUserAnswer.bind(this);
+    }
+
+    handleDelete() {
+        if(window.confirm("Are you sure you want to delete this Poll? It will be gone forever, and forever is a long time.")){
+            // dispatch an action to delete the poll with its ID
+        }
     }
 
     // Multiple vote submission logic 
@@ -145,7 +152,7 @@ class Edit extends Component {
                         <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Allow users to rescind their vote </label>
                         <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> Allow users to see the results before voting </label>
                     </div>
-                    <button onClick={this.handleEditSubmit} className="btn btn-outline-danger editButton pollSubmitButton" >Delete</button>
+                    <button onClick={this.handleDelete} className="btn btn-outline-danger editButton pollSubmitButton" >Delete</button>
                     <button onClick={this.handleEditSubmit} className="btn btn-primary float-right editButton pollSubmitButton" >Save Changes</button>
                 </div>
 
