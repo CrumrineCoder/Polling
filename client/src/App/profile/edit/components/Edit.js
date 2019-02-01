@@ -145,7 +145,8 @@ class Edit extends Component {
                         <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Allow users to rescind their vote </label>
                         <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> Allow users to see the results before voting </label>
                     </div>
-                    <button onClick={this.handleEditSubmit} className="btn btn-primary float-right editButton" id="pollSubmitButton">Save Changes</button>
+                    <button onClick={this.handleEditSubmit} className="btn btn-outline-danger editButton pollSubmitButton" >Delete</button>
+                    <button onClick={this.handleEditSubmit} className="btn btn-primary float-right editButton pollSubmitButton" >Save Changes</button>
                 </div>
 
                 <div id="leftPoll">
