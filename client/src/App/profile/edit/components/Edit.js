@@ -34,8 +34,11 @@ class Edit extends Component {
     }
 
     handleDelete() {
+        const { _id } = this.state;
+        const { dispatch } = this.props;
         if(window.confirm("Are you sure you want to delete this Poll? It will be gone forever, and forever is a long time.")){
             // dispatch an action to delete the poll with its ID
+            dispatch(pollActions.deletePoll(_id));
         }
     }
 

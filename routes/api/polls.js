@@ -23,8 +23,10 @@ router.post('/editPoll', (req, res, next) => {
   });
 });
 
-router.post('/deletePoll', (req, res, next) => {
+router.post('/deletePoll/:id', (req, res, next) => {
   console.log("honk");
+  console.log(req.body);
+  console.log(req.params.id);
 });
 
 router.get('/get/', (req, res, next) => {

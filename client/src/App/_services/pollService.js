@@ -34,13 +34,12 @@ function editPoll(poll) {
 }
 
 function deletePoll(id) {
+    console.log(id);
     //    let body = JSON.stringify({poll: poll, shouldReset: shouldReset });
     const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: id
+        method: 'POST'
     };
-    return fetch(`/api/polls/deletePoll`, requestOptions).then(handleResponse);
+    return fetch(`/api/polls/deletePoll/` + id, requestOptions).then(handleResponse);
 }
 
 // make a post request with a single vote on a poll creator answer

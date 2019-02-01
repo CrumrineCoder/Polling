@@ -83,6 +83,7 @@ function editPoll(poll) {
 }
 
 function deletePoll(id) {
+    console.log(id);
     return dispatch => {
         dispatch(request(id));
         pollService.deletePoll(id)
