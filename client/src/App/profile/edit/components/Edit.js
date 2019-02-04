@@ -42,6 +42,7 @@ class Edit extends Component {
         }
     }
 
+    
     // Multiple vote submission logic 
     handleEditSubmit() {
         var { _id, answers, userAnswers, options, question, value } = this.state;
