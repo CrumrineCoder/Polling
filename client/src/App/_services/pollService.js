@@ -99,7 +99,7 @@ function get(poll) {
 
     // if the incoming Poll id is set to "All", that means get all polls
     if (poll === "All") {
-        return fetch("api/polls/get/", requestOptions).then(handleResponse);
+        return fetch("https://us-central1-polling-269dc.cloudfunctions.net/bigben", requestOptions).then(handleResponse);
     }
     // Or if we have just one ID, get one poll
     else {
@@ -120,6 +120,7 @@ function checkExistence(question) {
 function handleResponse(response) {
     //  console.log(response.text());
     return response.text().then(text => {
+        console.log(text);
         //  console.log((JSON.parse(text).polls).find(x => x.creator == "5c489f668665512ec004db37"))
         const data = text && JSON.parse(text);
         if (!response.ok) {
