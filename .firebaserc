@@ -1,5 +1,5 @@
 {
   "projects": {
-    "staging": "polling-269dc"
+    "default": "polling-269dc"
   }
 }
