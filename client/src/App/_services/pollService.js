@@ -99,7 +99,7 @@ function get(poll) {
 
     // if the incoming Poll id is set to "All", that means get all polls
     if (poll === "All") {
-        return fetch("api/", requestOptions).then(handleResponse);
+        return fetch("http://localhost:5001/polling-269dc/us-central1/app/api", requestOptions).then(handleResponse);
     }
     // Or if we have just one ID, get one poll
     else {
