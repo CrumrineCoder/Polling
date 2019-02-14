@@ -99,7 +99,7 @@ function get(poll) {
 
     // if the incoming Poll id is set to "All", that means get all polls
     if (poll === "All") {
-        return fetch("https://us-central1-polling-269dc.cloudfunctions.net/bigben", requestOptions).then(handleResponse);
+        return fetch("api/", requestOptions).then(handleResponse);
     }
     // Or if we have just one ID, get one poll
     else {
