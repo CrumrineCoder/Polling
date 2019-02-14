@@ -17,11 +17,14 @@ app.post('/api/polls/createPoll', (req, res) => {
 });
 
 app.get("/api/polls/get", (req, res) => {
-  return database.ref('polls/' + "test").once('value').then((snapshot) => {
+  return database.ref('polls/' + "test").once('value', function(snapshot){
+    console.log(snapshot.val());
+  })
+  .then((snapshot) => {
   //  var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
     // ...
       console.log(snapshot.val());
-      return snapshot.val(); 
+      res.json(snapshot.val());
   });
 })
 
