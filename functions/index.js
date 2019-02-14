@@ -1,7 +1,10 @@
-/*const functions = require('firebase-functions');
+const functions = require('firebase-functions');
 const express = require('express');
 const app = express();
 const cors = require('cors')({origin: true});
+const mongoose = require('mongoose');
+const Polls = mongoose.model('Polls');
+
 app.use(cors);
 
 app.get('/api', (req, res) => {
@@ -28,7 +31,15 @@ app.get('/', (req, res) => {
     </html>`);
   });
 
-  exports.app = functions.https.onRequest(app); */
+  app.get('/get/', (req, res, next) => {
+    return Polls.find()
+      .sort({ createdAt: 'descending' })
+      .then((polls) => res.json({ polls: polls.map(poll => poll.toJSON()) }))
+      .catch(next);
+  });
+  
+
+  exports.app = functions.https.onRequest(app); 
 /*
   const express = require('express');
 const router = express.Router();
@@ -37,7 +48,7 @@ const functions = require('firebase-functions');
 router.use('/api', require('../routes/api'));
 
 module.exports = functions.https.onRequest(router);
-*/
+*//*
 const functions = require('firebase-functions');
 const express = require('express');
 const path = require('path');
@@ -55,9 +66,9 @@ mongoose.promise = global.Promise;
 const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
-
+*/
 // Serve the static files from the React app
-
+/*
 app.use(cors());
 app.use(require('morgan')('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -70,13 +81,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
+*/
+/*
 if (!isProduction) {
 	app.use(errorHandler());
 }
 
-const mLab = 'mongodb://' + process.env.dbUSER + ':' + process.env.dbPASS + process.env.dbHOST + '/' + process.env.dbNAME + '?authMode=scram-sha1';
-
+const mLab = 'mongodb://' + functions.config().db.user + ':' + functions.config().db.pass +functions.config().db.host + '/' + functions.config().db.name + '?authMode=scram-sha1';
+console.log(mLab);
 mongoose.connect(mLab);
 mongoose.set('debug', true);
 
@@ -109,11 +121,11 @@ if (!isProduction) {
 
 
 // Handles any requests that don't match the ones above
-app.get('*', (req, res) => {
+/*app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
-});
+}); */
 
 //const port = process.env.PORT || 5000;
 //app.listen(port);
-exports.app = functions.https.onRequest(app);
+//exports.app = functions.https.onRequest(app);
 //console.log('App is listening on port ' + port);
