@@ -13,7 +13,7 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api/polls/createPoll', (req, res) => {
-  database.ref('polls/' + "test").set(req.body);
+  database.ref('polls/').push(req.body);
 });
 
 app.get("/api/polls/get", (req, res) => {
