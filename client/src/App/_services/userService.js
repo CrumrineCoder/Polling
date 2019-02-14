@@ -25,18 +25,18 @@ function login(user) {
         body: JSON.stringify({ user })
     };
 
- //   return fetch(`api/users/login`, requestOptions)
-        // .then(handleResponse)
-        // .then(user => {
-        //     // Upon getting data from the backend, get the user
-        //     user = user.user;
-        //     // login successful if there's a jwt token in the response
-        //     if (user.token) {
-        //         // store user details and jwt token in local storage to keep user logged in between page refreshes
-        //         localStorage.setItem('user', JSON.stringify(user));
-        //     }
-        //     return user;
-        // });
+    return fetch(`api/users/login`, requestOptions)
+        .then(handleResponse)
+        .then(user => {
+            // Upon getting data from the backend, get the user
+            user = user.user;
+            // login successful if there's a jwt token in the response
+            if (user.token) {
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                localStorage.setItem('user', JSON.stringify(user));
+            }
+            return user;
+        });
 }
 
 // log out the user
@@ -51,7 +51,7 @@ function getCurrent() {
         method: 'GET',
         headers: authHeader()
     };
- //   return fetch(`api/users/current`, requestOptions).then(handleResponse);
+    return fetch(`api/users/current`, requestOptions).then(handleResponse);
 }
 /*
 function getById(id) {
@@ -68,7 +68,7 @@ function checkExistence(user) {
     const requestOptions = {
         method: 'GET'
     };
- //   return fetch("api/users/checkExistence/"+user, requestOptions).then(handleResponse);
+    return fetch("api/users/checkExistence/"+user, requestOptions).then(handleResponse);
 }
 
 //  registera user
@@ -79,7 +79,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
- //   return fetch('api/users/register', requestOptions).then(handleResponse);
+    return fetch('api/users/register', requestOptions).then(handleResponse);
 }
 /*
 function update(user) {

@@ -5,7 +5,6 @@ const cors = require('cors')({origin: true});
 app.use(cors);
 
 app.get('/api', (req, res) => {
-  console.log("test");
     const date = new Date();
     const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
     res.json({bongs: 'BONG '.repeat(hours)});
