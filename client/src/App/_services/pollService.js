@@ -20,7 +20,7 @@ function createPoll(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-    return fetch(`http://localhost:5000/polling-269dc/us-central1/app/api`, requestOptions).then(handleResponse);
+    return fetch(`/api/polls/createPoll`, requestOptions).then(handleResponse);
 }
 
 function editPoll(poll) {
@@ -99,7 +99,7 @@ function get(poll) {
 
     // if the incoming Poll id is set to "All", that means get all polls
     if (poll === "All") {
-      //  return fetch("api/polls/get/", requestOptions).then(handleResponse);
+        return fetch("api/", requestOptions).then(handleResponse);
     }
     // Or if we have just one ID, get one poll
     else {
@@ -121,6 +121,7 @@ function handleResponse(response) {
     //  console.log(response.text());
     return response.text().then(text => {
         //  console.log((JSON.parse(text).polls).find(x => x.creator == "5c489f668665512ec004db37"))
+        console.log(text);
         const data = text && JSON.parse(text);
         if (!response.ok) {
             const error = (data && data.message) || response.statusText;

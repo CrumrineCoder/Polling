@@ -7,7 +7,7 @@ const fire =  require('./fire');
 
 app.use(cors);
 
-app.get("/api/polls/createPoll", (req,res) => {
+app.post("/api/polls/createPoll", (req,res) => {
   console.log("Preventable Injury", req.body)
   fire.database().ref('polls/' + req.body.id).set(req.body);
 });
