@@ -97,7 +97,8 @@ class Form extends Component {
             let value = 0;
 
             // Dispatch to the create poll action in poll.actions.js
-            dispatch(pollActions.checkExistence(question, { question, answers, options, creator, value }));
+          //  dispatch(pollActions.checkExistence(question, { question, answers, options, creator, value }));
+          dispatch(pollActions.createPoll({ question, answers, options, creator, value }));
         }
     }
 

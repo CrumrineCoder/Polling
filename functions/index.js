@@ -2,10 +2,23 @@ const functions = require('firebase-functions');
 const express = require('express');
 const app = express();
 const cors = require('cors')({origin: true});
-const mongoose = require('mongoose');
-const Polls = mongoose.model('Polls');
+// Get a reference to the database service
+const fire =  require('./fire');
 
 app.use(cors);
+
+app.get("/api/polls/createPoll", (req,res) => {
+  console.log("Preventable Injury", req.body)
+  fire.database().ref('polls/' + req.body.id).set(req.body);
+});
+/*
+(userId, name, email, imageUrl) {
+  firebase.database().ref('users/' + userId).set({
+    username: name,
+    email: email,
+    profile_picture : imageUrl
+  });
+} */
 
 app.get('/api', (req, res) => {
     const date = new Date();
