@@ -120,7 +120,7 @@ function checkExistence(question) {
 function handleResponse(response) {
     //  console.log(response.text());
     return response.text().then(text => {
-        console.log(text);
+        console.log(JSON.parse(text));
         //  console.log((JSON.parse(text).polls).find(x => x.creator == "5c489f668665512ec004db37"))
         const data = text && JSON.parse(text);
         if (!response.ok) {

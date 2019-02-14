@@ -17,15 +17,34 @@ app.post('/api/polls/createPoll', (req, res) => {
 });
 
 app.get("/api/polls/get", (req, res) => {
-  return database.ref('polls/' + "test").once('value', function(snapshot){
+  var ref = database.ref("polls/");
+  var query = ref.orderByChild("question");
+  var sum = [];
+  /*query.on('child_added', function (snapshot) {
     console.log(snapshot.val());
-  })
-  .then((snapshot) => {
-  //  var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-    // ...
-      console.log(snapshot.val());
-      res.json(snapshot.val());
+    sum.push(snapshot.val());
+  //  res.json(snapshot.val());
+  }).then(res.json(sum));*/
+  query.once("value", function (snap) {
+    snap.forEach(function (childSnap) {
+      sum.push(childSnap.val());
+    });
+    res.json(sum);
   });
+  /*console.log(sum);
+  res.json(sum);*/
+  //   var topUserPostsRef = database.ref('polls/').orderByChild('question');
+  //   console.log(topUserPostsRef);
+  //  // console.log(topUserPostsRef.val());
+  //   return database.ref('polls/' + "test").once('value', function(snapshot){
+  //     console.log(snapshot.val());
+  //   })
+  //   .then((snapshot) => {
+  //   //  var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+  //     // ...
+  //       console.log(snapshot.val());
+  //       res.json(snapshot.val());
+  //   });
 })
 
 app.get('/', (req, res) => {
