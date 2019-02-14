@@ -28,15 +28,15 @@ class Home extends Component {
 
 	// Upon first render,  tell the back end to get all polls
 	componentDidMount() {
-		this.props.dispatch(pollActions.selectPoll("All"));
-		this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
+//		this.props.dispatch(pollActions.selectPoll("All"));
+//		this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
 	}
 
 	// Upon updating, tell the back end to get all polls (if there's been any change)
 	componentDidUpdate(prevProps) {
 		if (this.props.selectedPoll !== prevProps.selectedPoll) {
-			this.props.dispatch(pollActions.selectPoll("All"));
-			this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
+	//		this.props.dispatch(pollActions.selectPoll("All"));
+	//		this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
 		}
 	}
 

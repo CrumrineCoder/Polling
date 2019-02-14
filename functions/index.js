@@ -10,6 +10,13 @@ app.get('/api', (req, res) => {
     res.json({bongs: 'BONG '.repeat(hours)});
   });
 
+  app.post('/api/polls/createPoll', (req, res) => {
+   console.log(req.body);
+   const date = new Date();
+   const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
+   res.json({bongs: 'BONG '.repeat(hours)});
+  });
+
 app.get('/', (req, res) => {
     const date = new Date();
     const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
