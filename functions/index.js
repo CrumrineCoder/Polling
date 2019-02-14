@@ -16,6 +16,15 @@ app.post('/api/polls/createPoll', (req, res) => {
   database.ref('polls/' + "test").set(req.body);
 });
 
+app.get("/api/polls/get", (req, res) => {
+  return database.ref('polls/' + "test").once('value').then((snapshot) => {
+  //  var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+    // ...
+      console.log(snapshot.val());
+      return snapshot.val(); 
+  });
+})
+
 app.get('/', (req, res) => {
   const date = new Date();
   const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
