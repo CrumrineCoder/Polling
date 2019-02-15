@@ -104,7 +104,7 @@ function get(poll) {
     // Or if we have just one ID, get one poll
     else {
       //  var id = mongoose.Types.ObjectId(poll);
-       return fetch("http://localhost:5001/polling-269dc/us-central1/app/api/polls/get" + poll, requestOptions).then(handleResponse);
+       return fetch("http://localhost:5001/polling-269dc/us-central1/app/api/polls/get/" + poll, requestOptions).then(handleResponse);
     }
 }
 

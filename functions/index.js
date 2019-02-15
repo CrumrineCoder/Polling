@@ -22,7 +22,7 @@ app.post('/api/polls/createPoll', (req, res) => {
   database.ref("polls/"+newPostKey).update(updates);
 });
 
-app.get("/api/polls/get", (req, res) => {
+app.get("/api/polls/get/", (req, res) => {
   var ref = database.ref("polls/");
   var query = ref.orderByChild("question");
   var sum = [];
@@ -35,6 +35,7 @@ app.get("/api/polls/get", (req, res) => {
 
   
 app.get('/api/polls/get/:id', (req, res) => {
+  console.log("honks");
   const date = new Date();
   const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
   console.log(hours);
