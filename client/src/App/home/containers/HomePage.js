@@ -69,8 +69,6 @@ class Home extends Component {
 			});
 		}
 
-	
-
 		// If we're fetching polls, tell the user why
 		if (this.props.isFetching) {
 			pageContent = (
@@ -83,6 +81,7 @@ class Home extends Component {
 			if (this.state.query !== "") {
 				polls = find(polls, this.state.query);
 			}
+			console.log(polls);
 			pageContent = (
 				<ul className="polls">
 					{polls.map((poll, i) => <PollLink update={this.update} key={i} {...poll} />)}

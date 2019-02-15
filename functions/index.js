@@ -13,7 +13,23 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api/polls/createPoll', (req, res) => {
-  database.ref('polls/').push(req.body);
+ // database.ref('polls/').push(req.body);
+
+// var newPostKey = database.ref('polls/').push().key;
+  var newPostKey = database.ref().child('polls').push().key;
+  data = req.body;
+  data.id = "uid";
+
+  var updates = {};
+  updates = data;
+  updates.id = newPostKey; 
+ /* console.log(newPostKey);
+  console.log(data);
+  console.log(  updates['/polls/' + newPostKey]);
+  updates['/polls/' + newPostKey] = data;
+  console.log(updates);
+  console.log(  updates['/polls/' + newPostKey]); */
+  database.ref("polls/"+newPostKey).update(updates);
 });
 
 app.get("/api/polls/get", (req, res) => {
