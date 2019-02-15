@@ -13,22 +13,12 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api/polls/createPoll', (req, res) => {
- // database.ref('polls/').push(req.body);
-
-// var newPostKey = database.ref('polls/').push().key;
   var newPostKey = database.ref().child('polls').push().key;
   data = req.body;
   data.id = "uid";
-
   var updates = {};
   updates = data;
   updates.id = newPostKey; 
- /* console.log(newPostKey);
-  console.log(data);
-  console.log(  updates['/polls/' + newPostKey]);
-  updates['/polls/' + newPostKey] = data;
-  console.log(updates);
-  console.log(  updates['/polls/' + newPostKey]); */
   database.ref("polls/"+newPostKey).update(updates);
 });
 
@@ -36,17 +26,20 @@ app.get("/api/polls/get", (req, res) => {
   var ref = database.ref("polls/");
   var query = ref.orderByChild("question");
   var sum = [];
-  /*query.on('child_added', function (snapshot) {
-    console.log(snapshot.val());
-    sum.push(snapshot.val());
-  //  res.json(snapshot.val());
-  }).then(res.json(sum));*/
   query.once("value", function (snap) {
     snap.forEach(function (childSnap) {
       sum.push(childSnap.val());
     });
     res.json(sum);
   });
+
+  
+app.get('/api/polls/get/:id', (req, res) => {
+  const date = new Date();
+  const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
+  console.log(hours);
+  res.json({ bongs: 'BONG '.repeat(hours) });
+});
   /*console.log(sum);
   res.json(sum);*/
   //   var topUserPostsRef = database.ref('polls/').orderByChild('question');
