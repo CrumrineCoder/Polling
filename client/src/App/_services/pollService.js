@@ -123,8 +123,10 @@ function handleResponse(response) {
         console.log(JSON.parse(text));
         //  console.log((JSON.parse(text).polls).find(x => x.creator == "5c489f668665512ec004db37"))
         const data = text && JSON.parse(text);
+        console.log(data);
         if (!response.ok) {
             const error = (data && data.message) || response.statusText;
+            console.log(error);
             return Promise.reject(error);
         }
         return data;

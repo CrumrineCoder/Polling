@@ -240,9 +240,9 @@ function selectPoll(poll) {
 }
 
 function receiveVotes(poll, json) {
-    if (poll === "All") {
-        json = json.polls;
-    }
+    // if (poll === "All") {
+    //     json = json.polls;
+    // }
     return {
         type: pollConstants.GET_SUCCESS,
         poll,
