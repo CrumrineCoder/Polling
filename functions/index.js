@@ -18,8 +18,9 @@ app.post('/api/polls/createPoll', (req, res) => {
   data.id = "uid";
   var updates = {};
   updates = data;
-  updates.id = newPostKey; 
-  database.ref("polls/"+newPostKey).update(updates);
+  updates.id = newPostKey;
+  console.log(updates);
+  database.ref("polls/" + newPostKey).update(updates);
 });
 
 app.get("/api/polls/get/", (req, res) => {
@@ -32,15 +33,16 @@ app.get("/api/polls/get/", (req, res) => {
     });
     res.json(sum);
   });
-
-  
-app.get('/api/polls/get/:id', (req, res) => {
-  console.log("honks");
-  const date = new Date();
-  const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
-  console.log(hours);
-  res.json({ bongs: 'BONG '.repeat(hours) });
 });
+
+  app.get('/api/polls/get/:id', (req, res) => {
+    var ref = database.ref('polls/' + req.params.id);
+    ref.on('value', function (snapshot) {
+      console.log(snapshot.val());
+      res.json(snapshot.val());
+    });
+  });
+
   /*console.log(sum);
   res.json(sum);*/
   //   var topUserPostsRef = database.ref('polls/').orderByChild('question');
@@ -55,12 +57,12 @@ app.get('/api/polls/get/:id', (req, res) => {
   //       console.log(snapshot.val());
   //       res.json(snapshot.val());
   //   });
-})
 
-app.get('/', (req, res) => {
-  const date = new Date();
-  const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
-  res.send(`
+
+  app.get('/', (req, res) => {
+    const date = new Date();
+    const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
+    res.send(`
       <!doctype html>
       <head>
         <title>Time</title>
@@ -73,6 +75,6 @@ app.get('/', (req, res) => {
         <button onClick="refresh(this)">Refresh</button>
       </body>
     </html>`);
-});
+  });
 
-exports.app = functions.https.onRequest(app);
+  exports.app = functions.https.onRequest(app);

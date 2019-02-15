@@ -37,8 +37,8 @@ class Form extends Component {
         this.props.history.push("polls/" + id);
     }
 
-    componentWillReceiveProps(newProps){
-        if(newProps.checkPolls.exists && this.props.checkPolls.isChecking){
+    componentWillReceiveProps(newProps) {
+        if (newProps.checkPolls.exists && this.props.checkPolls.isChecking) {
             alert("Your question already exists as a Poll.");
         }
     }
@@ -61,9 +61,9 @@ class Form extends Component {
         const { dispatch } = this.props;
         let creator;
 
-    //    this.props.dispatch(pollActions.checkExistence(question));
-      //  console.log("Beanus", this.props);
-       // console.log("this", this.props.checkPolls)
+        //    this.props.dispatch(pollActions.checkExistence(question));
+        //  console.log("Beanus", this.props);
+        // console.log("this", this.props.checkPolls)
 
         // Remove empty answers
         answers = answers.filter(function (el) {
@@ -95,10 +95,18 @@ class Form extends Component {
             }
 
             let value = 0;
-
+            console.log(answers);
+            var tempAnswers = answers.map(function (el) {
+                var o = Object.assign({}, el);
+                o.Users = [];
+                return o;
+            })
+            console.log(tempAnswers);
+            answers = tempAnswers;
+            console.log(answers);
             // Dispatch to the create poll action in poll.actions.js
-          //  dispatch(pollActions.checkExistence(question, { question, answers, options, creator, value }));
-          dispatch(pollActions.createPoll({ question, answers, options, creator, value }));
+            //  dispatch(pollActions.checkExistence(question, { question, answers, options, creator, value }));
+            dispatch(pollActions.createPoll({ question, answers, options, creator, value }));
         }
     }
 
