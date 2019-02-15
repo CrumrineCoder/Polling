@@ -19,8 +19,24 @@ app.post('/api/polls/createPoll', (req, res) => {
   var updates = {};
   updates = data;
   updates.id = newPostKey;
-  console.log(updates);
   database.ref("polls/" + newPostKey).update(updates);
+});
+
+/*
+var ref = firebase.database().ref('node/clicks');
+ref.transaction(function(currentClicks) {
+  // If node/clicks has never been set, currentRank will be `null`.
+  return (currentClicks || 0) + 1;
+});
+*/
+
+app.post("/api/polls/votePollAnswer/", (req, res) => {
+  console.log(req.body);
+  var databaseRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child('value');
+
+  databaseRef.transaction(function(value) {
+    return (value || 0) + 1;
+  });
 });
 
 app.get("/api/polls/get/", (req, res) => {
@@ -35,34 +51,34 @@ app.get("/api/polls/get/", (req, res) => {
   });
 });
 
-  app.get('/api/polls/get/:id', (req, res) => {
-    var ref = database.ref('polls/' + req.params.id);
-    ref.on('value', function (snapshot) {
-      console.log(snapshot.val());
-      res.json(snapshot.val());
-    });
+app.get('/api/polls/get/:id', (req, res) => {
+  var ref = database.ref('polls/' + req.params.id);
+  ref.on('value', function (snapshot) {
+    console.log(snapshot.val());
+    res.json(snapshot.val());
   });
+});
 
-  /*console.log(sum);
-  res.json(sum);*/
-  //   var topUserPostsRef = database.ref('polls/').orderByChild('question');
-  //   console.log(topUserPostsRef);
-  //  // console.log(topUserPostsRef.val());
-  //   return database.ref('polls/' + "test").once('value', function(snapshot){
-  //     console.log(snapshot.val());
-  //   })
-  //   .then((snapshot) => {
-  //   //  var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-  //     // ...
-  //       console.log(snapshot.val());
-  //       res.json(snapshot.val());
-  //   });
+/*console.log(sum);
+res.json(sum);*/
+//   var topUserPostsRef = database.ref('polls/').orderByChild('question');
+//   console.log(topUserPostsRef);
+//  // console.log(topUserPostsRef.val());
+//   return database.ref('polls/' + "test").once('value', function(snapshot){
+//     console.log(snapshot.val());
+//   })
+//   .then((snapshot) => {
+//   //  var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+//     // ...
+//       console.log(snapshot.val());
+//       res.json(snapshot.val());
+//   });
 
 
-  app.get('/', (req, res) => {
-    const date = new Date();
-    const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
-    res.send(`
+app.get('/', (req, res) => {
+  const date = new Date();
+  const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
+  res.send(`
       <!doctype html>
       <head>
         <title>Time</title>
@@ -75,6 +91,6 @@ app.get("/api/polls/get/", (req, res) => {
         <button onClick="refresh(this)">Refresh</button>
       </body>
     </html>`);
-  });
+});
 
-  exports.app = functions.https.onRequest(app);
+exports.app = functions.https.onRequest(app);

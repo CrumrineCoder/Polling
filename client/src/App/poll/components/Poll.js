@@ -17,7 +17,7 @@ class Poll extends Component {
 		this.state = {
 			selected: [],
 			userAnswer: '',
-			_parentID: this.props._id,
+			_parentID: this.props.id,
 			isLoggedIn: typeof localStorage["user"] !== 'undefined',
 			choiceType: '',
 			optionChangeType: undefined,
@@ -62,7 +62,7 @@ class Poll extends Component {
 				dispatch(pollActions.votePollUserAnswer({ _id, selected, user }));
 			} // User is voting on a poll answer
 			else if (submissionType === "answer") {
-				dispatch(pollActions.votePollAnswer({ _id, selected, user }));
+				dispatch(pollActions.votePollAnswer({ _parentID, _id, selected, user }));
 			} // User didn't select an option
 			else {
 				alert("You must select an option.")
@@ -183,10 +183,11 @@ class Poll extends Component {
 						<div className="pollVotingSquare">
 							<h4 className="">Answers</h4>
 							{
-								this.props.answers.map(function (answer) {
+								this.props.answers.map(function (answer, index) {
+									console.log(answer.id);
 									return (
-										<div key={answer._id}>
-											<input type={this.state.choiceType} name="answer" submitted="answer" submissiontype="answer" onChange={this.state.optionChangeType} value={answer.text} id={answer._id} className="pollInput" />
+										<div key={answer.id}>
+											<input type={this.state.choiceType} name="answer" submitted="answer" submissiontype="answer" onChange={this.state.optionChangeType} value={answer.text} id={index} className="pollInput" />
 											<label className="pollInputLabel">{answer.text}</label>
 										</div>
 									)

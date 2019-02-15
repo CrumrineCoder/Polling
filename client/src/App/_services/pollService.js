@@ -48,7 +48,8 @@ function votePollAnswer(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
- //   return fetch(`/api/polls/voteAnswer`, requestOptions).then(handleResponse);
+    console.log(poll);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/votePollAnswer/`, requestOptions).then(handleResponse);
 }
 
 // make a post request with a single vote on a user answer
