@@ -34,7 +34,7 @@ class Results extends Component {
 			this.props.dispatch(pollActions.selectPoll(this.props.id));
 			this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
 		}
-	}	
+	}
 
 	// Button logic for returning to the voting page if the poll creator turned on SeeResults
 	handleBackClick(e) {
@@ -59,41 +59,44 @@ class Results extends Component {
 
 	render() {
 		let polls = this.props;
+		console.log(polls);
 		let pageContent = '';
-		let Rescind; 
-		let Back; 
+		let Rescind;
+		let Back;
 		// If we're still getting the data, tell the user why
 		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
-						The content is loading, but because this site uses a free Heroku server it has to warm up before it can get the data. This will take only 10 seconds to a minute, so please be patient! Once the servers are warmed up, the site will load content like normal.
+					The content is loading, but because this site uses a free Heroku server it has to warm up before it can get the data. This will take only 10 seconds to a minute, so please be patient! Once the servers are warmed up, the site will load content like normal.
       		    </div>
 			)
 		} // Once we've gotten the data
-		 else {	
-			 // Verify that the user hasn't voted before by checking every poll and user answer
+		else {
+			// Verify that the user hasn't voted before by checking every poll and user answer
 			let id = [];
-			for (var i = 0; i < this.props.votes.answers.length; i++) {
-				for (var j = 0; j < this.props.votes.answers[i].Users.length; j++) {
-					id.push(this.props.votes.answers[i].Users[j]);
+			if (this.props.votes.answers[0].Users) {
+				for (var i = 0; i < this.props.votes.answers.length; i++) {
+					for (var j = 0; j < this.props.votes.answers[i].Users.length; j++) {
+						id.push(this.props.votes.answers[i].Users[j]);
+					}
 				}
-			}
-			for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
-				for (var l = 0; l < this.props.votes.userAnswers[k].Users.length; l++) {
-					id.push(this.props.votes.userAnswers[k].Users[l]);
+				for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
+					for (var l = 0; l < this.props.votes.userAnswers[k].Users.length; l++) {
+						id.push(this.props.votes.userAnswers[k].Users[l]);
+					}
 				}
-			}
-			if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
-				if(!this.props.votes.options.SeeResults){
-					history.push("");
-					history.push(polls.id + "/vote");
-				} // Because the user hasn't already voted and wasn't redirected away for not voting, we can create the back to voting button here in the logic thread. 
-				else{
-					Back = (<button className = "btn-secondary btn" onClick={this.handleBackClick}{...this.props}><i className="fas fa-arrow-left"></i> Back to voting</button>);
+				if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
+					if (!this.props.votes.options.SeeResults) {
+						history.push("");
+						history.push(polls.id + "/vote");
+					} // Because the user hasn't already voted and wasn't redirected away for not voting, we can create the back to voting button here in the logic thread. 
+					else {
+						Back = (<button className="btn-secondary btn" onClick={this.handleBackClick}{...this.props}><i className="fas fa-arrow-left"></i> Back to voting</button>);
+					}
+					// If rescind is turned on, also create a rescind button. We do the logic here because if the user has already voted, we can check the logic of the option here. 
+				} else if (this.props.votes.options.Rescind) {
+					Rescind = (<button className="btn btn-outline-warning" onClick={this.handleRescindClick}><i className="fas fa-undo-alt"></i> Rescind vote</button>);
 				}
-			// If rescind is turned on, also create a rescind button. We do the logic here because if the user has already voted, we can check the logic of the option here. 
-			} else if(this.props.votes.options.Rescind){
-				Rescind = (<button className = "btn btn-outline-warning" onClick={this.handleRescindClick}><i className="fas fa-undo-alt"></i> Rescind vote</button>);
 			}
 
 			// Send data to the result

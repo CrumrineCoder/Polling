@@ -29,14 +29,14 @@ class SimpleBarChart extends Component {
 				<XAxis dataKey="name" />
 				<YAxis />
 				<Tooltip />
-			
+
 				<Bar dataKey="votes" fill="#8884d8" >
 					{
-          	data.map((entry, index) => {
-            	const color = entry.votes > 4000 ? COLORS[0] : COLORS[1];
-            	return <Cell key={index} fill={color} />;
-            })
-          }
+						data.map((entry, index) => {
+							const color = entry.votes > 4000 ? COLORS[0] : COLORS[1];
+							return <Cell key={index} fill={color} />;
+						})
+					}
 				</Bar>
 			</BarChart>
 		);
@@ -76,16 +76,20 @@ class Result extends Component {
 		var data = [];
 
 		// Get all votes
-		for (var i = 0; i < this.props.votes.answers.length; i++) {
-			var fullData = this.props.votes.answers;
-			var insert = { name: fullData[i].text, votes: fullData[i].value };
-			data.push(insert);
+		if (this.props.votes.answers) {
+			for (var i = 0; i < this.props.votes.answers.length; i++) {
+				var fullData = this.props.votes.answers;
+				var insert = { name: fullData[i].text, votes: fullData[i].value };
+				data.push(insert);
+			}
 		}
 
-		for (var j = 0; j < this.props.votes.userAnswers.length; j++) {
-			var fullUserData = this.props.votes.userAnswers;
-			var userInsert = { name: "[User] " + fullUserData[j].text, votes: fullUserData[j].value };
-			data.push(userInsert);
+		if (this.props.votes.userAnswers) {
+			for (var j = 0; j < this.props.votes.userAnswers.length; j++) {
+				var fullUserData = this.props.votes.userAnswers;
+				var userInsert = { name: "[User] " + fullUserData[j].text, votes: fullUserData[j].value };
+				data.push(userInsert);
+			}
 		}
 
 		// Input all votes into the simple bar and pie charts
