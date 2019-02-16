@@ -43,9 +43,9 @@ function createPoll(poll) {
         dispatch(request(poll));
         pollService.createPoll(poll)
             .then(
-                poll => {
+                newPostKey => {
                     dispatch(success());
-                    history.push(poll.poll._id + "/vote");
+                    history.push(newPostKey + "/vote");
                     dispatch(alertActions.success('Create Poll Successful'));
                 },
                 error => {
@@ -112,10 +112,10 @@ function votePollAnswer(poll) {
         dispatch(request(poll));
         pollService.votePollAnswer(poll)
             .then(
-                poll => {
+                id => {
                     dispatch(success());
                     history.push("");
-                    history.push(poll._id + "/results/");
+                    history.push(id + "/results/");
                     dispatch(alertActions.success('Vote Poll Successful'));
                 },
                 error => {

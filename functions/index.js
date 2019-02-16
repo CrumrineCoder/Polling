@@ -20,6 +20,7 @@ app.post('/api/polls/createPoll', (req, res) => {
   updates = data;
   updates.id = newPostKey;
   database.ref("polls/" + newPostKey).update(updates);
+  res.json(newPostKey);
 });
 
 /*
@@ -31,12 +32,13 @@ ref.transaction(function(currentClicks) {
 */
 
 app.post("/api/polls/votePollAnswer/", (req, res) => {
-  console.log(req.body);
   var databaseRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child('value');
 
   databaseRef.transaction(function(value) {
     return (value || 0) + 1;
   });
+
+  res.json(req.body._parentID);
 });
 
 app.get("/api/polls/get/", (req, res) => {
