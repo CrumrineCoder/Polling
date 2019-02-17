@@ -85,7 +85,12 @@ class Poll extends Component {
 			if (isLoggedIn) {
 				let user = JSON.parse(localStorage.getItem('user'));
 				user = user.id;
-				dispatch(pollActions.votePollMultiple({ selected, _id, _parentID, user }))
+				var userLength = 0; 
+				console.log(this.props.userAnswers);
+				if(this.props.userAnswers != null){
+					userLength = this.props.userAnswers.length;
+				}
+				dispatch(pollActions.votePollMultiple({userLength, selected, _id, _parentID, user }))
 			}
 		} // User selected nothing
 		else {

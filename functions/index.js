@@ -56,7 +56,7 @@ app.post("/api/polls/voteMultiple/", (req, res) => {
   for (var i = 0; i < req.body.selected.length; i++) {
     if (req.body.selected[i].submitted == "toSubmit") {
       var userVote = {
-        "text": req.body.userAnswer,
+        "text": req.body.selected[i].value,
         "value": 1,
         "Users": [req.body.user]
       }
@@ -72,7 +72,8 @@ app.post("/api/polls/voteMultiple/", (req, res) => {
         return (value || 0) + 1;
       });
     }
-  } 
+  }
+  res.json(req.body._parentID); 
 });
 
 app.get("/api/polls/get/", (req, res) => {
