@@ -137,10 +137,10 @@ function votePollUserAnswer(poll) {
         dispatch(request(poll));
         pollService.votePollUserAnswer(poll)
             .then(
-                poll => {
+                id => {
                     dispatch(success());
                     history.push("");
-                    history.push(poll._id + "/results/");
+                    history.push(id + "/results/");
                     dispatch(alertActions.success('Vote Poll Successful'));
                 },
                 error => {

@@ -64,7 +64,7 @@ class Poll extends Component {
 				dispatch(pollActions.votePollCreateUserAnswer({ _parentID, userAnswer, user, userLength }));
 			} // User is voting on a user answer
 			else if (submissionType === "userAnswer") {
-				dispatch(pollActions.votePollUserAnswer({ _id, selected, user }));
+				dispatch(pollActions.votePollUserAnswer({ _parentID, _id, selected, user }));
 			} // User is voting on a poll answer
 			else if (submissionType === "answer") {
 				dispatch(pollActions.votePollAnswer({ _parentID, _id, selected, user }));
@@ -155,10 +155,11 @@ class Poll extends Component {
 			)
 			// Already existing user answers
 			if (this.props.userAnswers) {
+				console.log(this.props.userAnswers);
 				for (var i = 0; i < this.props.userAnswers.length; i++) {
 					useranswers.push(
-						<div key={this.props.userAnswers[i]._id}>
-							<input type={this.state.choiceType} name="answer" submitted="userAnswer" submissiontype="userAnswer" onChange={this.state.optionChangeType} value={this.props.userAnswers[i].text} id={this.props.userAnswers[i]._id} className="pollInput" />
+						<div key={i}>
+							<input type={this.state.choiceType} name="answer" submitted="userAnswer" submissiontype="userAnswer" onChange={this.state.optionChangeType} value={this.props.userAnswers[i].text} id={i} className="pollInput" />
 							<label className="pollInputLabel">{this.props.userAnswers[i].text}</label>
 						</div>
 					)
