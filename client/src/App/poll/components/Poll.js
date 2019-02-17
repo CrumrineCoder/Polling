@@ -57,8 +57,9 @@ class Poll extends Component {
 			// User is submitting  a user answer 
 			if (submissionType === "toSubmit") {
 				var userLength = 0; 
-				if(this.props.userAnswer != null){
-					userLength = this.props.userAnswer.length;
+				console.log(this.props.userAnswers);
+				if(this.props.userAnswers != null){
+					userLength = this.props.userAnswers.length;
 				}
 				dispatch(pollActions.votePollCreateUserAnswer({ _parentID, userAnswer, user, userLength }));
 			} // User is voting on a user answer
