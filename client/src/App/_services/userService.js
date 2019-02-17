@@ -79,7 +79,9 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch('api/users/register', requestOptions).then(handleResponse);
+    console.log(user);
+
+    return fetch('http://localhost:5001/polling-269dc/us-central1/app/api/', requestOptions).then(handleResponse);
 }
 /*
 function update(user) {

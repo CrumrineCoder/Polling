@@ -5,12 +5,49 @@ const cors = require('cors')({ origin: true });
 app.use(cors);
 const fire = require("./fire.js");
 var database = fire.database();
+//var auth = fire.auth();
 
 app.get('/api', (req, res) => {
+  console.log(req.body);
   const date = new Date();
   const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
   res.json({ bongs: 'BONG '.repeat(hours) });
 });
+
+app.post('/api/users/register', (req, res) => {
+  console.log(req.body);
+ /* const user = req.body;
+  console.log(user);
+  // Validate the user created an email and password
+  if (!user.email) {
+    return res.status(422).json({
+      errors: {
+        email: 'is required',
+      },
+    });
+  }
+
+  if (!user.password) {
+    return res.status(422).json({
+      errors: {
+        password: 'is required',
+      },
+    });
+  }
+
+  auth.createUserWithEmailAndPassword(user.email, user.password).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    if(errorCode || errorMessage){
+      console.log(errorCode);
+      console.log(errorMessage);
+      res.json(errorMessage)
+    }
+  });
+
+  res.json("ok") */
+})
 
 app.post('/api/polls/createPoll', (req, res) => {
   var newPostKey = database.ref().child('polls').push().key;
@@ -51,8 +88,6 @@ app.post("/api/polls/userVote", (req, res, next) => {
 });
 
 app.post("/api/polls/voteMultiple/", (req, res) => {
-  console.log(req.body);
-  
   for (var i = 0; i < req.body.selected.length; i++) {
     if (req.body.selected[i].submitted == "toSubmit") {
       var userVote = {

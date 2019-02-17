@@ -31,7 +31,9 @@ class RegisterForm extends Component {
         var { email, password } = this.state;
         const { dispatch } = this.props;
         this.setState({ submitted: true });
-        dispatch(userActions.checkExistence(email, { email, password }));
+        console.log(email);
+        console.log(password);
+        dispatch(userActions.register(email, password));
     }
 
     // For form control
