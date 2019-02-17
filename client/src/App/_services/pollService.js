@@ -59,7 +59,7 @@ function votePollUserAnswer(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-  //  return fetch(`/api/polls/voteUserAnswer`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/voteUserAnswer`, requestOptions).then(handleResponse);
 }
 
 // make a post request with a single created user answer
@@ -69,7 +69,7 @@ function votePollCreateUserAnswer(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-   // return fetch(`/api/polls/userVote`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/userVote`, requestOptions).then(handleResponse);
 }
 
 // make a post request with multiple votes

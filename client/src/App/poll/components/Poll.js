@@ -56,7 +56,11 @@ class Poll extends Component {
 			user = user.id;
 			// User is submitting  a user answer 
 			if (submissionType === "toSubmit") {
-				dispatch(pollActions.votePollCreateUserAnswer({ _parentID, userAnswer, user }));
+				var userLength = 0; 
+				if(this.props.userAnswer != null){
+					userLength = this.props.userAnswer.length;
+				}
+				dispatch(pollActions.votePollCreateUserAnswer({ _parentID, userAnswer, user, userLength }));
 			} // User is voting on a user answer
 			else if (submissionType === "userAnswer") {
 				dispatch(pollActions.votePollUserAnswer({ _id, selected, user }));
@@ -149,13 +153,15 @@ class Poll extends Component {
 				<h4 key="userAnswersHeader">User Answers </h4>
 			)
 			// Already existing user answers
-			for (var i = 0; i < this.props.userAnswers.length; i++) {
-				useranswers.push(
-					<div key={this.props.userAnswers[i]._id}>
-						<input type={this.state.choiceType} name="answer" submitted="userAnswer" submissiontype="userAnswer" onChange={this.state.optionChangeType} value={this.props.userAnswers[i].text} id={this.props.userAnswers[i]._id} className="pollInput" />
-						<label className="pollInputLabel">{this.props.userAnswers[i].text}</label>
-					</div>
-				)
+			if (this.props.userAnswers) {
+				for (var i = 0; i < this.props.userAnswers.length; i++) {
+					useranswers.push(
+						<div key={this.props.userAnswers[i]._id}>
+							<input type={this.state.choiceType} name="answer" submitted="userAnswer" submissiontype="userAnswer" onChange={this.state.optionChangeType} value={this.props.userAnswers[i].text} id={this.props.userAnswers[i]._id} className="pollInput" />
+							<label className="pollInputLabel">{this.props.userAnswers[i].text}</label>
+						</div>
+					)
+				}
 			}
 			// Make your own user answer
 			useranswers.push(
@@ -165,7 +171,7 @@ class Poll extends Component {
 				</div>
 			)
 		} // Tell the user about userAnswers being set to false
-		 else {
+		else {
 			useranswers = <p key="userAnswersDisclaimer">User Answers are not allowed for this poll.</p>
 		}
 

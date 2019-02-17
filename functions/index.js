@@ -23,22 +23,53 @@ app.post('/api/polls/createPoll', (req, res) => {
   res.json(newPostKey);
 });
 
-/*
-var ref = firebase.database().ref('node/clicks');
-ref.transaction(function(currentClicks) {
-  // If node/clicks has never been set, currentRank will be `null`.
-  return (currentClicks || 0) + 1;
-});
-*/
 
 app.post("/api/polls/votePollAnswer/", (req, res) => {
   var databaseRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child('value');
-
   databaseRef.transaction(function(value) {
     return (value || 0) + 1;
   });
-
   res.json(req.body._parentID);
+});
+
+app.post("/api/polls/voteUserAnswer", (req, res, next) => {
+ /* Polls.findOneAndUpdate({ "userAnswers._id": ObjectId(req.body._id) }, { $push: { "userAnswers.$.Users": req.body.user }, $inc: { "userAnswers.$.value": 1, "value": 1 } }, function (err, docs) { res.json(docs) }); */
+  var databaseRef = database.ref('polls/' + req.body._parentID + "/userAnswers").child(req.body._id).child('value');
+  databaseRef.transaction(function(value) {
+    return (value || 0) + 1;
+  });
+  res.json(req.body._parentID);
+})
+
+app.post("/api/polls/userVote", (req, res, next) => {
+  var userVote = {
+    "text": req.body.userAnswer,
+    "value": 1,
+    "Users": [req.body.user]
+  }
+  console.log(userVote);
+  database.ref("polls/" + req.body._parentID + "/userAnswers/"+req.body.userLength).update(userVote);
+  res.json(req.body._parentID)
+
+    /*
+
+  return Polls.update(
+    { _id: req.body._parentID },
+    { $push: { userAnswers: userVote } },
+    function (err, doc) {
+      res.json(doc);
+    });
+
+
+     var newPostKey = database.ref().child('polls').push().key;
+  data = req.body;
+  data.id = "uid";
+  var updates = {};
+  updates = data;
+  updates.id = newPostKey;
+  database.ref("polls/" + newPostKey).update(updates);
+  res.json(newPostKey);
+    */
 });
 
 app.get("/api/polls/get/", (req, res) => {
