@@ -84,7 +84,39 @@ app.post('/api/users/login', (req, res) => {
   });
 
   res.json(user); 
-})
+});
+
+
+app.get('/api/users/current', (req, res, next) => {
+ // const id = req.payload.id;
+  // Check if the user is actually in the database. 
+ /* return Users.findById(id)
+    .then((user) => {
+      if (!user) {
+        return res.sendStatus(400);
+      }
+      return res.json({ user: user.toAuthJSON() });
+    }); */
+    auth.onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+      /*  var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData; */
+        // ...
+        console.log("user:", user);
+      } else {
+        console.log("No user"); 
+        // User is signed out.
+        // ...
+      }
+    });
+    res.json({"test": "test"})
+});
 
 
 app.post('/api/polls/createPoll', (req, res) => {
