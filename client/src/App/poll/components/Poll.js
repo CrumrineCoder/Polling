@@ -141,24 +141,21 @@ class Poll extends Component {
 	}
 
 	render() {
-		const { isLoggedIn } = this.state;
-		let pageContent = '';
 		if(this.props.isFetchingCurrentUser){
-			pageContent = "loading";
+			
 		} else{
-			pageContent = "done loading";
+			console.log(this.props);
+			console.log(this.props.currentUser.user === null);
+			console.log(this.props.currentUser.user);
+			if(this.props.currentUser.user === null){
+				button = <div className="float-right" id="pleaseLoginOrRegister" > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</div>;
+			} else{
+				button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
+			}
 		}
 		let button;
 		let useranswers = [];
 		let Results;
-
-		// If the user is logged in, they can vote. If not, they'll have to login or register to vote. 
-		if (isLoggedIn) {
-			button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
-		} else {
-			button = <div className="float-right" id="pleaseLoginOrRegister" > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</div>;
-		}
-
 		// If the poll creator set userAnswers to true
 		if (this.props.options.UserAnswers) {
 			// Build out the user answers
@@ -203,7 +200,6 @@ class Poll extends Component {
 						<h1 className="pollVotingSquare">{this.props.question}</h1>
 						<div className="pollVotingSquare">
 							<h4 className="">Answers</h4>
-							{pageContent}
 							{
 								this.props.answers.map(function (answer, index) {
 									console.log(answer.id);
@@ -230,12 +226,15 @@ class Poll extends Component {
 
 // use the users and votePoll reducers
 function mapStateToProps(state) {
-	const { users } = state.home
-	const { isFetchingCurrentUser } = users || {
+	const { users } = state.home;
+	console.log(users);
+	const { isFetchingCurrentUser, currentUser } = users || {
 		isFetchingCurrentUser: true,
+		currentUser: {}
 		}
 	return {
-		isFetchingCurrentUser
+		isFetchingCurrentUser,
+		currentUser
 	};
 }
 
