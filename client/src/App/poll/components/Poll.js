@@ -18,12 +18,13 @@ class Poll extends Component {
 			selected: [],
 			userAnswer: '',
 			_parentID: this.props.id,
-			isLoggedIn: typeof localStorage["user"] !== 'undefined',
+			//	isLoggedIn: typeof localStorage["user"] !== 'undefined',
 			choiceType: '',
 			optionChangeType: undefined,
 			submitType: undefined,
 			submissionType: undefined
 		};
+		console.log(this.props);
 		// Bind action creators to the state. 
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleMultipleOptionChange = this.handleMultipleOptionChange.bind(this);
@@ -35,6 +36,7 @@ class Poll extends Component {
 
 	// Before the first render, determine the variables for the rendered componenets whether they'll be checkboxes or radio and which optionChange and submit logic they'll  use. 
 	componentWillMount() {
+		console.log(this.props);
 		if (this.props.options.MultipleAnswers) {
 			this.setState({ choiceType: "checkbox" });
 			this.setState({ optionChangeType: this.handleMultipleOptionChange });
@@ -56,9 +58,9 @@ class Poll extends Component {
 			user = user.id;
 			// User is submitting  a user answer 
 			if (submissionType === "toSubmit") {
-				var userLength = 0; 
+				var userLength = 0;
 				console.log(this.props.userAnswers);
-				if(this.props.userAnswers != null){
+				if (this.props.userAnswers != null) {
 					userLength = this.props.userAnswers.length;
 				}
 				dispatch(pollActions.votePollCreateUserAnswer({ _parentID, userAnswer, user, userLength }));
@@ -85,12 +87,12 @@ class Poll extends Component {
 			if (isLoggedIn) {
 				let user = JSON.parse(localStorage.getItem('user'));
 				user = user.id;
-				var userLength = 0; 
+				var userLength = 0;
 				console.log(this.props.userAnswers);
-				if(this.props.userAnswers != null){
+				if (this.props.userAnswers != null) {
 					userLength = this.props.userAnswers.length;
 				}
-				dispatch(pollActions.votePollMultiple({userLength, selected, _id, _parentID, user }))
+				dispatch(pollActions.votePollMultiple({ userLength, selected, _id, _parentID, user }))
 			}
 		} // User selected nothing
 		else {
@@ -140,6 +142,12 @@ class Poll extends Component {
 
 	render() {
 		const { isLoggedIn } = this.state;
+		let pageContent = '';
+		if(this.props.isFetchingCurrentUser){
+			pageContent = "loading";
+		} else{
+			pageContent = "done loading";
+		}
 		let button;
 		let useranswers = [];
 		let Results;
@@ -195,6 +203,7 @@ class Poll extends Component {
 						<h1 className="pollVotingSquare">{this.props.question}</h1>
 						<div className="pollVotingSquare">
 							<h4 className="">Answers</h4>
+							{pageContent}
 							{
 								this.props.answers.map(function (answer, index) {
 									console.log(answer.id);
@@ -221,10 +230,12 @@ class Poll extends Component {
 
 // use the users and votePoll reducers
 function mapStateToProps(state) {
-	const { voting } = state.home.votePoll;
-	const { userInteraction } = state.home.users;
+	const { users } = state.home
+	const { isFetchingCurrentUser } = users || {
+		isFetchingCurrentUser: true,
+		}
 	return {
-		voting, userInteraction
+		isFetchingCurrentUser
 	};
 }
 

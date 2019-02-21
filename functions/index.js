@@ -88,15 +88,6 @@ app.post('/api/users/login', (req, res) => {
 
 
 app.get('/api/users/current', (req, res, next) => {
- // const id = req.payload.id;
-  // Check if the user is actually in the database. 
- /* return Users.findById(id)
-    .then((user) => {
-      if (!user) {
-        return res.sendStatus(400);
-      }
-      return res.json({ user: user.toAuthJSON() });
-    }); */
     auth.onAuthStateChanged(function(user) {
       if (user) {
         var email = user.email;
@@ -105,7 +96,6 @@ app.get('/api/users/current', (req, res, next) => {
         res.json({user: null})
       }
     });
-  //  res.json({"test": "test"})
 });
 
 
