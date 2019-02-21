@@ -25,18 +25,17 @@ function login(user) {
         body: JSON.stringify({ user })
     };
 
-    return fetch(`api/users/login`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/users/login`, requestOptions).then(handleResponse)
+     /*   .then(user => {
             // Upon getting data from the backend, get the user
-            user = user.user;
+            user = user.user
             // login successful if there's a jwt token in the response
             if (user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
             }
             return user;
-        });
+        }); */
 }
 
 // log out the user

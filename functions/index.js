@@ -49,6 +49,44 @@ app.post('/api/users/register', (req, res) => {
   res.json(user); 
 })
 
+app.post('/api/users/login', (req, res) => {
+  console.log(req.body);
+  const user = req.body.user;
+  console.log(user);
+  // Validate the user created an email and password
+  if (!user.email) {
+    console.log("Email");
+    return res.status(422).json({
+      errors: {
+        email: 'is required',
+      },
+    });
+  }
+
+  if (!user.password) {
+    console.log("pas")
+    return res.status(422).json({
+      errors: {
+        password: 'is required',
+      },
+    });
+  }
+
+  auth.signInWithEmailAndPassword(user.email, user.password).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    if(errorCode || errorMessage){
+      console.log(errorCode);
+      console.log(errorMessage);
+      res.json(errorMessage)
+    }
+  });
+
+  res.json(user); 
+})
+
+
 app.post('/api/polls/createPoll', (req, res) => {
   var newPostKey = database.ref().child('polls').push().key;
   data = req.body;
