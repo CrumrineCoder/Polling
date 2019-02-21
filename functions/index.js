@@ -5,7 +5,7 @@ const cors = require('cors')({ origin: true });
 app.use(cors);
 const fire = require("./fire.js");
 var database = fire.database();
-//var auth = fire.auth();
+var auth = fire.auth();
 
 app.get('/api', (req, res) => {
   console.log(req.body);
@@ -16,7 +16,7 @@ app.get('/api', (req, res) => {
 
 app.post('/api/users/register', (req, res) => {
   console.log(req.body);
- /* const user = req.body;
+  const user = req.body;
   console.log(user);
   // Validate the user created an email and password
   if (!user.email) {
@@ -46,7 +46,7 @@ app.post('/api/users/register', (req, res) => {
     }
   });
 
-  res.json("ok") */
+  res.json(user); 
 })
 
 app.post('/api/polls/createPoll', (req, res) => {
