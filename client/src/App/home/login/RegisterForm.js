@@ -33,7 +33,7 @@ class RegisterForm extends Component {
         this.setState({ submitted: true });
         console.log(email);
         console.log(password);
-        dispatch(userActions.register(email, password));
+        dispatch(userActions.register({email, password}));
     }
 
     // For form control
