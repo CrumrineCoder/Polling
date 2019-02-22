@@ -24,7 +24,6 @@ class Poll extends Component {
 			submitType: undefined,
 			submissionType: undefined
 		};
-		console.log(this.props);
 		// Bind action creators to the state. 
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleMultipleOptionChange = this.handleMultipleOptionChange.bind(this);
@@ -36,7 +35,6 @@ class Poll extends Component {
 
 	// Before the first render, determine the variables for the rendered componenets whether they'll be checkboxes or radio and which optionChange and submit logic they'll  use. 
 	componentWillMount() {
-		console.log(this.props);
 		if (this.props.options.MultipleAnswers) {
 			this.setState({ choiceType: "checkbox" });
 			this.setState({ optionChangeType: this.handleMultipleOptionChange });
@@ -141,19 +139,15 @@ class Poll extends Component {
 	}
 
 	render() {
-		if(this.props.isFetchingCurrentUser){
-			
-		} else{
-			console.log(this.props);
-			console.log(this.props.currentUser.user === null);
-			console.log(this.props.currentUser.user);
+		let button = "Authenticating...";
+		if(!this.props.isFetchingCurrentUser){
 			if(this.props.currentUser.user === null){
 				button = <div className="float-right" id="pleaseLoginOrRegister" > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</div>;
 			} else{
 				button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
 			}
 		}
-		let button;
+	
 		let useranswers = [];
 		let Results;
 		// If the poll creator set userAnswers to true
@@ -227,7 +221,6 @@ class Poll extends Component {
 // use the users and votePoll reducers
 function mapStateToProps(state) {
 	const { users } = state.home;
-	console.log(users);
 	const { isFetchingCurrentUser, currentUser } = users || {
 		isFetchingCurrentUser: true,
 		currentUser: {}
