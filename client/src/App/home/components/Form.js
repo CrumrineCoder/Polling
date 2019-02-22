@@ -92,6 +92,7 @@ class Form extends Component {
                 creator = "";
             }
 
+
             let value = 0;
             var tempAnswers = answers.map(function (el) {
                 var o = Object.assign({}, el);
@@ -151,6 +152,7 @@ class Form extends Component {
     render() {
         const { question } = this.state;
         let linkPoll;
+        console.log(this.props);
         // If there's no one logged in, suggest them to login so they can add this poll to their account
         if (!this.props.isFetchingCurrentUser) {
             if (!this.props.loggedIn) {
@@ -211,6 +213,12 @@ class Form extends Component {
 
 // get the create poll actions for dispatching
 function mapStateToProps(state) {
+    var user;
+    if (state.home.authenticate.user) {
+        user = state.home.authenticate.user.email
+    } else {
+        user = null
+    }
     const checkPolls = state.home.checkPolls;
     const { loggedIn } = state.home.authenticate;
     const { isFetchingCurrentUser } = state.home.users || {
@@ -218,6 +226,7 @@ function mapStateToProps(state) {
     }
     return {
         checkPolls,
+        user,
         loggedIn,
         isFetchingCurrentUser
     };

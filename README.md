@@ -6,22 +6,22 @@ This is a remake of an old project I had built without AngularJS or React.js, so
 
 ## To Do
 
-* Edit Polls
-* Search for Polls
 * Display what I voted for on the Results page
-* Delete Polls
 * Open/Close Polls
-* Indicate User Answers in Results
-* Delete user answers 
 * Confirm User via Email
 * Comment on Polls
 * Graph Colors
 * Hide user answers button
 * Validate user doesn't already exist when registering.
-* Profile page
 * Validate created user answers
 * Alert messaging
 * Admin accounts
+
+Firebase To Do
+
+* Stop password from being saved to authenticate reducer
+* Clean up reducers
+* Cannot SET HEADERS
 
 ## Completed Job Stories
 
