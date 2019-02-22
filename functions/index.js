@@ -47,15 +47,19 @@ app.post('/api/users/register', (req, res) => {
   });
 
   res.json(user); 
+});
+
+
+app.post('/api/users/logout', (req, res) => {
+  auth.signOut();
+  res.json({"user": null});
 })
 
+
 app.post('/api/users/login', (req, res) => {
-  console.log(req.body);
   const user = req.body.user;
-  console.log(user);
   // Validate the user created an email and password
   if (!user.email) {
-    console.log("Email");
     return res.status(422).json({
       errors: {
         email: 'is required',
@@ -64,7 +68,6 @@ app.post('/api/users/login', (req, res) => {
   }
 
   if (!user.password) {
-    console.log("pas")
     return res.status(422).json({
       errors: {
         password: 'is required',

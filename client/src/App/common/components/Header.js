@@ -19,8 +19,8 @@ class Header extends Component {
 	constructor(props) {
 		super(props);
 		const { dispatch } = this.props;
-		this.toggle = this.toggle.bind(this);
 		dispatch(userActions.getCurrent());
+		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false
 			//		isLoggedIn: typeof localStorage["user"] !== 'undefined'
@@ -34,66 +34,128 @@ class Header extends Component {
 		});
 	}
 
+	componentWillUpdate() {
+
+	}
+
 	render() {
 		let userLinks = "Authenticating...";
 		//Conditional rendering
-		if(!this.props.isFetchingCurrentUser){
-			if(this.props.currentUser.user === null){
-				userLinks = 
-				<>
-					<NavItem> 
-						<NavLink href="#/login">Login</NavLink>		
-					</NavItem>
-					<NavItem>	
-						<NavLink href="#/register">Register</NavLink>	
-					</NavItem>
-				</>
-			} else{
-				userLinks = 
-				<>
-					<NavItem> 
-						<NavLink href="#/profile">Profile</NavLink>
-					</NavItem>	
-					<NavItem>
-						<NavLink href="#/login">Logout</NavLink>	
-					</NavItem>
-				</>
+		/*	console.log(this.props);
+			if(!this.props.users.isFetchingCurrentUser){
+				console.log(this.props.users.isFetchingCurrentUser);
+				console.log(this.props.users.currentUser);
+				console.log(this.props.users.currentUser.user === null);
+				if(this.props.users.currentUser.user === null){
+					userLinks = 
+					<>
+						<NavItem> 
+							<NavLink href="#/login">Login</NavLink>		
+						</NavItem>
+						<NavItem>	
+							<NavLink href="#/register">Register</NavLink>	
+						</NavItem>
+					</>
+				} else{
+					userLinks = 
+					<>
+						<NavItem> 
+							<NavLink href="#/profile">Profile</NavLink>
+						</NavItem>	
+						<NavItem>
+							<NavLink href="#/login">Logout</NavLink>	
+						</NavItem>
+					</>
+				}
+			} */
+		/*	console.log(this.props);
+			if(!this.props.isFetchingCurrentUser){
+				console.log(this.props.currentUser);
+				if(this.props.currentUser.user === null){
+					userLinks = 
+					<>
+						<NavItem> 
+							<NavLink href="#/login">Login</NavLink>		
+						</NavItem>
+						<NavItem>	
+							<NavLink href="#/register">Register</NavLink>	
+						</NavItem>
+					</>
+				} else{
+					userLinks = 
+					<>
+						<NavItem> 
+							<NavLink href="#/profile">Profile</NavLink>
+						</NavItem>	
+						<NavItem>
+							<NavLink href="#/login">Logout</NavLink>	
+						</NavItem>
+					</>
+				}
+			} */
+		console.log(this.props);
+		if (!this.props.isFetchingCurrentUser) {
+			if (!this.props.loggedIn) {
+				userLinks =
+					<>
+						<NavItem>
+							<NavLink href="#/login">Login</NavLink>
+						</NavItem>
+						<NavItem>
+							<NavLink href="#/register">Register</NavLink>
+						</NavItem>
+					</>
+			} else {
+				userLinks =
+					<>
+						<NavItem>
+							<NavLink href="#/profile">Profile</NavLink>
+						</NavItem>
+						<NavItem>
+							<NavLink href="#/login">Logout</NavLink>
+						</NavItem>
+					</>
 			}
 		}
-	
 		return (
 			<header>
-					<Navbar color="faded" light expand="md">
-						<NavbarBrand href="/">Polling</NavbarBrand>
-						<NavbarToggler onClick={this.toggle} />
-						<Collapse isOpen={this.state.isOpen} navbar>
-							<Nav className="ml-auto" navbar>
-								<NavItem>
-									<NavLink href="#/">Home</NavLink>
-								</NavItem>
-								{userLinks}
-							</Nav>
-						</Collapse>
-					</Navbar>
+				<Navbar color="faded" light expand="md">
+					<NavbarBrand href="/">Polling</NavbarBrand>
+					<NavbarToggler onClick={this.toggle} />
+					<Collapse isOpen={this.state.isOpen} navbar>
+						<Nav className="ml-auto" navbar>
+							<NavItem>
+								<NavLink href="#/">Home</NavLink>
+							</NavItem>
+							{userLinks}
+						</Nav>
+					</Collapse>
+				</Navbar>
 			</header>
 		)
 	}
 }
 
-Header.propTypes = {
-//	isLoggedIn: PropTypes.bool.isRequired,
-}
-
 function mapStateToProps(state) {
-	const { users } = state.home;
-	const { isFetchingCurrentUser, currentUser } = users || {
-		isFetchingCurrentUser: true,
-		currentUser: {}
-		}
+	/*	console.log(state.home);
+		const { users } = state.home;
+		const { isFetchingCurrentUser, currentUser } = users || {
+			isFetchingCurrentUser: true,
+			currentUser: {}
+			}
+		return {
+			isFetchingCurrentUser,
+			currentUser
+		}; */
+
+	const { loggedIn } = state.home.authenticate;
+	const { isFetchingCurrentUser } = state.home.users || {
+		isFetchingCurrentUser: true
+	}
 	return {
-		isFetchingCurrentUser,
-		currentUser
-	};
+		loggedIn,
+		isFetchingCurrentUser
+	}
 }
 
 export default connect(mapStateToProps)(Header);

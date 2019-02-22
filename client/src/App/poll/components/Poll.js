@@ -57,7 +57,6 @@ class Poll extends Component {
 			// User is submitting  a user answer 
 			if (submissionType === "toSubmit") {
 				var userLength = 0;
-				console.log(this.props.userAnswers);
 				if (this.props.userAnswers != null) {
 					userLength = this.props.userAnswers.length;
 				}
@@ -86,7 +85,6 @@ class Poll extends Component {
 				let user = JSON.parse(localStorage.getItem('user'));
 				user = user.id;
 				var userLength = 0;
-				console.log(this.props.userAnswers);
 				if (this.props.userAnswers != null) {
 					userLength = this.props.userAnswers.length;
 				}
@@ -140,6 +138,7 @@ class Poll extends Component {
 
 	render() {
 		let button = "Authenticating...";
+		console.log(this.props);
 		if(!this.props.isFetchingCurrentUser){
 			if(this.props.currentUser.user === null){
 				button = <div className="float-right" id="pleaseLoginOrRegister" > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</div>;
@@ -159,7 +158,6 @@ class Poll extends Component {
 			)
 			// Already existing user answers
 			if (this.props.userAnswers) {
-				console.log(this.props.userAnswers);
 				for (var i = 0; i < this.props.userAnswers.length; i++) {
 					useranswers.push(
 						<div key={i}>
@@ -196,7 +194,6 @@ class Poll extends Component {
 							<h4 className="">Answers</h4>
 							{
 								this.props.answers.map(function (answer, index) {
-									console.log(answer.id);
 									return (
 										<div key={answer.id}>
 											<input type={this.state.choiceType} name="answer" submitted="answer" submissiontype="answer" onChange={this.state.optionChangeType} value={answer.text} id={index} className="pollInput" />

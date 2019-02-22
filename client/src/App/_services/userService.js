@@ -26,22 +26,26 @@ function login(user) {
     };
 
     return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/users/login`, requestOptions).then(handleResponse)
-     /*   .then(user => {
-            // Upon getting data from the backend, get the user
-            user = user.user
-            // login successful if there's a jwt token in the response
-            if (user.token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
-            }
-            return user;
-        }); */
+    /*   .then(user => {
+           // Upon getting data from the backend, get the user
+           user = user.user
+           // login successful if there's a jwt token in the response
+           if (user.token) {
+               // store user details and jwt token in local storage to keep user logged in between page refreshes
+               localStorage.setItem('user', JSON.stringify(user));
+           }
+           return user;
+       }); */
 }
 
 // log out the user
 function logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('user');
+    //  localStorage.removeItem('user');
+    const requestOptions = {
+        method: 'POST'
+    };
+    return fetch("http://localhost:5001/polling-269dc/us-central1/app/api/users/logout/", requestOptions).then(handleResponse);
 }
 
 // get the current user
@@ -67,7 +71,7 @@ function checkExistence(user) {
     const requestOptions = {
         method: 'GET'
     };
-    return fetch("api/users/checkExistence/"+user, requestOptions).then(handleResponse);
+    return fetch("api/users/checkExistence/" + user, requestOptions).then(handleResponse);
 }
 
 //  registera user
@@ -77,9 +81,7 @@ function register(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-
-    console.log(user);
-
+    
     return fetch('http://localhost:5001/polling-269dc/us-central1/app/api/users/register/', requestOptions).then(handleResponse);
 }
 /*
