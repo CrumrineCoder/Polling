@@ -48,7 +48,6 @@ function votePollAnswer(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-    console.log(poll);
     return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/votePollAnswer/`, requestOptions).then(handleResponse);
 }
 
@@ -121,10 +120,8 @@ function checkExistence(question) {
 function handleResponse(response) {
     //  console.log(response.text());
     return response.text().then(text => {
-        console.log(JSON.parse(text));
         //  console.log((JSON.parse(text).polls).find(x => x.creator == "5c489f668665512ec004db37"))
         const data = text && JSON.parse(text);
-        console.log(data);
         if (!response.ok) {
             const error = (data && data.message) || response.statusText;
             console.log(error);

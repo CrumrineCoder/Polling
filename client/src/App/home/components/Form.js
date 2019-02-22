@@ -87,12 +87,12 @@ class Form extends Component {
             this.setState({ submitted: true });
             // If the user wants this poll to be linked to their account, then send the user to the backend
             if (linked) {
-                creator = JSON.parse(localStorage.getItem('user')).id;
+                creator = this.props.user;
             } else {
                 creator = "";
             }
 
-
+            console.log("Creator", creator);
             let value = 0;
             var tempAnswers = answers.map(function (el) {
                 var o = Object.assign({}, el);
@@ -152,7 +152,6 @@ class Form extends Component {
     render() {
         const { question } = this.state;
         let linkPoll;
-        console.log(this.props);
         // If there's no one logged in, suggest them to login so they can add this poll to their account
         if (!this.props.isFetchingCurrentUser) {
             if (!this.props.loggedIn) {
