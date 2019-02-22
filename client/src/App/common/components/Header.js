@@ -34,66 +34,8 @@ class Header extends Component {
 		});
 	}
 
-	componentWillUpdate() {
-
-	}
-
 	render() {
 		let userLinks = "Authenticating...";
-		//Conditional rendering
-		/*	console.log(this.props);
-			if(!this.props.users.isFetchingCurrentUser){
-				console.log(this.props.users.isFetchingCurrentUser);
-				console.log(this.props.users.currentUser);
-				console.log(this.props.users.currentUser.user === null);
-				if(this.props.users.currentUser.user === null){
-					userLinks = 
-					<>
-						<NavItem> 
-							<NavLink href="#/login">Login</NavLink>		
-						</NavItem>
-						<NavItem>	
-							<NavLink href="#/register">Register</NavLink>	
-						</NavItem>
-					</>
-				} else{
-					userLinks = 
-					<>
-						<NavItem> 
-							<NavLink href="#/profile">Profile</NavLink>
-						</NavItem>	
-						<NavItem>
-							<NavLink href="#/login">Logout</NavLink>	
-						</NavItem>
-					</>
-				}
-			} */
-		/*	console.log(this.props);
-			if(!this.props.isFetchingCurrentUser){
-				console.log(this.props.currentUser);
-				if(this.props.currentUser.user === null){
-					userLinks = 
-					<>
-						<NavItem> 
-							<NavLink href="#/login">Login</NavLink>		
-						</NavItem>
-						<NavItem>	
-							<NavLink href="#/register">Register</NavLink>	
-						</NavItem>
-					</>
-				} else{
-					userLinks = 
-					<>
-						<NavItem> 
-							<NavLink href="#/profile">Profile</NavLink>
-						</NavItem>	
-						<NavItem>
-							<NavLink href="#/login">Logout</NavLink>	
-						</NavItem>
-					</>
-				}
-			} */
-		console.log(this.props);
 		if (!this.props.isFetchingCurrentUser) {
 			if (!this.props.loggedIn) {
 				userLinks =
@@ -137,17 +79,6 @@ class Header extends Component {
 }
 
 function mapStateToProps(state) {
-	/*	console.log(state.home);
-		const { users } = state.home;
-		const { isFetchingCurrentUser, currentUser } = users || {
-			isFetchingCurrentUser: true,
-			currentUser: {}
-			}
-		return {
-			isFetchingCurrentUser,
-			currentUser
-		}; */
-
 	const { loggedIn } = state.home.authenticate;
 	const { isFetchingCurrentUser } = state.home.users || {
 		isFetchingCurrentUser: true

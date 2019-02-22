@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { Link } from 'react-router-dom';
-
+import { userActions } from '../../_actions/users.actions.js';
 // Form for creating polls
 class Form extends Component {
 
     constructor(props) {
         super(props);
+        const { dispatch } = this.props;
+        dispatch(userActions.getCurrent());
         // initial state stores the questions, an array of answers the user will input, options the user will make true or false, linked represents if the user will be linked, and submitted checks if the poll has been submitted yet. 
         this.state = {
             question: '',
@@ -61,10 +63,6 @@ class Form extends Component {
         const { dispatch } = this.props;
         let creator;
 
-        //    this.props.dispatch(pollActions.checkExistence(question));
-        //  console.log("Beanus", this.props);
-        // console.log("this", this.props.checkPolls)
-
         // Remove empty answers
         answers = answers.filter(function (el) {
             return el.text !== "";
@@ -95,15 +93,12 @@ class Form extends Component {
             }
 
             let value = 0;
-            console.log(answers);
             var tempAnswers = answers.map(function (el) {
                 var o = Object.assign({}, el);
                 o.Users = [];
                 return o;
             })
-            console.log(tempAnswers);
             answers = tempAnswers;
-            console.log(answers);
             // Dispatch to the create poll action in poll.actions.js
             //  dispatch(pollActions.checkExistence(question, { question, answers, options, creator, value }));
             dispatch(pollActions.createPoll({ question, answers, options, creator, value }));
@@ -157,17 +152,19 @@ class Form extends Component {
         const { question } = this.state;
         let linkPoll;
         // If there's no one logged in, suggest them to login so they can add this poll to their account
-        if (JSON.parse(localStorage.getItem('user')) === null) {
-            linkPoll = (
-                <div>
-                    <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to link this poll with your account and edit the poll after creation.
+        if (!this.props.isFetchingCurrentUser) {
+            if (!this.props.loggedIn) {
+                linkPoll = (
+                    <div>
+                        <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to link this poll with your account and edit the poll after creation.
                 </div>
-            )
-            // If they are logged in, make a link this button to my account button
-        } else {
-            linkPoll = (
-                <label><input type="checkbox" checked={this.state.linked} onChange={this.handleLinkedClick} name="user" value="LinkPoll" /> Link Poll to my user account </label>
-            )
+                )
+                // If they are logged in, make a link this button to my account button
+            } else {
+                linkPoll = (
+                    <label><input type="checkbox" checked={this.state.linked} onChange={this.handleLinkedClick} name="user" value="LinkPoll" /> Link Poll to my user account </label>
+                )
+            }
         }
         return (
             <div className="form">
@@ -215,8 +212,14 @@ class Form extends Component {
 // get the create poll actions for dispatching
 function mapStateToProps(state) {
     const checkPolls = state.home.checkPolls;
+    const { loggedIn } = state.home.authenticate;
+    const { isFetchingCurrentUser } = state.home.users || {
+        isFetchingCurrentUser: true
+    }
     return {
-        checkPolls
+        checkPolls,
+        loggedIn,
+        isFetchingCurrentUser
     };
 }
 
