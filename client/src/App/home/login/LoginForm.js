@@ -13,6 +13,7 @@ class LoginForm extends Component {
     constructor(props) {
         super(props);
         // Log out the user upon entering (When logged in, they'll see this page as 'logout', and when not logged in, well it doesn't matter)
+        this.props.dispatch(userActions.getCurrent());
         this.props.dispatch(userActions.logout());
 
         // User's email, password, and where they came from are stored
@@ -92,8 +93,15 @@ class LoginForm extends Component {
 // Authentication actions, from authentication.reducers.js
 function mapStateToProps(state) {
     const { logging } = state.home.authenticate;
+    const { users } = state.home;
+	const { isFetchingCurrentUser, currentUser } = users || {
+		isFetchingCurrentUser: true,
+		currentUser: {}
+		}
     return {
-        logging
+        logging,
+        isFetchingCurrentUser,
+		currentUser
     };
 }
 

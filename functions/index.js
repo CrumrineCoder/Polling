@@ -35,24 +35,24 @@ app.post('/api/users/register', (req, res) => {
     });
   }
 
-  auth.createUserWithEmailAndPassword(user.email, user.password).catch(function(error) {
+  auth.createUserWithEmailAndPassword(user.email, user.password).catch(function (error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
-    if(errorCode || errorMessage){
+    if (errorCode || errorMessage) {
       console.log(errorCode);
       console.log(errorMessage);
       res.json(errorMessage)
     }
   });
 
-  res.json(user); 
+  res.json(user);
 });
 
 
 app.post('/api/users/logout', (req, res) => {
   auth.signOut();
-  res.json({"user": null});
+  res.json({ "user": null });
 })
 
 
@@ -75,30 +75,30 @@ app.post('/api/users/login', (req, res) => {
     });
   }
 
-  auth.signInWithEmailAndPassword(user.email, user.password).catch(function(error) {
+  auth.signInWithEmailAndPassword(user.email, user.password).catch(function (error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
-    if(errorCode || errorMessage){
+    if (errorCode || errorMessage) {
       console.log(errorCode);
       console.log(errorMessage);
       res.json(errorMessage)
     }
   });
 
-  res.json(user); 
+  res.json(user);
 });
 
 
 app.get('/api/users/current', (req, res, next) => {
-    auth.onAuthStateChanged(function(user) {
-      if (user) {
-        var email = user.email;
-        res.json({user: email});
-      } else {
-        res.json({user: null})
-      }
-    });
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      var email = user.email;
+      res.json({ user: email });
+    } else {
+      res.json({ user: null })
+    }
+  });
 });
 
 
@@ -161,7 +161,7 @@ app.post("/api/polls/voteMultiple/", (req, res) => {
       });
     }
   }
-  res.json(req.body._parentID); 
+  res.json(req.body._parentID);
 });
 
 app.get("/api/polls/get/", (req, res) => {

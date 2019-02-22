@@ -34,10 +34,22 @@ class Header extends Component {
 		});
 	}
 
+	componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.isFetchingCurrentUser !== this.props.isFetchingCurrentUser) {
+			// Do whatever you want
+			console.log("Test");
+		}
+		if (prevProps.currentUser.user !== this.props.currentUser.user) {
+			// Do whatever you want
+			console.log("FSADFASDFASDFA");
+        }
+    }
+
 	render() {
+		console.log(this.props);
 		let userLinks = "Authenticating...";
-		if (!this.props.isFetchingCurrentUser) {
-			if (!this.props.loggedIn) {
+		if(!this.props.isFetchingCurrentUser){
+			if(this.props.currentUser.user === null){
 				userLinks =
 					<>
 						<NavItem>
@@ -79,14 +91,24 @@ class Header extends Component {
 }
 
 function mapStateToProps(state) {
-	const { loggedIn } = state.home.authenticate;
+	console.log(state.home);
+/*	const { loggedIn } = state.home.authenticate;
 	const { isFetchingCurrentUser } = state.home.users || {
 		isFetchingCurrentUser: true
 	}
 	return {
 		loggedIn,
 		isFetchingCurrentUser
-	}
+	} */
+	const { users } = state.home;
+	const { isFetchingCurrentUser, currentUser } = users || {
+		isFetchingCurrentUser: true,
+		currentUser: {}
+		}
+	return {
+		isFetchingCurrentUser,
+		currentUser
+	};
 }
 
 export default connect(mapStateToProps)(Header);

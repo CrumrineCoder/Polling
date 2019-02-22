@@ -92,7 +92,6 @@ class Form extends Component {
                 creator = "";
             }
 
-            console.log("Creator", creator);
             let value = 0;
             var tempAnswers = answers.map(function (el) {
                 var o = Object.assign({}, el);

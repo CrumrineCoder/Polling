@@ -82,6 +82,7 @@ class Poll extends Component {
 		if (selected !== undefined && selected.length !== 0) {
 			// If the user is logged in 
 			if (isLoggedIn) {
+				console.log(this.props);
 				let user = JSON.parse(localStorage.getItem('user'));
 				user = user.id;
 				var userLength = 0;
