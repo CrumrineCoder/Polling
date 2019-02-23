@@ -21,7 +21,7 @@ Firebase To Do
 
 * Stop password from being saved to authenticate reducer
 * Clean up reducers
-* Cannot SET HEADERS
+* When redirected to / after logging in, make sure the user is stored first. 
 
 ## Completed Job Stories
 

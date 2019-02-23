@@ -86,12 +86,16 @@ class Form extends Component {
             // Poll will be submitted
             this.setState({ submitted: true });
             // If the user wants this poll to be linked to their account, then send the user to the backend
+            console.log(this.props);
+
             if (linked) {
-                creator = this.props.user;
+                creator = this.props.currentUser.user;
             } else {
                 creator = "";
             }
 
+            console.log(creator);
+            
             let value = 0;
             var tempAnswers = answers.map(function (el) {
                 var o = Object.assign({}, el);

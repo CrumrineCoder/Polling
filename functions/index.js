@@ -91,7 +91,8 @@ app.post('/api/users/login', (req, res) => {
 
 
 app.get('/api/users/current', (req, res, next) => {
-  auth.onAuthStateChanged(function (user) {
+  var unsubscribe = auth.onAuthStateChanged(function (user) {
+    unsubscribe();
     if (user) {
       var email = user.email;
       console.log("LOGGED IN!");
@@ -180,7 +181,7 @@ app.get("/api/polls/get/", (req, res) => {
 
 app.get('/api/polls/get/:id', (req, res) => {
   var ref = database.ref('polls/' + req.params.id);
-  ref.on('value', function (snapshot) {
+  ref.once('value', function (snapshot) {
     console.log(snapshot.val());
     res.json(snapshot.val());
   });

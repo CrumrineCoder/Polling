@@ -51,8 +51,8 @@ class Poll extends Component {
 		var { selected, _parentID, _id, userAnswer, submissionType, isLoggedIn } = this.state;
 		const { dispatch } = this.props;
 		// If the user is logged in 
-		if (isLoggedIn) {
-			let user = JSON.parse(localStorage.getItem('user'));
+		if (this.props.currentUser) {
+			let user = this.props.currentUser.user
 			user = user.id;
 			// User is submitting  a user answer 
 			if (submissionType === "toSubmit") {
@@ -81,10 +81,11 @@ class Poll extends Component {
 		// If the user selected at least one option to vote
 		if (selected !== undefined && selected.length !== 0) {
 			// If the user is logged in 
-			if (isLoggedIn) {
+			if (this.props.currentUser) {
 				console.log(this.props);
-				let user = JSON.parse(localStorage.getItem('user'));
-				user = user.id;
+				//let user = JSON.parse(localStorage.getItem('user'));
+				//user = user.id;
+				let user = this.props.currentUser.user
 				var userLength = 0;
 				if (this.props.userAnswers != null) {
 					userLength = this.props.userAnswers.length;
