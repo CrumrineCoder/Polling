@@ -152,8 +152,8 @@ class Form extends Component {
         const { question } = this.state;
         let linkPoll;
         // If there's no one logged in, suggest them to login so they can add this poll to their account
-        if (!this.props.isFetchingCurrentUser) {
-            if (!this.props.loggedIn) {
+        if(!this.props.isFetchingCurrentUser){
+			if(this.props.currentUser.user === null){
                 linkPoll = (
                     <div>
                         <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to link this poll with your account and edit the poll after creation.
@@ -211,7 +211,7 @@ class Form extends Component {
 
 // get the create poll actions for dispatching
 function mapStateToProps(state) {
-    var user;
+/*    var user;
     if (state.home.authenticate.user) {
         user = state.home.authenticate.user.email
     } else {
@@ -227,7 +227,18 @@ function mapStateToProps(state) {
         user,
         loggedIn,
         isFetchingCurrentUser
-    };
+    }; */
+    const checkPolls = state.home.checkPolls;
+    const { users } = state.home;
+	const { isFetchingCurrentUser, currentUser } = users || {
+		isFetchingCurrentUser: true,
+		currentUser: {}
+		}
+	return {
+        checkPolls,
+		isFetchingCurrentUser,
+		currentUser
+	};
 }
 
 export default connect(mapStateToProps)(Form);

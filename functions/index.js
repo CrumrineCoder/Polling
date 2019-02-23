@@ -94,8 +94,10 @@ app.get('/api/users/current', (req, res, next) => {
   auth.onAuthStateChanged(function (user) {
     if (user) {
       var email = user.email;
+      console.log("LOGGED IN!");
       res.json({ user: email });
     } else {
+      console.log("-not logged in-")
       res.json({ user: null })
     }
   });

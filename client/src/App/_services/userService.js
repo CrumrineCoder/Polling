@@ -54,6 +54,7 @@ function getCurrent() {
         method: 'GET',
         headers: authHeader()
     };
+    console.log("Get Current  User Service");
     return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/users/current`, requestOptions).then(handleResponse);
 }
 /*

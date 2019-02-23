@@ -100,13 +100,15 @@ function register(user) {
 function getCurrent() {
     return dispatch => {
         dispatch(request());
-
+        console.log("Get Current User Action");
         userService.getCurrent()
             .then(
                 users => dispatch(success(users)),
                 error => dispatch(failure(error.toString()))
             );
     };
+
+   
 
     function request() { return { type: userConstants.GETCURRENT_REQUEST } }
     function success(users) { return { type: userConstants.GETCURRENT_SUCCESS, users } }
