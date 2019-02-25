@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import { userActions } from '../../_actions/users.actions.js';
+import { history } from '../../store.js';
 
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import validator from 'validator';
 import fire from "../../common/components/Fire.js";
 var auth = fire.auth();
+
 
 class LoginForm extends Component {
 
@@ -39,7 +41,7 @@ class LoginForm extends Component {
     handleSubmit() {
         var { email, password, from } = this.state;
         const { dispatch } = this.props;
-
+        console.log("From", from);
         // Request the back end to login the user
         //        dispatch(userActions.login({ email, password, from }));
         auth.signInWithEmailAndPassword(email, password).catch(function (error) {
@@ -51,7 +53,7 @@ class LoginForm extends Component {
                 console.log(errorMessage);
                 //  res.json(errorMessage)
             }
-        });
+        }).then(history.push(from.pathname));
     }
 
     // For form control

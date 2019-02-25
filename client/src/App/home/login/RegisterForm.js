@@ -23,8 +23,8 @@ class RegisterForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillReceiveProps(newProps){
-        if(newProps.checkUsers.exists){
+    componentWillReceiveProps(newProps) {
+        if (newProps.checkUsers.exists) {
             alert("Your username is taken.");
         }
     }
@@ -36,18 +36,18 @@ class RegisterForm extends Component {
         this.setState({ submitted: true });
         console.log(email);
         console.log(password);
-      //  dispatch(userActions.register({email, password}));
-      auth.createUserWithEmailAndPassword(email, password).catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        if (errorCode || errorMessage) {
-          console.log(errorCode);
-          console.log(errorMessage);
-      //   res.json(errorMessage)
-        }
-      });
-    
+        //  dispatch(userActions.register({email, password}));
+        auth.createUserWithEmailAndPassword(email, password).catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode || errorMessage) {
+                console.log(errorCode);
+                console.log(errorMessage);
+                //   res.json(errorMessage)
+            }
+        });
+
     }
 
     // For form control
@@ -61,16 +61,16 @@ class RegisterForm extends Component {
         const { email, password } = this.state;
         const required = (value) => {
             if (!value.toString().trim().length) {
-              // We can return string or jsx as the 'error' prop for the validated Component
-              return <p class="warning">This value is required.</p>
+                // We can return string or jsx as the 'error' prop for the validated Component
+                return <p class="warning">This value is required.</p>
             }
-          };
-           
-          const requireEmail = (value) => {
+        };
+
+        const requireEmail = (value) => {
             if (!validator.isEmail(value)) {
                 return <p class="warning">{value} is not a valid email.</p>
             }
-          };
+        };
         return (
             <Form className="form">
                 <Container>
@@ -87,7 +87,7 @@ class RegisterForm extends Component {
                         value={password}
                         className="form-control my-3"
                         placeholder="password"
-                        type="password" 
+                        type="password"
                         validations={[required]}
                     />
                     <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>
