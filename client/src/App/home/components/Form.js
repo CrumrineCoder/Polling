@@ -27,7 +27,8 @@ class Form extends Component {
             },
             linked: false,
             submitted: false,
-            isLoggedIn: false
+            isLoggedIn: false, 
+            creator: null
         };
         // Bind action creators to the state
         this.handleChangeField = this.handleChangeField.bind(this);
@@ -55,7 +56,8 @@ class Form extends Component {
 				console.log("LOGGED IN!");
 				//	  res.json({ user: email })
 				this.setState({
-					isLoggedIn: true
+                    isLoggedIn: true,
+                    creator: email
 				});
 			} else {
 				console.log("-not logged in-")
@@ -112,7 +114,7 @@ class Form extends Component {
             console.log(this.props);
 
             if (linked) {
-                creator = this.props.currentUser.user;
+                creator = this.state.creator;
             } else {
                 creator = "";
             }

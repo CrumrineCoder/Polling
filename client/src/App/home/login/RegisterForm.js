@@ -35,19 +35,15 @@ class RegisterForm extends Component {
         var { email, password } = this.state;
         const { dispatch } = this.props;
         this.setState({ submitted: true });
-        console.log(email);
-        console.log(password);
 
         auth.createUserWithEmailAndPassword(email, password).then(function () {
             history.push("");
             history.push("/login");
         }, function (error) {
-            var errorCode = error.code;
+        //    var errorCode = error.code;
             var errorMessage = error.message;
-            if (errorCode || errorMessage) {
-                console.log(errorCode);
-                console.log(errorMessage);
-                //   res.json(errorMessage)
+            if (errorMessage) {
+                alert(errorMessage);
             }
         });
     }

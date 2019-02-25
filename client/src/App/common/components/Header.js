@@ -26,7 +26,7 @@ class Header extends Component {
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false,
-			isLoggedIn: false
+			isLoggedIn: ""
 			//		isLoggedIn: typeof localStorage["user"] !== 'undefined'
 		};
 	}
@@ -64,7 +64,7 @@ class Header extends Component {
 		  }); 
 	} */
 
-	componentWillMount(){
+	componentDidMount(){
 		auth.onAuthStateChanged((user)=>{
 			if (user) {
 				var email = user.email;

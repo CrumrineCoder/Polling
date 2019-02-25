@@ -4,7 +4,8 @@ import { pollActions } from '../../_actions/polls.actions.js';
 import { userActions } from '../../_actions/users.actions.js';
 import { Link } from 'react-router-dom';
 import { history } from '../../store.js';
-
+import fire from "../../common/components/Fire.js";
+var auth = fire.auth();
 
 class Poll extends Component {
 
@@ -22,7 +23,8 @@ class Poll extends Component {
 			choiceType: '',
 			optionChangeType: undefined,
 			submitType: undefined,
-			submissionType: undefined
+			submissionType: undefined,
+			user: ""
 		};
 		// Bind action creators to the state. 
 		this.handleOptionChange = this.handleOptionChange.bind(this);
@@ -44,6 +46,24 @@ class Poll extends Component {
 			this.setState({ optionChangeType: this.handleOptionChange });
 			this.setState({ submitType: this.handleSubmit });
 		}
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				var email = user.email;
+				console.log("LOGGED IN!");
+				//	  res.json({ user: email })
+				this.setState({
+					isLoggedIn: true,
+					user: email
+				});
+			} else {
+				console.log("-not logged in-")
+				//	  res.json({ user: null })
+				this.setState({
+					isLoggedIn: false
+				});
+
+			}
+		});
 	}
 
 	//Single vote submission logic
@@ -140,14 +160,12 @@ class Poll extends Component {
 	render() {
 		let button = "Authenticating...";
 		console.log(this.props);
-		if(!this.props.isFetchingCurrentUser){
-			if(this.props.currentUser.user === null){
-				button = <div className="float-right" id="pleaseLoginOrRegister" > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</div>;
-			} else{
-				button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
-			}
+		if (this.state.isLoggedIn) {
+			button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
+		} else {		
+			button = <div className="float-right" id="pleaseLoginOrRegister" > Please  <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to vote.</div>;
 		}
-	
+
 		let useranswers = [];
 		let Results;
 		// If the poll creator set userAnswers to true
@@ -222,7 +240,7 @@ function mapStateToProps(state) {
 	const { isFetchingCurrentUser, currentUser } = users || {
 		isFetchingCurrentUser: true,
 		currentUser: {}
-		}
+	}
 	return {
 		isFetchingCurrentUser,
 		currentUser
