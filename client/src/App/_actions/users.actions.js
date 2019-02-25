@@ -71,7 +71,6 @@ function checkExistence(email, user) {
 // Param: username and password
 // Function: Send a register request to the back end and redirect the user to the login page
 function register(user) {
-    console.log("registeraction", user); 
     return dispatch => {
         dispatch(request(user));
 
@@ -100,7 +99,6 @@ function register(user) {
 function getCurrent() {
     return dispatch => {
         dispatch(request());
-        console.log("Get Current User Action");
         userService.getCurrent()
             .then(
                 users => dispatch(success(users)),

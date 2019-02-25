@@ -21,7 +21,6 @@ class Header extends Component {
 	constructor(props) {
 		super(props);
 		const { dispatch } = this.props;
-		console.log("HEADER PROPS", this.props);
 		dispatch(userActions.getCurrent());
 		this.toggle = this.toggle.bind(this);
 		this.state = {
@@ -37,45 +36,13 @@ class Header extends Component {
 			isOpen: !this.state.isOpen
 		});
 	}
-	/*
-		componentDidUpdate(prevProps, prevState, snapshot) {
-			if (prevProps.isFetchingCurrentUser !== this.props.isFetchingCurrentUser) {
-				// Do whatever you want
-				console.log("Test");
-				this.setState(this.state);
-			}
-			if (prevProps.currentUser.user !== this.props.currentUser.user) {
-				// Do whatever you want
-				console.log("FSADFASDFASDFA");
-				this.setState(this.state);
-			}
-		}
-		*/
-	/*componentDidUpdate(){
-		auth.onAuthStateChanged(function (user) {
-			if (user) {
-			  var email = user.email;
-			  console.log("LOGGED IN!");
-		//	  res.json({ user: email });
-			} else {
-			  console.log("-not logged in-")
-		//	  res.json({ user: null })
-			}
-		  }); 
-	} */
-
 	componentDidMount(){
 		auth.onAuthStateChanged((user)=>{
 			if (user) {
-				var email = user.email;
-				console.log("LOGGED IN!");
-				//	  res.json({ user: email })
 				this.setState({
 					isLoggedIn: true
 				});
 			} else {
-				console.log("-not logged in-")
-				//	  res.json({ user: null })
 				this.setState({
 					isLoggedIn: false
 				});
@@ -85,9 +52,7 @@ class Header extends Component {
 	}
 
 	render() {
-		//	console.log(this.props);
 		let userLinks = "Authenticating...";
-		console.log(this.state.isLoggedIn);
 		if(this.state.isLoggedIn){
 			userLinks =
 			<>
@@ -153,15 +118,6 @@ class Header extends Component {
 }
 
 function mapStateToProps(state) {
-	//	console.log(state.home);
-	/*	const { loggedIn } = state.home.authenticate;
-		const { isFetchingCurrentUser } = state.home.users || {
-			isFetchingCurrentUser: true
-		}
-		return {
-			loggedIn,
-			isFetchingCurrentUser
-		} */
 	const { users } = state.home;
 	const { isFetchingCurrentUser, currentUser } = users || {
 		isFetchingCurrentUser: true,

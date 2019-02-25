@@ -32,7 +32,6 @@ class Polls extends Component {
 	render() {
 		let { votes } = this.props;
 		let pageContent = '';
-		console.log(this.props);
 		// If we're still fetching the data, tell the user
 		if (this.props.isFetching) {
 			pageContent = (
@@ -44,7 +43,6 @@ class Polls extends Component {
 		else {
 			// Get all of the users 
 			let id = [];
-			console.log(this.props.votes);
 			if (this.props.votes.answers[0].Users) {
 				for (var i = 0; i < this.props.votes.answers.length; i++) {
 					for (var j = 0; j < this.props.votes.answers[i].Users.length; j++) {

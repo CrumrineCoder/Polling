@@ -42,7 +42,6 @@ class EditContainer extends Component {
 			)
 		} // Once the data is fetched... 
 		else {
-			console.log("VOTES", votes);
 			if (localStorage.getItem('user')) {
 				if (JSON.parse(localStorage.getItem('user')).id !== votes.creator) {
 					alert("This poll was not made by you. Redirecting...");

@@ -49,15 +49,11 @@ class Poll extends Component {
 		auth.onAuthStateChanged((user) => {
 			if (user) {
 				var email = user.email;
-				console.log("LOGGED IN!");
-				//	  res.json({ user: email })
 				this.setState({
 					isLoggedIn: true,
 					user: email
 				});
 			} else {
-				console.log("-not logged in-")
-				//	  res.json({ user: null })
 				this.setState({
 					isLoggedIn: false
 				});
@@ -101,7 +97,6 @@ class Poll extends Component {
 		if (selected !== undefined && selected.length !== 0) {
 			// If the user is logged in 
 		//	if (this.props.currentUser) {
-				console.log(this.props);
 				//let user = JSON.parse(localStorage.getItem('user'));
 				//user = user.id;
 				let user = this.state.user;
@@ -159,7 +154,6 @@ class Poll extends Component {
 
 	render() {
 		let button = "Authenticating...";
-		console.log(this.props);
 		if (this.state.isLoggedIn) {
 			button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
 		} else {		

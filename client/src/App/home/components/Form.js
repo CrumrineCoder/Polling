@@ -53,15 +53,11 @@ class Form extends Component {
 		auth.onAuthStateChanged((user)=>{
 			if (user) {
 				var email = user.email;
-				console.log("LOGGED IN!");
-				//	  res.json({ user: email })
 				this.setState({
                     isLoggedIn: true,
                     creator: email
 				});
 			} else {
-				console.log("-not logged in-")
-				//	  res.json({ user: null })
 				this.setState({
 					isLoggedIn: false
 				});
@@ -111,15 +107,11 @@ class Form extends Component {
             // Poll will be submitted
             this.setState({ submitted: true });
             // If the user wants this poll to be linked to their account, then send the user to the backend
-            console.log(this.props);
-
             if (linked) {
                 creator = this.state.creator;
             } else {
                 creator = "";
             }
-
-            console.log(creator);
             
             let value = 0;
             var tempAnswers = answers.map(function (el) {

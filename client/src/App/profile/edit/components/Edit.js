@@ -13,7 +13,6 @@ class Edit extends Component {
         const { dispatch } = this.props;
         // Get the current user, authentication
         dispatch(userActions.getCurrent());
-        console.log("TELL ME THE PROPS", this.props);
         // selected is the votes selected by the user, userAnswer is the user created answer, _parentID is the id of the poll itself, isLoggedIn checks if the user is logged in, choiceType is whether the inputs to select votes are radio (single vote) or checkbox (multiple votes), optionChangeType keeps track of whether we're using multipleOptionChange or optionChange, submitType is  handleSubmit or handleMultipleSubmit, and submissionType is whether the user is voting on a poll answer, a user answer, creating a user answer, or multiple. 
         this.state = {
             _id: this.props._id,

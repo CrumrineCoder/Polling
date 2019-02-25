@@ -43,15 +43,11 @@ class Results extends Component {
 		auth.onAuthStateChanged((user)=>{
 			if (user) {
 				var email = user.email;
-				console.log("LOGGED IN!");
-				//	  res.json({ user: email })
 				this.setState({
                     isLoggedIn: true,
                     user: email
 				});
 			} else {
-				console.log("-not logged in-")
-				//	  res.json({ user: null })
 				this.setState({
 					isLoggedIn: false
 				});
@@ -83,7 +79,6 @@ class Results extends Component {
 
 	render() {
 		let polls = this.props;
-		console.log(polls);
 		let pageContent = '';
 		let Rescind;
 		let Back;
@@ -98,8 +93,6 @@ class Results extends Component {
 		else {
 			// Verify that the user hasn't voted before by checking every poll and user answer
 			let id = [];
-			console.log(this.props.votes);
-
 			for (var i = 0; i < this.props.votes.answers.length; i++) {
 				if (this.props.votes.answers[i].users) {
 					for (var j = 0; j < Object.values(this.props.votes.answers[i].users).length; j++) {
@@ -116,9 +109,6 @@ class Results extends Component {
 					}
 				}
 			}
-			console.log(id);
-			console.log(this.state.user);
-			console.log(id.indexOf(this.state.user));
 			if (id.indexOf(this.state.user) === -1 && this.state.user != null) {
 				if (!this.props.votes.options.SeeResults) {
 					history.push("");
