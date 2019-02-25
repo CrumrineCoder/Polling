@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { Link } from 'react-router-dom';
 import { userActions } from '../../_actions/users.actions.js';
+import fire from "../../common/components/Fire.js";
+var auth = fire.auth();
 // Form for creating polls
 class Form extends Component {
 
@@ -24,7 +26,8 @@ class Form extends Component {
                 SeeResults: false
             },
             linked: false,
-            submitted: false
+            submitted: false,
+            isLoggedIn: false
         };
         // Bind action creators to the state
         this.handleChangeField = this.handleChangeField.bind(this);
@@ -44,6 +47,26 @@ class Form extends Component {
             alert("Your question already exists as a Poll.");
         }
     }
+
+    componentWillMount(){
+		auth.onAuthStateChanged((user)=>{
+			if (user) {
+				var email = user.email;
+				console.log("LOGGED IN!");
+				//	  res.json({ user: email })
+				this.setState({
+					isLoggedIn: true
+				});
+			} else {
+				console.log("-not logged in-")
+				//	  res.json({ user: null })
+				this.setState({
+					isLoggedIn: false
+				});
+			
+			}
+		});
+	}
     // componentWillReceiveProps() {
     //     if (!this.props.checkPolls.isChecking) {
     //         this.setState({ isChecking: false });
@@ -156,7 +179,7 @@ class Form extends Component {
         const { question } = this.state;
         let linkPoll;
         // If there's no one logged in, suggest them to login so they can add this poll to their account
-        if(!this.props.isFetchingCurrentUser){
+      /*  if(!this.props.isFetchingCurrentUser){
 			if(this.props.currentUser.user === null){
                 linkPoll = (
                     <div>
@@ -169,7 +192,18 @@ class Form extends Component {
                     <label><input type="checkbox" checked={this.state.linked} onChange={this.handleLinkedClick} name="user" value="LinkPoll" /> Link Poll to my user account </label>
                 )
             }
-        }
+        } */
+        if(this.state.isLoggedIn){
+            linkPoll = (
+                <label><input type="checkbox" checked={this.state.linked} onChange={this.handleLinkedClick} name="user" value="LinkPoll" /> Link Poll to my user account </label>
+            )
+		} else{
+            linkPoll = (
+                <div>
+                    <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to link this poll with your account and edit the poll after creation.
+            </div>
+            )
+		}
         return (
             <div className="form">
                 <h1>Create Poll</h1>

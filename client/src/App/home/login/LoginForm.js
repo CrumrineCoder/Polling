@@ -15,8 +15,8 @@ class LoginForm extends Component {
         super(props);
         // Log out the user upon entering (When logged in, they'll see this page as 'logout', and when not logged in, well it doesn't matter)
         this.props.dispatch(userActions.getCurrent());
-        this.props.dispatch(userActions.logout());
-
+      //  this.props.dispatch(userActions.logout());
+      auth.signOut();
         // User's email, password, and where they came from are stored
         this.state = {
             email: '', password: '', from: ''
