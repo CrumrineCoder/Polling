@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import { userActions } from '../../_actions/users.actions.js';
+import { history } from '../../store.js';
 
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
@@ -36,9 +37,11 @@ class RegisterForm extends Component {
         this.setState({ submitted: true });
         console.log(email);
         console.log(password);
-        //  dispatch(userActions.register({email, password}));
-        auth.createUserWithEmailAndPassword(email, password).catch(function (error) {
-            // Handle Errors here.
+
+        auth.createUserWithEmailAndPassword(email, password).then(function () {
+            history.push("");
+            history.push("/login");
+        }, function (error) {
             var errorCode = error.code;
             var errorMessage = error.message;
             if (errorCode || errorMessage) {
@@ -47,7 +50,6 @@ class RegisterForm extends Component {
                 //   res.json(errorMessage)
             }
         });
-
     }
 
     // For form control
