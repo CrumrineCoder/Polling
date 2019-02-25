@@ -102,8 +102,8 @@ class Results extends Component {
 
 			for (var i = 0; i < this.props.votes.answers.length; i++) {
 				if (this.props.votes.answers[i].users) {
-					for (var j = 0; j < this.props.votes.answers[i].users.length; j++) {
-						id.push(this.props.votes.answers[i].users[j]);
+					for (var j = 0; j < Object.values(this.props.votes.answers[i].users).length; j++) {
+						id.push(Object.values( this.props.votes.answers[i].users)[j]);
 					}
 				}
 			}
