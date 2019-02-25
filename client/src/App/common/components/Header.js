@@ -25,7 +25,8 @@ class Header extends Component {
 		dispatch(userActions.getCurrent());
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			isOpen: false
+			isOpen: false,
+			isLoggedIn: false
 			//		isLoggedIn: typeof localStorage["user"] !== 'undefined'
 		};
 	}
@@ -63,37 +64,52 @@ class Header extends Component {
 		  }); 
 	} */
 
-	render() {
-		//	console.log(this.props);
-		let userLinks = "Authenticating...";
-		auth.onAuthStateChanged(function (user) {
+	componentDidMount(){
+		auth.onAuthStateChanged((user)=>{
 			if (user) {
 				var email = user.email;
 				console.log("LOGGED IN!");
-				//	  res.json({ user: email });
-				userLinks =
-					<>
-						<NavItem>
-							<NavLink href="#/profile">Profile</NavLink>
-						</NavItem>
-						<NavItem>
-							<NavLink href="#/login">Logout</NavLink>
-						</NavItem>
-					</>
+				//	  res.json({ user: email })
+				this.setState({
+					isLoggedIn: true
+				});
 			} else {
 				console.log("-not logged in-")
 				//	  res.json({ user: null })
-				userLinks =
-					<>
-						<NavItem>
-							<NavLink href="#/login">Login</NavLink>
-						</NavItem>
-						<NavItem>
-							<NavLink href="#/register">Register</NavLink>
-						</NavItem>
-					</>
+				this.setState({
+					isLoggedIn: false
+				});
+			
 			}
 		});
+	}
+
+	render() {
+		//	console.log(this.props);
+		let userLinks = "Authenticating...";
+
+		if(this.state.loggedIn){
+			userLinks =
+			<>
+				<NavItem>
+					<NavLink href="#/profile">Profile</NavLink>
+				</NavItem>
+				<NavItem>
+					<NavLink href="#/login">Logout</NavLink>
+				</NavItem>
+			</>
+		} else{
+			userLinks =
+			<>
+				<NavItem>
+					<NavLink href="#/login">Login</NavLink>
+				</NavItem>
+				<NavItem>
+					<NavLink href="#/register">Register</NavLink>
+				</NavItem>
+			</>
+		}
+	
 		/*	if(!this.props.isFetchingCurrentUser){
 				if(this.props.currentUser.user === null){
 					userLinks =
