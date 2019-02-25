@@ -10,6 +10,8 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { userActions } from '../../_actions/users.actions.js';
+import fire from "./Fire.js";
+var auth = fire.auth();
 //import PropTypes from 'prop-types';
 
 // Header hosts navigation info at the top of the screen. It appears on all pages.
@@ -19,6 +21,7 @@ class Header extends Component {
 	constructor(props) {
 		super(props);
 		const { dispatch } = this.props;
+		console.log("HEADER PROPS", this.props);
 		dispatch(userActions.getCurrent());
 		this.toggle = this.toggle.bind(this);
 		this.state = {
@@ -33,33 +36,41 @@ class Header extends Component {
 			isOpen: !this.state.isOpen
 		});
 	}
-
-	componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.isFetchingCurrentUser !== this.props.isFetchingCurrentUser) {
-			// Do whatever you want
-			console.log("Test");
+	/*
+		componentDidUpdate(prevProps, prevState, snapshot) {
+			if (prevProps.isFetchingCurrentUser !== this.props.isFetchingCurrentUser) {
+				// Do whatever you want
+				console.log("Test");
+				this.setState(this.state);
+			}
+			if (prevProps.currentUser.user !== this.props.currentUser.user) {
+				// Do whatever you want
+				console.log("FSADFASDFASDFA");
+				this.setState(this.state);
+			}
 		}
-		if (prevProps.currentUser.user !== this.props.currentUser.user) {
-			// Do whatever you want
-			console.log("FSADFASDFASDFA");
-        }
-    }
+		*/
+	/*componentDidUpdate(){
+		auth.onAuthStateChanged(function (user) {
+			if (user) {
+			  var email = user.email;
+			  console.log("LOGGED IN!");
+		//	  res.json({ user: email });
+			} else {
+			  console.log("-not logged in-")
+		//	  res.json({ user: null })
+			}
+		  }); 
+	} */
 
 	render() {
-		console.log(this.props);
+		//	console.log(this.props);
 		let userLinks = "Authenticating...";
-		if(!this.props.isFetchingCurrentUser){
-			if(this.props.currentUser.user === null){
-				userLinks =
-					<>
-						<NavItem>
-							<NavLink href="#/login">Login</NavLink>
-						</NavItem>
-						<NavItem>
-							<NavLink href="#/register">Register</NavLink>
-						</NavItem>
-					</>
-			} else {
+		auth.onAuthStateChanged(function (user) {
+			if (user) {
+				var email = user.email;
+				console.log("LOGGED IN!");
+				//	  res.json({ user: email });
 				userLinks =
 					<>
 						<NavItem>
@@ -69,8 +80,43 @@ class Header extends Component {
 							<NavLink href="#/login">Logout</NavLink>
 						</NavItem>
 					</>
+			} else {
+				console.log("-not logged in-")
+				//	  res.json({ user: null })
+				userLinks =
+					<>
+						<NavItem>
+							<NavLink href="#/login">Login</NavLink>
+						</NavItem>
+						<NavItem>
+							<NavLink href="#/register">Register</NavLink>
+						</NavItem>
+					</>
 			}
-		}
+		});
+		/*	if(!this.props.isFetchingCurrentUser){
+				if(this.props.currentUser.user === null){
+					userLinks =
+						<>
+							<NavItem>
+								<NavLink href="#/login">Login</NavLink>
+							</NavItem>
+							<NavItem>
+								<NavLink href="#/register">Register</NavLink>
+							</NavItem>
+						</>
+				} else {
+					userLinks =
+						<>
+							<NavItem>
+								<NavLink href="#/profile">Profile</NavLink>
+							</NavItem>
+							<NavItem>
+								<NavLink href="#/login">Logout</NavLink>
+							</NavItem>
+						</>
+				}
+			} */
 		return (
 			<header>
 				<Navbar color="faded" light expand="md">
@@ -91,20 +137,20 @@ class Header extends Component {
 }
 
 function mapStateToProps(state) {
-	console.log(state.home);
-/*	const { loggedIn } = state.home.authenticate;
-	const { isFetchingCurrentUser } = state.home.users || {
-		isFetchingCurrentUser: true
-	}
-	return {
-		loggedIn,
-		isFetchingCurrentUser
-	} */
+	//	console.log(state.home);
+	/*	const { loggedIn } = state.home.authenticate;
+		const { isFetchingCurrentUser } = state.home.users || {
+			isFetchingCurrentUser: true
+		}
+		return {
+			loggedIn,
+			isFetchingCurrentUser
+		} */
 	const { users } = state.home;
 	const { isFetchingCurrentUser, currentUser } = users || {
 		isFetchingCurrentUser: true,
 		currentUser: {}
-		}
+	}
 	return {
 		isFetchingCurrentUser,
 		currentUser

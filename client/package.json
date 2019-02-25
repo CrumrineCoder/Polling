@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "dependencies": {
-    "webpack-dev-server": "3.1.14",
     "@babel/core": "*",
     "axios": "*",
     "body-parser": "*",
@@ -14,6 +13,7 @@
     "errorhandler": "*",
     "express": "*",
     "express-session": "*",
+    "firebase": "^5.8.4",
     "history": "*",
     "jquery": "*",
     "moment": "*",
@@ -39,7 +39,8 @@
     "redux-thunk": "*",
     "rxjs": "*",
     "rxjs-compat": "*",
-    "validator": "*"
+    "validator": "*",
+    "webpack-dev-server": "3.1.14"
   },
   "devDependencies": {
     "redux-devtools": "*",

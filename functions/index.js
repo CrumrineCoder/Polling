@@ -1,5 +1,9 @@
 const functions = require('firebase-functions');
 const express = require('express');
+/*
+const passport = require('passport');
+const passportAuth = require('./auth');
+*/
 const app = express();
 const cors = require('cors')({ origin: true });
 app.use(cors);
@@ -56,7 +60,7 @@ app.post('/api/users/logout', (req, res) => {
 })
 
 
-app.post('/api/users/login', (req, res) => {
+app.post('/api/users/login', (req, res, next) => {
   const user = req.body.user;
   // Validate the user created an email and password
   if (!user.email) {
@@ -85,23 +89,60 @@ app.post('/api/users/login', (req, res) => {
       res.json(errorMessage)
     }
   });
+/*
+  // Use Passport's local strategy to authenticate. If so, return a token. 
+  return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (passportUser) {
+      const user = passportUser;
+      user.token = passportUser.generateJWT();
+      return res.json({ user: user.toAuthJSON() });
+    }
 
-  res.json(user);
+    return res.status(400).info;
+  })(req, res, next); */
+  res.json({"user": user});
 });
 
 
 app.get('/api/users/current', (req, res, next) => {
-  var unsubscribe = auth.onAuthStateChanged(function (user) {
-    unsubscribe();
+   auth.onAuthStateChanged(function (user) {
+     if (user) {
+       var email = user.email;
+       console.log("LOGGED IN!");
+       res.json({ user: email });
+     } else {
+       console.log("-not logged in-")
+       res.json({ user: null })
+     }
+   }); 
+
+  /*
+   if(user){
+     res.json({user: user.email});
+   } else{
+     res.json({user: null});
+   } */
+  /*(async () => {
+    const fetchUser = new Promise((resolve, reject) => {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          resolve(user)
+        } else {
+          reject(console.log)
+        }
+      })
+    })
+
+    let user = await fetchUser();
     if (user) {
-      var email = user.email;
-      console.log("LOGGED IN!");
-      res.json({ user: email });
+      res.json({ user: user.email });
     } else {
-      console.log("-not logged in-")
-      res.json({ user: null })
+      res.json({ user: null });
     }
-  });
+  }); */
 });
 
 
@@ -118,6 +159,7 @@ app.post('/api/polls/createPoll', (req, res) => {
 
 
 app.post("/api/polls/votePollAnswer/", (req, res) => {
+  console.log("Reqbody", req.body);
   var databaseRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child('value');
   databaseRef.transaction(function (value) {
     return (value || 0) + 1;

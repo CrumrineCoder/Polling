@@ -53,7 +53,6 @@ class Poll extends Component {
 		// If the user is logged in 
 		if (this.props.currentUser) {
 			let user = this.props.currentUser.user
-			user = user.id;
 			// User is submitting  a user answer 
 			if (submissionType === "toSubmit") {
 				var userLength = 0;
