@@ -157,6 +157,17 @@ app.post('/api/polls/createPoll', (req, res) => {
   res.json(newPostKey);
 });
 
+app.post("/api/polls/rescind/", (req, res) => {
+  console.log("Reqbody", req.body);
+ /* var databaseRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child('value');
+  databaseRef.transaction(function (value) {
+    return (value || 0) + 1;
+  });
+  var databasePushRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child("users");
+  databasePushRef.push(req.body.user);
+  res.json(req.body._parentID); */
+});
+
 
 app.post("/api/polls/votePollAnswer/", (req, res) => {
   console.log("Reqbody", req.body);

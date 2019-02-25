@@ -88,7 +88,7 @@ function rescind(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
- //   return fetch(`/api/polls/rescind`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/rescind`, requestOptions).then(handleResponse);
 }
 
 // make a GET request to get poll(s) data

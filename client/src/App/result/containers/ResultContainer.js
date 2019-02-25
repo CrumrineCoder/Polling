@@ -66,15 +66,37 @@ class Results extends Component {
 	// Button logic for rescinding a user's vote if the poll creator turned on rescind. 
 	handleRescindClick(e) {
 		e.preventDefault();
-		let user = JSON.parse(localStorage.getItem('user'));
-		let answersLength = this.props.votes.answers.length;
-		let userAnswersLength = this.props.votes.userAnswers.length;
-		if (user && user.token) {
-			const _parentID = this.props.id;
-			user = user.id;
-			// If the user is logged in, send the information to the backend to rescind the user's vote
-			this.props.dispatch(pollActions.rescind({ user, _parentID, answersLength, userAnswersLength }));
+//		let user = JSON.parse(localStorage.getItem('user'));
+		let answersLength =  this.props.votes.answers.length;
+ /*		for (var i = 0; i < this.props.votes.answers.length; i++) {
+			if (this.props.votes.answers[i].users) {
+				for (var j = 0; j < Object.values(this.props.votes.answers[i].users).length; j++) {
+					answersLength++;
+				}
+			}
+		} */
+		let userAnswersLength = 0;
+		if(this.props.votes.userAnswers){
+			 userAnswersLength = this.props.votes.userAnswers.length;
 		}
+	/*	if (this.props.votes.userAnswers) {
+			for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
+				if (this.props.votes.userAnswers[k].users) {
+					for (var l = 0; l < Object.values(this.props.votes.userAnswers[i].users).length; l++) {
+						userAnswersLength++;
+					}
+				}
+			}
+		} */
+		let user = this.state.user;
+		const _parentID = this.props.id;
+		this.props.dispatch(pollActions.rescind({ user, _parentID, answersLength, userAnswersLength }));
+	//	if (user && user.token) {
+	//		const _parentID = this.props.id;
+	//		user = user.id;
+			// If the user is logged in, send the information to the backend to rescind the user's vote
+	//		this.props.dispatch(pollActions.rescind({ user, _parentID, answersLength, userAnswersLength }));
+	//	}
 	}
 
 	render() {
