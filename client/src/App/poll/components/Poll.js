@@ -71,8 +71,8 @@ class Poll extends Component {
 		var { selected, _parentID, _id, userAnswer, submissionType, isLoggedIn } = this.state;
 		const { dispatch } = this.props;
 		// If the user is logged in 
-		if (this.props.currentUser) {
-			let user = this.props.currentUser.user
+	//	if (this.props.currentUser) {
+			let user = this.state.user;
 			// User is submitting  a user answer 
 			if (submissionType === "toSubmit") {
 				var userLength = 0;
@@ -90,7 +90,7 @@ class Poll extends Component {
 			else {
 				alert("You must select an option.")
 			}
-		}
+	//	}
 	}
 
 	// Multiple vote submission logic 
@@ -100,17 +100,17 @@ class Poll extends Component {
 		// If the user selected at least one option to vote
 		if (selected !== undefined && selected.length !== 0) {
 			// If the user is logged in 
-			if (this.props.currentUser) {
+		//	if (this.props.currentUser) {
 				console.log(this.props);
 				//let user = JSON.parse(localStorage.getItem('user'));
 				//user = user.id;
-				let user = this.props.currentUser.user
+				let user = this.state.user;
 				var userLength = 0;
 				if (this.props.userAnswers != null) {
 					userLength = this.props.userAnswers.length;
 				}
 				dispatch(pollActions.votePollMultiple({ userLength, selected, _id, _parentID, user }))
-			}
+		//	}
 		} // User selected nothing
 		else {
 			alert("You must select at least one option.")

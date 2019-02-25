@@ -5,6 +5,8 @@ import Result from '../components/Result';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { withRouter } from 'react-router-dom';
 import { history } from '../../store.js';
+import fire from "../../common/components/Fire.js";
+var auth = fire.auth();
 
 class Results extends Component {
 
@@ -18,6 +20,7 @@ class Results extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {};
 		this.handleRescindClick = this.handleRescindClick.bind(this);
 		this.handleBackClick = this.handleBackClick.bind(this);
 	}
@@ -34,6 +37,27 @@ class Results extends Component {
 			this.props.dispatch(pollActions.selectPoll(this.props.id));
 			this.props.dispatch(pollActions.fetchVotesIfNeeded(this.props.id));
 		}
+	}
+
+	componentWillMount(){
+		auth.onAuthStateChanged((user)=>{
+			if (user) {
+				var email = user.email;
+				console.log("LOGGED IN!");
+				//	  res.json({ user: email })
+				this.setState({
+                    isLoggedIn: true,
+                    user: email
+				});
+			} else {
+				console.log("-not logged in-")
+				//	  res.json({ user: null })
+				this.setState({
+					isLoggedIn: false
+				});
+			
+			}
+		});
 	}
 
 	// Button logic for returning to the voting page if the poll creator turned on SeeResults
@@ -74,30 +98,38 @@ class Results extends Component {
 		else {
 			// Verify that the user hasn't voted before by checking every poll and user answer
 			let id = [];
-			if (this.props.votes.answers[0].Users) {
-				for (var i = 0; i < this.props.votes.answers.length; i++) {
-					for (var j = 0; j < this.props.votes.answers[i].Users.length; j++) {
-						id.push(this.props.votes.answers[i].Users[j]);
+			console.log(this.props.votes);
+
+			for (var i = 0; i < this.props.votes.answers.length; i++) {
+				if (this.props.votes.answers[i].users) {
+					for (var j = 0; j < this.props.votes.answers[i].users.length; j++) {
+						id.push(this.props.votes.answers[i].users[j]);
 					}
-				}
-				for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
-					for (var l = 0; l < this.props.votes.userAnswers[k].Users.length; l++) {
-						id.push(this.props.votes.userAnswers[k].Users[l]);
-					}
-				}
-				if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) === -1) {
-					if (!this.props.votes.options.SeeResults) {
-						history.push("");
-						history.push(polls.id + "/vote");
-					} // Because the user hasn't already voted and wasn't redirected away for not voting, we can create the back to voting button here in the logic thread. 
-					else {
-						Back = (<button className="btn-secondary btn" onClick={this.handleBackClick}{...this.props}><i className="fas fa-arrow-left"></i> Back to voting</button>);
-					}
-					// If rescind is turned on, also create a rescind button. We do the logic here because if the user has already voted, we can check the logic of the option here. 
-				} else if (this.props.votes.options.Rescind) {
-					Rescind = (<button className="btn btn-outline-warning" onClick={this.handleRescindClick}><i className="fas fa-undo-alt"></i> Rescind vote</button>);
 				}
 			}
+			if (this.props.votes.userAnswers) {
+				for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
+					if (this.props.votes.userAnswers[k].users) {
+						for (var l = 0; l < this.props.votes.userAnswers[k].users.length; l++) {
+							id.push(this.props.votes.userAnswers[k].users[l]);
+						}
+					}
+				}
+			}
+			console.log(id);
+			if (id.indexOf(this.state.user) === -1) {
+				if (!this.props.votes.options.SeeResults) {
+			//		history.push("");
+		//			history.push(polls.id + "/vote");
+				} // Because the user hasn't already voted and wasn't redirected away for not voting, we can create the back to voting button here in the logic thread. 
+				else {
+					Back = (<button className="btn-secondary btn" onClick={this.handleBackClick}{...this.props}><i className="fas fa-arrow-left"></i> Back to voting</button>);
+				}
+				// If rescind is turned on, also create a rescind button. We do the logic here because if the user has already voted, we can check the logic of the option here. 
+			} else if (this.props.votes.options.Rescind) {
+				Rescind = (<button className="btn btn-outline-warning" onClick={this.handleRescindClick}><i className="fas fa-undo-alt"></i> Rescind vote</button>);
+			}
+
 
 			// Send data to the result
 			pageContent = (
@@ -108,7 +140,7 @@ class Results extends Component {
 		}
 
 		return (
-			<div className="poll">
+			<div className="poll" >
 				{Back}
 				{Rescind}
 				{pageContent}

@@ -74,7 +74,6 @@ class Result extends Component {
 
 	render() {
 		var data = [];
-
 		// Get all votes
 		if (this.props.votes.answers) {
 			for (var i = 0; i < this.props.votes.answers.length; i++) {

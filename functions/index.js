@@ -164,6 +164,8 @@ app.post("/api/polls/votePollAnswer/", (req, res) => {
   databaseRef.transaction(function (value) {
     return (value || 0) + 1;
   });
+  var databasePushRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child("users");
+  databasePushRef.push({user: req.body.user});
   res.json(req.body._parentID);
 });
 
