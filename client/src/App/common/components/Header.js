@@ -64,7 +64,7 @@ class Header extends Component {
 		  }); 
 	} */
 
-	componentDidMount(){
+	componentWillMount(){
 		auth.onAuthStateChanged((user)=>{
 			if (user) {
 				var email = user.email;
@@ -87,8 +87,8 @@ class Header extends Component {
 	render() {
 		//	console.log(this.props);
 		let userLinks = "Authenticating...";
-
-		if(this.state.loggedIn){
+		console.log(this.state.isLoggedIn);
+		if(this.state.isLoggedIn){
 			userLinks =
 			<>
 				<NavItem>
