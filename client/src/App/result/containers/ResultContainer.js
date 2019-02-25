@@ -103,24 +103,26 @@ class Results extends Component {
 			for (var i = 0; i < this.props.votes.answers.length; i++) {
 				if (this.props.votes.answers[i].users) {
 					for (var j = 0; j < Object.values(this.props.votes.answers[i].users).length; j++) {
-						id.push(Object.values( this.props.votes.answers[i].users)[j]);
+						id.push(Object.values(this.props.votes.answers[i].users)[j]);
 					}
 				}
 			}
 			if (this.props.votes.userAnswers) {
 				for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
 					if (this.props.votes.userAnswers[k].users) {
-						for (var l = 0; l < this.props.votes.userAnswers[k].users.length; l++) {
-							id.push(this.props.votes.userAnswers[k].users[l]);
+						for (var l = 0; l < Object.values(this.props.votes.userAnswers[i].users).length; l++) {
+							id.push(Object.values(this.props.votes.userAnswers[i].users)[j]);
 						}
 					}
 				}
 			}
 			console.log(id);
-			if (id.indexOf(this.state.user) === -1) {
+			console.log(this.state.user);
+			console.log(id.indexOf(this.state.user));
+			if (id.indexOf(this.state.user) === -1 && this.state.user != null) {
 				if (!this.props.votes.options.SeeResults) {
-			//		history.push("");
-		//			history.push(polls.id + "/vote");
+					history.push("");
+					history.push(polls.id + "/vote");
 				} // Because the user hasn't already voted and wasn't redirected away for not voting, we can create the back to voting button here in the logic thread. 
 				else {
 					Back = (<button className="btn-secondary btn" onClick={this.handleBackClick}{...this.props}><i className="fas fa-arrow-left"></i> Back to voting</button>);
