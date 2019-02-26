@@ -11,7 +11,7 @@ class Edit extends Component {
         super(props);
         const { dispatch } = this.props;
         // Get the current user, authentication
-        dispatch(userActions.getCurrent());
+     //   dispatch(userActions.getCurrent());
         let userAnswers = [];
         if(this.props.userAnswers){
             userAnswers = this.props.userAnswers;
@@ -153,8 +153,6 @@ class Edit extends Component {
     }
 
     render() {
-        console.log(this.props);
-        
         return (
             <div className="form">
                 <h1>Edit Poll</h1>

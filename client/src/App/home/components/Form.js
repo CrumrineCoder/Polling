@@ -11,7 +11,7 @@ class Form extends Component {
     constructor(props) {
         super(props);
         const { dispatch } = this.props;
-        dispatch(userActions.getCurrent());
+     //   dispatch(userActions.getCurrent());
         // initial state stores the questions, an array of answers the user will input, options the user will make true or false, linked represents if the user will be linked, and submitted checks if the poll has been submitted yet. 
         this.state = {
             question: '',

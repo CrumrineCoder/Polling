@@ -69,7 +69,6 @@ app.post("/api/polls/rescind/", (req, res) => {
       trueIndex++;
       if (childSnapshot.val().users) {
         var users = Object.values(childSnapshot.val().users);
-        console.log(users.length);
         if (users.length == 1) {
           database.ref('polls/' + req.body._parentID + "/userAnswers").child(trueIndex).remove();
         } else{

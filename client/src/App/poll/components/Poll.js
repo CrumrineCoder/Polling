@@ -13,7 +13,7 @@ class Poll extends Component {
 		super(props);
 		const { dispatch } = this.props;
 		// Get the current user, authentication
-		dispatch(userActions.getCurrent());
+	//	dispatch(userActions.getCurrent());
 		// selected is the votes selected by the user, userAnswer is the user created answer, _parentID is the id of the poll itself, isLoggedIn checks if the user is logged in, choiceType is whether the inputs to select votes are radio (single vote) or checkbox (multiple votes), optionChangeType keeps track of whether we're using multipleOptionChange or optionChange, submitType is  handleSubmit or handleMultipleSubmit, and submissionType is whether the user is voting on a poll answer, a user answer, creating a user answer, or multiple. 
 		this.state = {
 			selected: [],
@@ -154,7 +154,6 @@ class Poll extends Component {
 
 	render() {
 		let button = "Authenticating...";
-		console.log(this.props);
 		if (this.state.isLoggedIn) {
 			button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
 		} else {		

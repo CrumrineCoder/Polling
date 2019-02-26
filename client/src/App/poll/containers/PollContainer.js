@@ -84,9 +84,6 @@ class Polls extends Component {
 					}
 				}
 			}
-			console.log(id);
-			console.log(id.indexOf(this.state.user));
-			console.log(this.state.user);
 			// If the current user matches ANY of the votes, redirect them to the results
 			if (id.indexOf(this.state.user) !== -1 && this.state.user != null) {
 				history.push("");

@@ -21,7 +21,7 @@ class Header extends Component {
 	constructor(props) {
 		super(props);
 		const { dispatch } = this.props;
-		dispatch(userActions.getCurrent());
+	//	dispatch(userActions.getCurrent());
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false,
