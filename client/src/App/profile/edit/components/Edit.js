@@ -12,13 +12,17 @@ class Edit extends Component {
         const { dispatch } = this.props;
         // Get the current user, authentication
         dispatch(userActions.getCurrent());
+        let userAnswers = [];
+        if(this.props.userAnswers){
+            userAnswers = this.props.userAnswers;
+        }
         // selected is the votes selected by the user, userAnswer is the user created answer, _parentID is the id of the poll itself, isLoggedIn checks if the user is logged in, choiceType is whether the inputs to select votes are radio (single vote) or checkbox (multiple votes), optionChangeType keeps track of whether we're using multipleOptionChange or optionChange, submitType is  handleSubmit or handleMultipleSubmit, and submissionType is whether the user is voting on a poll answer, a user answer, creating a user answer, or multiple. 
         this.state = {
-            _id: this.props._id,
+            id: this.props.id,
             isLoggedIn: typeof localStorage["user"] !== 'undefined',
             question: this.props.question,
             answers: this.props.answers,
-            userAnswers: this.props.userAnswers,
+            userAnswers: userAnswers,
             options: this.props.options,
             value: this.props.value,
             submitted: false,
@@ -33,18 +37,18 @@ class Edit extends Component {
     }
 
     handleDelete() {
-        const { _id } = this.state;
+        const { id } = this.state;
         const { dispatch } = this.props;
         if(window.confirm("Are you sure you want to delete this Poll? It will be gone forever, and forever is a long time.")){
             // dispatch an action to delete the poll with its ID
-            dispatch(pollActions.deletePoll(_id));
+            dispatch(pollActions.deletePoll(id));
         }
     }
 
     
     // Multiple vote submission logic 
     handleEditSubmit() {
-        var { _id, answers, userAnswers, options, question, value, creator } = this.state;
+        var { id, answers, userAnswers, options, question, value, creator } = this.state;
         const { dispatch } = this.props;
         let shouldReset = false;
        // let creator = JSON.parse(localStorage.getItem('user')).id;
@@ -96,7 +100,7 @@ class Edit extends Component {
         }
 
         // Send a dispatch to edit the poll. 
-        dispatch(pollActions.editPoll({_id, creator, answers, value, userAnswers, options, question}));
+        dispatch(pollActions.editPoll({id, creator, answers, value, userAnswers, options, question}));
     }
 
     // For Question
@@ -145,6 +149,7 @@ class Edit extends Component {
 
     render() {
         console.log(this.props);
+        
         return (
             <div className="form">
                 <h1>Edit Poll</h1>

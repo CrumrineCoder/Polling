@@ -166,7 +166,8 @@ app.post('/api/polls/editPoll', (req, res) => {
   updates.id = newPostKey;
   database.ref("polls/" + newPostKey).update(updates);
   res.json(newPostKey); */
-  var ref = database.ref('polls/' + req.body._parentID);
+  console.log(req.body);
+  var ref = database.ref('polls/' + req.body.id);
   ref.update(req.body);
 });
 
