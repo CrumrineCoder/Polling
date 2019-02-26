@@ -17,12 +17,6 @@ This is a remake of an old project I had built without AngularJS or React.js, so
 * Alert messaging
 * Admin accounts
 
-Firebase To Do
-
-* Stop password from being saved to authenticate reducer
-* Clean up reducers
-* When redirected to / after logging in, make sure the user is stored first. 
-
 ## Completed Job Stories
 
 Job Story 1: When I'm on the Home page, I can create a poll, and view all polls. 

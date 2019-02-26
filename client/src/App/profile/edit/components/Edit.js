@@ -99,6 +99,11 @@ class Edit extends Component {
             value  = 0;
         }
 
+        // If user Answers are no longer allowed, delete them all.
+        if(!options.UserAnswers){
+            userAnswers = [];
+        }
+
         // Send a dispatch to edit the poll. 
         dispatch(pollActions.editPoll({id, creator, answers, value, userAnswers, options, question}));
     }
