@@ -30,7 +30,7 @@ function editPoll(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-  //  return fetch(`/api/polls/editPoll`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/editPoll`, requestOptions).then(handleResponse);
 }
 
 function deletePoll(id) {

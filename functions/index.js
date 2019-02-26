@@ -157,6 +157,19 @@ app.post('/api/polls/createPoll', (req, res) => {
   res.json(newPostKey);
 });
 
+app.post('/api/polls/editPoll', (req, res) => {
+  /*var newPostKey = database.ref().child('polls').push().key;
+  data = req.body;
+  data.id = "uid";
+  var updates = {};
+  updates = data;
+  updates.id = newPostKey;
+  database.ref("polls/" + newPostKey).update(updates);
+  res.json(newPostKey); */
+  var ref = database.ref('polls/' + req.body._parentID);
+  ref.update(req.body);
+});
+
 app.post("/api/polls/rescind/", (req, res) => {
   console.log("Reqbody", req.body);
   //for (var i = 0; i < req.body.answersLength; i++) {

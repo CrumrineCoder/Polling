@@ -5,7 +5,6 @@ import { userActions } from '../../../_actions/users.actions.js';
 import { Link } from 'react-router-dom';
 import { history } from '../../../store.js';
 
-
 class Edit extends Component {
 
     constructor(props) {
@@ -22,7 +21,8 @@ class Edit extends Component {
             userAnswers: this.props.userAnswers,
             options: this.props.options,
             value: this.props.value,
-            submitted: false
+            submitted: false,
+            creator: this.props.creator
         };
         // Bind action creators to the state. 
         this.handleEditSubmit = this.handleEditSubmit.bind(this);
@@ -44,10 +44,10 @@ class Edit extends Component {
     
     // Multiple vote submission logic 
     handleEditSubmit() {
-        var { _id, answers, userAnswers, options, question, value } = this.state;
+        var { _id, answers, userAnswers, options, question, value, creator } = this.state;
         const { dispatch } = this.props;
         let shouldReset = false;
-        let creator = JSON.parse(localStorage.getItem('user')).id;
+       // let creator = JSON.parse(localStorage.getItem('user')).id;
 
         function objectsAreSame(x, y) {
             var objectsAreSame = true;
@@ -144,6 +144,7 @@ class Edit extends Component {
     }
 
     render() {
+        console.log(this.props);
         return (
             <div className="form">
                 <h1>Edit Poll</h1>

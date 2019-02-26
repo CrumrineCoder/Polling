@@ -149,11 +149,12 @@ class Poll extends Component {
 	handleBackClick(e) {
 		e.preventDefault();
 		history.push("");
-		history.push(this.props._id + "/results");
+		history.push(this.props.id + "/results");
 	}
 
 	render() {
 		let button = "Authenticating...";
+		console.log(this.props);
 		if (this.state.isLoggedIn) {
 			button = <button onClick={this.state.submitType} className="btn btn-primary float-right">Submit</button>;
 		} else {		
@@ -195,7 +196,7 @@ class Poll extends Component {
 		// If the poll creator set seeresults to true
 		if (this.props.options.SeeResults) {
 			// Make a button to allow the user to see the results before voting 
-			Results = (<button className="float-left btn btn-secondary" key="seeResultsButton" onClick={this.handleBackClick} value={this.props._id}>Results <i className="fas fa-poll-h"></i></button>);
+			Results = (<button className="float-left btn btn-secondary" key="seeResultsButton" onClick={this.handleBackClick} value={this.props.id}>Results <i className="fas fa-poll-h"></i></button>);
 		}
 
 		return (
