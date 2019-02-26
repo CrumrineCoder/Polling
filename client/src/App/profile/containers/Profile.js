@@ -75,7 +75,8 @@ class Profile extends Component {
 		else {
 			var pollsByUser = polls.filter(function (poll) {
 				return poll.creator ==  user;
-			})
+			});
+			console.log(pollsByUser);
 			pageContent = (
 				<ul className="polls">
 					{pollsByUser.map((poll, i) => <EditLink update={this.update} key={i} {...poll} />)}
