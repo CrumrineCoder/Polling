@@ -160,11 +160,13 @@ app.post('/api/polls/createPoll', (req, res) => {
 app.post('/api/polls/editPoll', (req, res) => {
   var ref = database.ref('polls/' + req.body.id);
   ref.update(req.body);
+  res.json(req.body.id);
 });
 
 app.post('/api/polls/deletePoll/:id', (req, res) => {
   var ref = database.ref('polls/' + req.params.id);
   ref.remove();
+  res.json(req.param.id);
 });
 
 app.post("/api/polls/rescind/", (req, res) => {
@@ -216,11 +218,12 @@ app.post("/api/polls/rescind/", (req, res) => {
       }
     });
   });
+
+  res.json(req.body._parentID);
 });
 
 
 app.post("/api/polls/votePollAnswer/", (req, res) => {
-  console.log("Reqbody", req.body);
   var databaseRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child('value');
   databaseRef.transaction(function (value) {
     return (value || 0) + 1;
@@ -289,7 +292,6 @@ app.get("/api/polls/get/", (req, res) => {
 app.get('/api/polls/get/:id', (req, res) => {
   var ref = database.ref('polls/' + req.params.id);
   ref.once('value', function (snapshot) {
-    console.log(snapshot.val());
     res.json(snapshot.val());
   });
 });

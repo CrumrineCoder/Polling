@@ -68,7 +68,7 @@ function editPoll(poll) {
                 poll => {
                     dispatch(success());
                     history.push("");
-                    history.push(poll._id + "/vote");
+                    history.push(poll + "/vote");
                     dispatch(alertActions.success('Edit Poll Successful'));
                 },
                 error => {
