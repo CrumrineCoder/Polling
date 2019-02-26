@@ -125,8 +125,8 @@ class Results extends Component {
 			if (this.props.votes.userAnswers) {
 				for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
 					if (this.props.votes.userAnswers[k].users) {
-						for (var l = 0; l < Object.values(this.props.votes.userAnswers[i].users).length; l++) {
-							id.push(Object.values(this.props.votes.userAnswers[i].users)[j]);
+						for (var l = 0; l < Object.values(this.props.votes.userAnswers[k].users).length; l++) {
+							id.push(Object.values(this.props.votes.userAnswers[k].users)[l]);
 						}
 					}
 				}

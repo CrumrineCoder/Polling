@@ -206,7 +206,7 @@ app.post("/api/polls/rescind/", (req, res) => {
           }
 
           var key = getKeyByValue(childSnapshot.val().users, req.body.user);
-          ref.child(trueIndex).child("users").child(key).remove();
+          database.ref('polls/' + req.body._parentID + "/userAnswers").child(trueIndex).child("users").child(key).remove();
         }
       }
     });
@@ -237,7 +237,7 @@ app.post("/api/polls/userVote", (req, res, next) => {
   var userVote = {
     "text": req.body.userAnswer,
     "value": 1,
-    "Users": [req.body.user]
+    "users": [req.body.user]
   }
   database.ref("polls/" + req.body._parentID + "/userAnswers/" + req.body.userLength).update(userVote);
   res.json(req.body._parentID)
@@ -249,7 +249,7 @@ app.post("/api/polls/voteMultiple/", (req, res) => {
       var userVote = {
         "text": req.body.selected[i].value,
         "value": 1,
-        "Users": [req.body.user]
+        "users": [req.body.user]
       }
       database.ref("polls/" + req.body._parentID + "/userAnswers/" + req.body.userLength).update(userVote);
     } else if (req.body.selected[i].submitted === "answer") {
