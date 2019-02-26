@@ -244,6 +244,8 @@ app.post("/api/polls/voteUserAnswer", (req, res, next) => {
   databaseRef.transaction(function (value) {
     return (value || 0) + 1;
   });
+  var databasePushRef = database.ref('polls/' + req.body._parentID + "/userAnswers").child(req.body._id).child("users");
+  databasePushRef.push(req.body.user);
   res.json(req.body._parentID);
 })
 
@@ -278,6 +280,8 @@ app.post("/api/polls/voteMultiple/", (req, res) => {
       databaseRef.transaction(function (value) {
         return (value || 0) + 1;
       });
+      var databasePushRef = database.ref('polls/' + req.body._parentID + "/userAnswers").child(req.body.selected[i]._id).child("users");
+      databasePushRef.push(req.body.user);
     }
   }
   res.json(req.body._parentID);
