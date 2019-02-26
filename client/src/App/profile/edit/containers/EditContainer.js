@@ -4,8 +4,15 @@ import { connect } from 'react-redux';
 import Edit from '../components/Edit';
 import { pollActions } from '../../../_actions/polls.actions.js';
 import { history } from '../../../store.js';
+import fire from "../../../common/components/Fire.js";
+var auth = fire.auth();
 
 class EditContainer extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
 
 	static propTypes = {
 		// selectedPoll: PropTypes.string.isRequired,
@@ -29,6 +36,23 @@ class EditContainer extends Component {
 		}
 	}
 
+	componentWillMount() {
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				var email = user.email;
+				this.setState({
+					isLoggedIn: true,
+					user: email
+				});
+			} else {
+				this.setState({
+					isLoggedIn: false
+				});
+
+			}
+		});
+	}
+
 	render() {
 		let { votes } = this.props;
 		let pageContent = '';
@@ -42,36 +66,24 @@ class EditContainer extends Component {
 			)
 		} // Once the data is fetched... 
 		else {
-			if (localStorage.getItem('user')) {
-				if (JSON.parse(localStorage.getItem('user')).id !== votes.creator) {
+			if (this.state.user) {
+				if (this.state.user !== votes.creator) {
 					alert("This poll was not made by you. Redirecting...");
 					history.push("");
 					history.push(votes._id + "/vote");
 				}
-			} else{
+				pageContent = (
+					<ul className="polls">
+						<Edit {...votes} />
+					</ul>
+				)
+			}
+		/*	} else{
 				alert("Please login to edit this poll. Redirecting...");
 				history.push("");
 				history.push("/login");
-			} 
-			// Get all of the users 
-			let id = [];
-			for (var i = 0; i < this.props.votes.answers.length; i++) {
-				for (var j = 0; j < this.props.votes.answers[i].Users.length; j++) {
-					id.push(this.props.votes.answers[i].Users[j]);
-				}
-			}
-			for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
-				for (var l = 0; l < this.props.votes.userAnswers[k].Users.length; l++) {
-					id.push(this.props.votes.userAnswers[k].Users[l]);
-				}
-            }
-            
-			// Redirect all poll data to the Poll component. 
-			pageContent = (
-				<ul className="polls">
-					<Edit {...votes} />
-				</ul>
-			)
+			}  */
+			// Redrect all poll data to the Poll component. 
 		}
 		return (
 			<div className="poll">
