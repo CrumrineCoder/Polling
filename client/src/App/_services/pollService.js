@@ -38,7 +38,7 @@ function deletePoll(id) {
     const requestOptions = {
         method: 'POST'
     };
-  //  return fetch(`/api/polls/deletePoll/` + id, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/deletePoll/` + id, requestOptions).then(handleResponse);
 }
 
 // make a post request with a single vote on a poll creator answer

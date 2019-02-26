@@ -158,21 +158,16 @@ app.post('/api/polls/createPoll', (req, res) => {
 });
 
 app.post('/api/polls/editPoll', (req, res) => {
-  /*var newPostKey = database.ref().child('polls').push().key;
-  data = req.body;
-  data.id = "uid";
-  var updates = {};
-  updates = data;
-  updates.id = newPostKey;
-  database.ref("polls/" + newPostKey).update(updates);
-  res.json(newPostKey); */
-  console.log(req.body);
   var ref = database.ref('polls/' + req.body.id);
   ref.update(req.body);
 });
 
+app.post('/api/polls/deletePoll/:id', (req, res) => {
+  var ref = database.ref('polls/' + req.params.id);
+  ref.remove();
+});
+
 app.post("/api/polls/rescind/", (req, res) => {
-  console.log("Reqbody", req.body);
   //for (var i = 0; i < req.body.answersLength; i++) {
   var ref = database.ref('polls/' + req.body._parentID + "/answers");
   ref.once('value', function (snapshot) {
@@ -182,8 +177,6 @@ app.post("/api/polls/rescind/", (req, res) => {
       if (childSnapshot.val().users) {
         var users = Object.values(childSnapshot.val().users);
         var index = users.indexOf(req.body.user);
-        console.log("Users", users);
-        console.log("Index", index);
         if (index !== -1) {
           database.ref('polls/' + req.body._parentID + "/answers").child(trueIndex).child("value").transaction(function (value) {
             return (value || 0) - 1;
@@ -194,8 +187,6 @@ app.post("/api/polls/rescind/", (req, res) => {
           }
 
           var key = getKeyByValue(childSnapshot.val().users, req.body.user);
-          console.log(key);
-          console.log(trueIndex);
           database.ref('polls/' + req.body._parentID + "/answers").child(trueIndex).child("users").child(key).remove();
         }
       }
