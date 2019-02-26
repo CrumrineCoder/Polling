@@ -202,22 +202,28 @@ app.post("/api/polls/rescind/", (req, res) => {
       trueIndex++;
       if (childSnapshot.val().users) {
         var users = Object.values(childSnapshot.val().users);
-        var index = users.indexOf(req.body.user);
-        if (index !== -1) {
-          database.ref('polls/' + req.body._parentID + "/userAnswers").child(trueIndex).child("value").transaction(function (value) {
-            return (value || 0) - 1;
-          });
+        console.log(users.length);
+        if (users.length == 1) {
+          database.ref('polls/' + req.body._parentID + "/userAnswers").child(trueIndex).remove();
+        } else{
+          var index = users.indexOf(req.body.user);
+          if (index !== -1) {
+            database.ref('polls/' + req.body._parentID + "/userAnswers").child(trueIndex).child("value").transaction(function (value) {
+              return (value || 0) - 1;
+            });
 
-          function getKeyByValue(object, value) {
-            return Object.keys(object).find(key => object[key] === value);
+            function getKeyByValue(object, value) {
+              return Object.keys(object).find(key => object[key] === value);
+            }
+
+            var key = getKeyByValue(childSnapshot.val().users, req.body.user);
+            database.ref('polls/' + req.body._parentID + "/userAnswers").child(trueIndex).child("users").child(key).remove();
           }
-
-          var key = getKeyByValue(childSnapshot.val().users, req.body.user);
-          database.ref('polls/' + req.body._parentID + "/userAnswers").child(trueIndex).child("users").child(key).remove();
         }
       }
     });
   });
+
 
   res.json(req.body._parentID);
 });
