@@ -5,6 +5,18 @@ const cors = require('cors')({ origin: true });
 app.use(cors);
 const fire = require("./fire.js");
 var database = fire.database();
+var auth = fire.auth();
+
+app.get('/api/users/current', (req, res, next) => {
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      var email = user.email;
+      res.json({ user: email });
+    } else {
+      res.json({ user: null })
+    }
+  });
+});
 
 app.post('/api/polls/createPoll', (req, res) => {
   var newPostKey = database.ref().child('polls').push().key;
