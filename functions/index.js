@@ -89,35 +89,35 @@ app.post('/api/users/login', (req, res, next) => {
       res.json(errorMessage)
     }
   });
-/*
-  // Use Passport's local strategy to authenticate. If so, return a token. 
-  return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-    if (err) {
-      return next(err);
-    }
-    if (passportUser) {
-      const user = passportUser;
-      user.token = passportUser.generateJWT();
-      return res.json({ user: user.toAuthJSON() });
-    }
-
-    return res.status(400).info;
-  })(req, res, next); */
-  res.json({"user": user});
+  /*
+    // Use Passport's local strategy to authenticate. If so, return a token. 
+    return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+      if (err) {
+        return next(err);
+      }
+      if (passportUser) {
+        const user = passportUser;
+        user.token = passportUser.generateJWT();
+        return res.json({ user: user.toAuthJSON() });
+      }
+  
+      return res.status(400).info;
+    })(req, res, next); */
+  res.json({ "user": user });
 });
 
 
 app.get('/api/users/current', (req, res, next) => {
-   auth.onAuthStateChanged(function (user) {
-     if (user) {
-       var email = user.email;
-       console.log("LOGGED IN!");
-       res.json({ user: email });
-     } else {
-       console.log("-not logged in-")
-       res.json({ user: null })
-     }
-   }); 
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      var email = user.email;
+      console.log("LOGGED IN!");
+      res.json({ user: email });
+    } else {
+      console.log("-not logged in-")
+      res.json({ user: null })
+    }
+  });
 
   /*
    if(user){
@@ -159,13 +159,38 @@ app.post('/api/polls/createPoll', (req, res) => {
 
 app.post("/api/polls/rescind/", (req, res) => {
   console.log("Reqbody", req.body);
- /* var databaseRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child('value');
-  databaseRef.transaction(function (value) {
-    return (value || 0) + 1;
-  });
-  var databasePushRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child("users");
-  databasePushRef.push(req.body.user);
-  res.json(req.body._parentID); */
+  //for (var i = 0; i < req.body.answersLength; i++) {
+    var ref = database.ref('polls/' + req.body._parentID +"/answers");
+    ref.once('value', function (snapshot) {
+      var trueIndex = -1; 
+      snapshot.forEach(function(childSnapshot) {
+        trueIndex++;
+        if(childSnapshot.val().users){
+          var users = Object.values(childSnapshot.val().users);
+          var index = users.indexOf(req.body.user);
+          console.log(index);
+          if(index !== -1){
+         /*   ref.transaction(function (value) {
+              return value - 1;
+            }); */
+            database.ref('polls/' + req.body._parentID +"/answers").child(trueIndex).child("value").transaction(function (value) {
+              return (value || 0) - 1;
+            });
+          }
+        }
+        //Here you can access  childSnapshot.key
+        console.log(childSnapshot.val());
+   //     console.log(Object.values(childSnapshot.val().users));
+     });
+    });
+ // }
+  /* var databaseRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child('value');
+   databaseRef.transaction(function (value) {
+     return (value || 0) + 1;
+   });
+   var databasePushRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child("users");
+   databasePushRef.push(req.body.user);
+   res.json(req.body._parentID); */
 });
 
 
