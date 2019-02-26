@@ -65,7 +65,7 @@ class Profile extends Component {
 		let pageContent = '';
 
 		// If we're fetching polls, tell the user why
-		if (this.props.isFetching || user == null) {
+		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
 					The content is loading, but because this site uses a free Heroku server it has to warm up before it can get the data. This will take only 10 seconds to a minute, so please be patient! Once the servers are warmed up, the site will load content like normal.
@@ -73,14 +73,20 @@ class Profile extends Component {
 			)
 		} // Show all polls as poll links 
 		else {
-			var pollsByUser = polls.filter(function (poll) {
-				return poll.creator ==  user;
-			});
-			pageContent = (
-				<ul className="polls">
-					{pollsByUser.map((poll, i) => <EditLink update={this.update} key={i} {...poll} />)}
-				</ul>
-			)
+			if (this.state.user) {
+				var pollsByUser = polls.filter(function (poll) {
+					return poll.creator == user;
+				});
+				pageContent = (
+					<ul className="polls">
+						{pollsByUser.map((poll, i) => <EditLink update={this.update} key={i} {...poll} />)}
+					</ul>
+				)
+			} else {
+				pageContent = (
+					<h3>Either you are not logged in or the user credentials are being retrieved.</h3>
+				)
+			}
 		}
 		/*
 		<Search onSearch={this.handleSearchBar} />

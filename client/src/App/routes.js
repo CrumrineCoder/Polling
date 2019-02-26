@@ -17,6 +17,7 @@ import Login from "./home/login/LoginForm";
 import Register from "./home/login/RegisterForm";
 import { userActions } from '../App/_actions/users.actions.js';
 
+
 // Private route that redirects the user if they're not logged in to the login page
 class PrivateRoute extends React.Component {
 
@@ -91,7 +92,7 @@ export default (
     <Route path="/:id/vote/" component={PollShow} />
     <PrivateRoute path="/:id/results/" component={Result} />
     <PrivateRoute path="/profile" component={Profile} />
-    <Route path="/:id/edit/" component={Edit} />
+    <PrivateRoute path="/:id/edit/" component={Edit} />
     <Route component={PageNotFound} />
   </Switch>
 );

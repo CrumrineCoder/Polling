@@ -18,6 +18,11 @@ app.get('/api/users/current', (req, res, next) => {
   });
 });
 
+app.post('/api/users/logout', (req, res) => {
+  auth.signOut();
+  res.json({ "user": null });
+})
+
 app.post('/api/polls/createPoll', (req, res) => {
   var newPostKey = database.ref().child('polls').push().key;
   data = req.body;

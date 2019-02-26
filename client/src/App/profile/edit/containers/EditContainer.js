@@ -77,6 +77,10 @@ class EditContainer extends Component {
 						<Edit {...votes} />
 					</ul>
 				)
+			} else{
+				pageContent = (
+					<h3>Either you are not logged in or the user credentials are being retrieved.</h3>
+				)
 			}
 		/*	} else{
 				alert("Please login to edit this poll. Redirecting...");
