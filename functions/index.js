@@ -176,6 +176,23 @@ app.post("/api/polls/rescind/", (req, res) => {
             database.ref('polls/' + req.body._parentID +"/answers").child(trueIndex).child("value").transaction(function (value) {
               return (value || 0) - 1;
             });
+
+            function getKeyByValue(object, value) {
+              return Object.keys(object).find(key => object[key] === value);
+            }
+
+            var key = getKeyByValue(childSnapshot.val().users, req.body.user);
+            ref.child(trueIndex).child("users").child(key).remove();
+
+/*
+            console.log("Key", key);
+            ref.child(trueIndex).child('users').equalTo(req.body.user).on("value", function(snapshot) {
+              console.log("Honk");
+              console.log(snapshot.val());
+              snapshot.forEach(function(data) {
+                  console.log(data.key);
+              }); 
+          }); */
           }
         }
         //Here you can access  childSnapshot.key
