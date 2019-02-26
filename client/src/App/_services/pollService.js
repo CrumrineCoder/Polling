@@ -113,7 +113,7 @@ function checkExistence(question) {
     const requestOptions = {
         method: 'GET'
     };
- //   return fetch("api/polls/checkExistence/" + question, requestOptions).then(handleResponse);
+    return fetch("http://localhost:5001/polling-269dc/us-central1/app/api/polls/checkExistence/" + question, requestOptions).then(handleResponse);
 }
 
 // error handling if there is one and returning data to the front end after getting it from the backend

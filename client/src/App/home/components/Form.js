@@ -121,8 +121,9 @@ class Form extends Component {
             })
             answers = tempAnswers;
             // Dispatch to the create poll action in poll.actions.js
-            //  dispatch(pollActions.checkExistence(question, { question, answers, options, creator, value }));
-            dispatch(pollActions.createPoll({ question, answers, options, creator, value }));
+            dispatch(pollActions.checkExistence(question, { question, answers, options, creator, value }));
+      //      dispatch(pollActions.createPoll({ question, answers, options, creator, value }));
+          
         }
     }
 

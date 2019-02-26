@@ -1,150 +1,10 @@
 const functions = require('firebase-functions');
 const express = require('express');
-/*
-const passport = require('passport');
-const passportAuth = require('./auth');
-*/
 const app = express();
 const cors = require('cors')({ origin: true });
 app.use(cors);
 const fire = require("./fire.js");
 var database = fire.database();
-var auth = fire.auth();
-
-app.get('/api', (req, res) => {
-  console.log(req.body);
-  const date = new Date();
-  const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
-  res.json({ bongs: 'BONG '.repeat(hours) });
-});
-
-app.post('/api/users/register', (req, res) => {
-  console.log(req.body);
-  const user = req.body;
-  console.log(user);
-  // Validate the user created an email and password
-  if (!user.email) {
-    return res.status(422).json({
-      errors: {
-        email: 'is required',
-      },
-    });
-  }
-
-  if (!user.password) {
-    return res.status(422).json({
-      errors: {
-        password: 'is required',
-      },
-    });
-  }
-
-  auth.createUserWithEmailAndPassword(user.email, user.password).catch(function (error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    if (errorCode || errorMessage) {
-      console.log(errorCode);
-      console.log(errorMessage);
-      res.json(errorMessage)
-    }
-  });
-
-  res.json(user);
-});
-
-
-app.post('/api/users/logout', (req, res) => {
-  auth.signOut();
-  res.json({ "user": null });
-})
-
-
-app.post('/api/users/login', (req, res, next) => {
-  const user = req.body.user;
-  // Validate the user created an email and password
-  if (!user.email) {
-    return res.status(422).json({
-      errors: {
-        email: 'is required',
-      },
-    });
-  }
-
-  if (!user.password) {
-    return res.status(422).json({
-      errors: {
-        password: 'is required',
-      },
-    });
-  }
-
-  auth.signInWithEmailAndPassword(user.email, user.password).catch(function (error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    if (errorCode || errorMessage) {
-      console.log(errorCode);
-      console.log(errorMessage);
-      res.json(errorMessage)
-    }
-  });
-  /*
-    // Use Passport's local strategy to authenticate. If so, return a token. 
-    return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-      if (err) {
-        return next(err);
-      }
-      if (passportUser) {
-        const user = passportUser;
-        user.token = passportUser.generateJWT();
-        return res.json({ user: user.toAuthJSON() });
-      }
-  
-      return res.status(400).info;
-    })(req, res, next); */
-  res.json({ "user": user });
-});
-
-
-app.get('/api/users/current', (req, res, next) => {
-  auth.onAuthStateChanged(function (user) {
-    if (user) {
-      var email = user.email;
-      console.log("LOGGED IN!");
-      res.json({ user: email });
-    } else {
-      console.log("-not logged in-")
-      res.json({ user: null })
-    }
-  });
-
-  /*
-   if(user){
-     res.json({user: user.email});
-   } else{
-     res.json({user: null});
-   } */
-  /*(async () => {
-    const fetchUser = new Promise((resolve, reject) => {
-      auth.onAuthStateChanged(function (user) {
-        if (user) {
-          resolve(user)
-        } else {
-          reject(console.log)
-        }
-      })
-    })
-
-    let user = await fetchUser();
-    if (user) {
-      res.json({ user: user.email });
-    } else {
-      res.json({ user: null });
-    }
-  }); */
-});
-
 
 app.post('/api/polls/createPoll', (req, res) => {
   var newPostKey = database.ref().child('polls').push().key;
@@ -155,6 +15,13 @@ app.post('/api/polls/createPoll', (req, res) => {
   updates.id = newPostKey;
   database.ref("polls/" + newPostKey).update(updates);
   res.json(newPostKey);
+});
+
+app.get('/api/polls/checkExistence/:question', (req, res) => {
+  var ref = database.ref('polls').orderByChild('question').equalTo(req.params.question)
+  ref.once('value', function (snapshot) {
+    res.json(snapshot.val() !== null);
+  });
 });
 
 app.post('/api/polls/editPoll', (req, res) => {

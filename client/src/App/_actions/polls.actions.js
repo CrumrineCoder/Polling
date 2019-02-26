@@ -26,10 +26,9 @@ function checkExistence(question, poll) {
                      dispatch(createPoll(poll)) 
                 }
                  else { 
-                     dispatch(pollExists(exists))
+                    dispatch(pollExists(exists))
                 }
             })
-        //console.log("Repsonse!" + response))
     }
     function requestCheck(question) { return { type: pollConstants.CHECK_POLL_REQUEST, question } }
     function pollExists(exists) { return { type: pollConstants.CHECK_POLL_SUCCESS, exists } }
