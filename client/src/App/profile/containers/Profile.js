@@ -4,12 +4,15 @@ import { connect } from 'react-redux';
 import EditLink from '../components/EditLink';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { withRouter } from 'react-router-dom';
+import fire from "../../common/components/Fire.js";
+var auth = fire.auth();
 
 // Landing page 
 class Profile extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {};
 	}
 
 	static propTypes = {
@@ -34,6 +37,23 @@ class Profile extends Component {
 		}
 	}
 
+	componentWillMount() {
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				var email = user.email;
+				this.setState({
+					isLoggedIn: true,
+					user: email
+				});
+			} else {
+				this.setState({
+					isLoggedIn: false
+				});
+
+			}
+		});
+	}
+
 	filterByValue(array, string) {
 		return array.filter(o =>
 			Object.keys(o).some(k => o[k].toString().toLowerCase().includes(string.toLowerCase())));
@@ -41,10 +61,11 @@ class Profile extends Component {
 
 	render() {
 		let { polls } = this.props;
+		let { user } = this.state;
 		let pageContent = '';
 
 		// If we're fetching polls, tell the user why
-		if (this.props.isFetching) {
+		if (this.props.isFetching || user == null) {
 			pageContent = (
 				<div className="pollsLoader">
 					The content is loading, but because this site uses a free Heroku server it has to warm up before it can get the data. This will take only 10 seconds to a minute, so please be patient! Once the servers are warmed up, the site will load content like normal.
@@ -53,7 +74,7 @@ class Profile extends Component {
 		} // Show all polls as poll links 
 		else {
 			var pollsByUser = polls.filter(function (poll) {
-				return poll.creator ==  JSON.parse(localStorage.getItem('user')).id;
+				return poll.creator ==  user;
 			})
 			pageContent = (
 				<ul className="polls">
