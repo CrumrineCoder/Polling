@@ -160,54 +160,57 @@ app.post('/api/polls/createPoll', (req, res) => {
 app.post("/api/polls/rescind/", (req, res) => {
   console.log("Reqbody", req.body);
   //for (var i = 0; i < req.body.answersLength; i++) {
-    var ref = database.ref('polls/' + req.body._parentID +"/answers");
-    ref.once('value', function (snapshot) {
-      var trueIndex = -1; 
-      snapshot.forEach(function(childSnapshot) {
-        trueIndex++;
-        if(childSnapshot.val().users){
-          var users = Object.values(childSnapshot.val().users);
-          var index = users.indexOf(req.body.user);
-          console.log(index);
-          if(index !== -1){
-         /*   ref.transaction(function (value) {
-              return value - 1;
-            }); */
-            database.ref('polls/' + req.body._parentID +"/answers").child(trueIndex).child("value").transaction(function (value) {
-              return (value || 0) - 1;
-            });
+  var ref = database.ref('polls/' + req.body._parentID + "/answers");
+  ref.once('value', function (snapshot) {
+    var trueIndex = -1;
+    snapshot.forEach(function (childSnapshot) {
+      trueIndex++;
+      if (childSnapshot.val().users) {
+        var users = Object.values(childSnapshot.val().users);
+        var index = users.indexOf(req.body.user);
+        console.log("Users", users);
+        console.log("Index", index);
+        if (index !== -1) {
+          database.ref('polls/' + req.body._parentID + "/answers").child(trueIndex).child("value").transaction(function (value) {
+            return (value || 0) - 1;
+          });
 
-            function getKeyByValue(object, value) {
-              return Object.keys(object).find(key => object[key] === value);
-            }
-
-            var key = getKeyByValue(childSnapshot.val().users, req.body.user);
-            ref.child(trueIndex).child("users").child(key).remove();
-
-/*
-            console.log("Key", key);
-            ref.child(trueIndex).child('users').equalTo(req.body.user).on("value", function(snapshot) {
-              console.log("Honk");
-              console.log(snapshot.val());
-              snapshot.forEach(function(data) {
-                  console.log(data.key);
-              }); 
-          }); */
+          function getKeyByValue(object, value) {
+            return Object.keys(object).find(key => object[key] === value);
           }
+
+          var key = getKeyByValue(childSnapshot.val().users, req.body.user);
+          console.log(key);
+          console.log(trueIndex);
+          database.ref('polls/' + req.body._parentID + "/answers").child(trueIndex).child("users").child(key).remove();
         }
-        //Here you can access  childSnapshot.key
-        console.log(childSnapshot.val());
-   //     console.log(Object.values(childSnapshot.val().users));
-     });
+      }
     });
- // }
-  /* var databaseRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child('value');
-   databaseRef.transaction(function (value) {
-     return (value || 0) + 1;
-   });
-   var databasePushRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body._id).child("users");
-   databasePushRef.push(req.body.user);
-   res.json(req.body._parentID); */
+  });
+
+  var ref = database.ref('polls/' + req.body._parentID + "/userAnswers");
+  ref.once('value', function (snapshot) {
+    var trueIndex = -1;
+    snapshot.forEach(function (childSnapshot) {
+      trueIndex++;
+      if (childSnapshot.val().users) {
+        var users = Object.values(childSnapshot.val().users);
+        var index = users.indexOf(req.body.user);
+        if (index !== -1) {
+          database.ref('polls/' + req.body._parentID + "/userAnswers").child(trueIndex).child("value").transaction(function (value) {
+            return (value || 0) - 1;
+          });
+
+          function getKeyByValue(object, value) {
+            return Object.keys(object).find(key => object[key] === value);
+          }
+
+          var key = getKeyByValue(childSnapshot.val().users, req.body.user);
+          ref.child(trueIndex).child("users").child(key).remove();
+        }
+      }
+    });
+  });
 });
 
 
@@ -254,6 +257,8 @@ app.post("/api/polls/voteMultiple/", (req, res) => {
       databaseRef.transaction(function (value) {
         return (value || 0) + 1;
       });
+      var databasePushRef = database.ref('polls/' + req.body._parentID + "/answers").child(req.body.selected[i]._id).child("users");
+      databasePushRef.push(req.body.user);
     } else {
       var databaseRef = database.ref('polls/' + req.body._parentID + "/userAnswers").child(req.body.selected[i]._id).child('value');
       databaseRef.transaction(function (value) {
