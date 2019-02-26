@@ -154,7 +154,7 @@ class Results extends Component {
 				)
 			} else{
 				pageContent = (
-					<h3>Either you are not logged in or the user credentials are being retrieved.</h3>
+					<p>Either the user credentials are being retrieved or you are not logged in.</p>
 				)
 			}
 		}
