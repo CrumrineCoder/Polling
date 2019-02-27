@@ -52,7 +52,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5001",
+  "proxy": "https://us-central1-polling-269dc.cloudfunctions.net/",
   "browserslist": [
     ">0.2%",
     "not dead",
