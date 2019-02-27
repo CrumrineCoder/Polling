@@ -56,18 +56,26 @@ app.post('/api/polls/deletePoll/:id', (req, res) => {
 app.post("/api/polls/rescind/", (req, res) => {
   //for (var i = 0; i < req.body.answersLength; i++) {
   var answersRef = database.ref('polls/' + req.body._parentID + "/answers");
-  answersRef.once('value', (snapshot) =>  {
+  answersRef.once('value', (snapshot) => {
     var trueIndex = -1;
-    snapshot.forEach( (childSnapshot) => {
+    snapshot.forEach((childSnapshot) => {
+      console.log(trueIndex);
       trueIndex++;
+      console.log(childSnapshot.val().users);
       if (childSnapshot.val().users) {
-        var users = Object.values(childSnapshot.val().users);
+        //    var users = Object.values(childSnapshot.val().users);
+        var users = Object.keys(childSnapshot.val().users).map(function (key) {
+          return childSnapshot.val().users[key];
+        });
         var index = users.indexOf(req.body.user);
+        console.log(users);
+        console.log(index);
         if (index !== -1) {
-          database.ref('polls/' + req.body._parentID + "/answers").child(trueIndex).child("value").transaction( (value) => {
+          database.ref('polls/' + req.body._parentID + "/answers").child(trueIndex).child("value").transaction((value) => {
             return (value || 0) - 1;
           });
           var key = Object.keys(childSnapshot.val().users).find(key => childSnapshot.val().users[key] === req.body.user);
+          console.log(key);
           database.ref('polls/' + req.body._parentID + "/answers").child(trueIndex).child("users").child(key).remove();
         }
       }
@@ -80,10 +88,13 @@ app.post("/api/polls/rescind/", (req, res) => {
     snapshot.forEach((childSnapshot) => {
       trueIndex++;
       if (childSnapshot.val().users) {
-        var users = Object.values(childSnapshot.val().users);
+        // var users = Object.values(childSnapshot.val().users);
+        var users = Object.keys(childSnapshot.val().users).map(function (key) {
+          return childSnapshot.val().users[key];
+        });
         if (users.length === 1) {
           database.ref('polls/' + req.body._parentID + "/userAnswers").child(trueIndex).remove();
-        } else{
+        } else {
           var index = users.indexOf(req.body.user);
           if (index !== -1) {
             database.ref('polls/' + req.body._parentID + "/userAnswers").child(trueIndex).child("value").transaction((value) => {
@@ -114,7 +125,7 @@ app.post("/api/polls/votePollAnswer/", (req, res) => {
 
 app.post("/api/polls/voteUserAnswer", (req, res, next) => {
   var databaseRef = database.ref('polls/' + req.body._parentID + "/userAnswers").child(req.body._id).child('value');
-  databaseRef.transaction( (value) => {
+  databaseRef.transaction((value) => {
     return (value || 0) + 1;
   });
   var databasePushRef = database.ref('polls/' + req.body._parentID + "/userAnswers").child(req.body._id).child("users");
@@ -150,7 +161,7 @@ app.post("/api/polls/voteMultiple/", (req, res) => {
       databasePushAnswerRef.push(req.body.user);
     } else {
       var databaseUserRef = database.ref('polls/' + req.body._parentID + "/userAnswers").child(req.body.selected[i]._id).child('value');
-      databaseUserRef.transaction( (value) => {
+      databaseUserRef.transaction((value) => {
         return (value || 0) + 1;
       });
       var databasePushUserRef = database.ref('polls/' + req.body._parentID + "/userAnswers").child(req.body.selected[i]._id).child("users");
@@ -165,7 +176,7 @@ app.get("/api/polls/get/", (req, res) => {
   var query = ref.orderByChild("question");
   var sum = [];
   query.once("value", (snap) => {
-    snap.forEach( (childSnap)  => {
+    snap.forEach((childSnap) => {
       sum.push(childSnap.val());
     });
     res.json(sum);
@@ -176,18 +187,6 @@ app.get('/api/polls/get/:id', (req, res) => {
   var ref = database.ref('polls/' + req.params.id);
   ref.once('value', (snapshot) => {
     res.json(snapshot.val());
-  });
-});
-
-exports.bigben = functions.https.onRequest((req, res) => {
-  var ref = database.ref("polls/");
-  var query = ref.orderByChild("question");
-  var sum = [];
-  query.once("value", (snap) => {
-    snap.forEach( (childSnap)  => {
-      sum.push(childSnap.val());
-    });
-    res.json(sum);
   });
 });
 
