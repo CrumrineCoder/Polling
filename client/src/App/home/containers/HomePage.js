@@ -73,7 +73,7 @@ class Home extends Component {
 		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
-					The content is loading, but because this site uses a free Heroku server it has to warm up before it can get the data. This will take only 10 seconds to a minute, so please be patient! Once the servers are warmed up, the site will load content like normal.
+					The content is loading, but because this site uses a free Firebase server it has to warm up before it can get the data. This will take only 10 seconds to a minute, so please be patient! Once the servers are warmed up, the site will load content like normal.
       		    </div>
 			)
 		} // Show all polls as poll links 
