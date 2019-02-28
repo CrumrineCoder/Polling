@@ -284,6 +284,11 @@ Railscasts-like style (c) Visoft, Inc. (Damien White)
 .pollsContainer{
   margin-bottom: 50px;
 }
+
+.resultChart{
+  width: 100%;
+  height: 400px;
+}
 /* Media Queries */
 
 @media screen and (max-width: 500px) {
@@ -300,6 +305,9 @@ Railscasts-like style (c) Visoft, Inc. (Damien White)
   }
   #footerCredit{
     display: none;
+  }
+  .polls{
+    padding: 0px;
   }
 
 }
