@@ -96,10 +96,8 @@ function get(poll) {
     const requestOptions = {
         method: 'GET'
     };
-    console.log("Get polls please3423423");
     // if the incoming Poll id is set to "All", that means get all polls
     if (poll === "All") {
-        console.log("Get polls3423424");
         return fetch("https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/get", requestOptions).then(handleResponse);
     }
     // Or if we have just one ID, get one poll
