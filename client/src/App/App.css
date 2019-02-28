@@ -296,7 +296,14 @@ Railscasts-like style (c) Visoft, Inc. (Damien White)
 }
 /* Media Queries */
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1000px) {
+
+  #rightPollWrapper .pollSubmitButton{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 775px) {
 
   #leftPoll{
     width: 100%;
@@ -307,7 +314,13 @@ Railscasts-like style (c) Visoft, Inc. (Damien White)
     float: none;
     margin-left: 0px;
     margin-top: 10px;
+    margin-bottom: 100px;
   }
+
+}
+
+@media screen and (max-width: 500px) {
+
   #footerCredit{
     display: none;
   }
