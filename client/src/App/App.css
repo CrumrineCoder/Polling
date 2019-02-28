@@ -30,6 +30,7 @@ header{
 #footerCredit{
   left: 10px;
   position: absolute;
+  font-size: .7rem;
 }
 
 .footerLink{

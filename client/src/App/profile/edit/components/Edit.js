@@ -92,7 +92,7 @@ class Edit extends Component {
 
             if (shouldReset) {
                 answers.map(function (x) {
-                    x.Users = [];
+                    x.users = [];
                     x.value = 0;
                     return x
                 });
