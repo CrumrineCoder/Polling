@@ -30,6 +30,7 @@ header{
 #footerCredit{
   left: 10px;
   position: absolute;
+  font-size: .7rem;
 }
 
 .footerLink{
@@ -131,14 +132,17 @@ li{
 #leftPoll{
   overflow: hidden;
     min-height: 50px;
+    float: left;
+    width: 68%;
     background: white;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
-.pollsContainer h1{
+#allPollsListingHeader{
   margin-top: 80px;
+  clear: both; 
 }
 
 #rightPollWrapper{
@@ -277,6 +281,56 @@ Railscasts-like style (c) Visoft, Inc. (Damien White)
 .poll .btn:not(.editButton), #pleaseLoginOrRegister{
   margin: 20px;
 }
+
+.pollsContainer{
+  margin-bottom: 50px;
+}
+
+.resultChart{
+  width: 100%;
+  height: 400px;
+}
+
+.form{
+  margin-top: 50px;
+}
+/* Media Queries */
+
+@media screen and (max-width: 1000px) {
+
+  #rightPollWrapper .pollSubmitButton{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 775px) {
+
+  #leftPoll{
+    width: 100%;
+    float: none;
+  }
+  #rightPollWrapper{
+    width: 100%;
+    float: none;
+    margin-left: 0px;
+    margin-top: 10px;
+    margin-bottom: 100px;
+  }
+
+}
+
+@media screen and (max-width: 500px) {
+
+  #footerCredit{
+    display: none;
+  }
+  .polls{
+    padding: 0px;
+  }
+
+}
+
+/*****/
 
 .hljs {
   display: block;

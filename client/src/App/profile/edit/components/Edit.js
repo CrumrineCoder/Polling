@@ -11,9 +11,9 @@ class Edit extends Component {
         super(props);
         const { dispatch } = this.props;
         // Get the current user, authentication
-     //   dispatch(userActions.getCurrent());
+        //   dispatch(userActions.getCurrent());
         let userAnswers = [];
-        if(this.props.userAnswers){
+        if (this.props.userAnswers) {
             userAnswers = this.props.userAnswers;
         }
         // selected is the votes selected by the user, userAnswer is the user created answer, _parentID is the id of the poll itself, isLoggedIn checks if the user is logged in, choiceType is whether the inputs to select votes are radio (single vote) or checkbox (multiple votes), optionChangeType keeps track of whether we're using multipleOptionChange or optionChange, submitType is  handleSubmit or handleMultipleSubmit, and submissionType is whether the user is voting on a poll answer, a user answer, creating a user answer, or multiple. 
@@ -39,36 +39,36 @@ class Edit extends Component {
     handleDelete() {
         const { id } = this.state;
         const { dispatch } = this.props;
-        if(window.confirm("Are you sure you want to delete this Poll? It will be gone forever, and forever is a long time.")){
+        if (window.confirm("Are you sure you want to delete this Poll? It will be gone forever, and forever is a long time.")) {
             // dispatch an action to delete the poll with its ID
             dispatch(pollActions.deletePoll(id));
         }
     }
 
-    
+
     // Multiple vote submission logic 
     handleEditSubmit() {
         var { id, answers, userAnswers, options, question, value, creator } = this.state;
         const { dispatch } = this.props;
         let shouldReset = false;
-       // let creator = JSON.parse(localStorage.getItem('user')).id;
+        // let creator = JSON.parse(localStorage.getItem('user')).id;
 
         function objectsAreSame(x, y) {
             var objectsAreSame = true;
-            for(var propertyName in x) {
-               if(x[propertyName] !== y[propertyName]) {
-                  objectsAreSame = false;
-                  break;
-               }
+            for (var propertyName in x) {
+                if (x[propertyName] !== y[propertyName]) {
+                    objectsAreSame = false;
+                    break;
+                }
             }
             return objectsAreSame;
-         }
+        }
 
 
         // If the props for anything other than user answers are different, set a variable that'll tell the back end to reset data. 
-        if ( !(objectsAreSame(answers, this.props.answers)) ||  !(objectsAreSame(options, this.props.options)) || question !== this.props.question) {
+        if (!(objectsAreSame(answers, this.props.answers)) || !(objectsAreSame(options, this.props.options)) || question !== this.props.question) {
             shouldReset = true;
-           
+
         }
 
         answers = answers.filter(function (el) {
@@ -88,24 +88,25 @@ class Edit extends Component {
         // Force the user to have at least 2 answers
         else if (answers.length < 2) {
             alert("You need two or more non-empty non-duplicate answers for your poll to submit.");
-        }
+        } else {
 
-        if(shouldReset){
-            answers.map(function (x) {
-                x.Users = [];
-                x.value = 0;
-                return x
-            });
-            value  = 0;
-        }
+            if (shouldReset) {
+                answers.map(function (x) {
+                    x.users = [];
+                    x.value = 0;
+                    return x
+                });
+                value = 0;
+            }
 
-        // If user Answers are no longer allowed, delete them all.
-        if(!options.UserAnswers){
-            userAnswers = [];
-        }
+            // If user Answers are no longer allowed, delete them all.
+            if (!options.UserAnswers) {
+                userAnswers = [];
+            }
 
-        // Send a dispatch to edit the poll. 
-        dispatch(pollActions.editPoll({id, creator, answers, value, userAnswers, options, question}));
+            // Send a dispatch to edit the poll. 
+            dispatch(pollActions.editPoll({ id, creator, answers, value, userAnswers, options, question }));
+        }
     }
 
     // For Question
@@ -156,17 +157,6 @@ class Edit extends Component {
         return (
             <div className="form">
                 <h1>Edit Poll</h1>
-                <div id="rightPollWrapper">
-                    <div id="rightPoll">
-                        <h4>Options</h4>
-                        <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Allow users to select more than one poll answer </label>
-                        <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> Allow users to create poll answers </label>
-                        <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Allow users to rescind their vote </label>
-                        <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> Allow users to see the results before voting </label>
-                    </div>
-                    <button onClick={this.handleDelete} className="btn btn-outline-danger editButton pollSubmitButton" >Delete</button>
-                    <button onClick={this.handleEditSubmit} className="btn btn-primary float-right editButton pollSubmitButton" >Save Changes</button>
-                </div>
 
                 <div id="leftPoll">
                     <h3>Question</h3>
@@ -207,6 +197,18 @@ class Edit extends Component {
                             </div>
                         ))}
                     </div>
+                </div>
+
+                <div id="rightPollWrapper">
+                    <div id="rightPoll">
+                        <h4>Options</h4>
+                        <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Allow users to select more than one poll answer </label>
+                        <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> Allow users to create poll answers </label>
+                        <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Allow users to rescind their vote </label>
+                        <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> Allow users to see the results before voting </label>
+                    </div>
+                    <button onClick={this.handleDelete} className="btn btn-outline-danger editButton pollSubmitButton" >Delete</button>
+                    <button onClick={this.handleEditSubmit} className="btn btn-primary float-right editButton pollSubmitButton" >Save Changes</button>
                 </div>
 
             </div>
