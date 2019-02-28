@@ -45,7 +45,7 @@ function logout() {
     const requestOptions = {
         method: 'POST'
     };
-    return fetch("api/users/logout/", requestOptions).then(handleResponse);
+    return fetch("http://localhost:5001/polling-269dc/us-central1/app/api/users/logout/", requestOptions).then(handleResponse);
 }
 
 // get the current user
@@ -54,7 +54,7 @@ function getCurrent() {
         method: 'GET',
         headers: authHeader()
     };
-    return fetch(`api/users/current`, requestOptions).then(handleResponse);
+    return fetch("http://localhost:5001/polling-269dc/us-central1/app/api/users/current", requestOptions).then(handleResponse);
 }
 /*
 function getById(id) {

@@ -202,7 +202,6 @@ class Form extends Component {
         return (
             <div className="form">
                 <h1>Create Poll</h1>
-                
                 <div id="leftPoll">
                     <input
                         onChange={(ev) => this.handleChangeField('question', ev)}
@@ -235,7 +234,7 @@ class Form extends Component {
                         <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Allow users to rescind their vote </label>
                         <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> Allow users to see the results before voting </label>
                     </div>
-                    <button onClick={this.handleSubmit} className="btn btn-primary float-right" id="pollSubmitButton">Submit</button>
+                    <button onClick={this.handleSubmit} className="btn btn-primary float-right pollSubmitButton">Submit</button>
                 </div>
 
             </div>

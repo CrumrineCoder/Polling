@@ -209,7 +209,7 @@ li{
   background: rgb(206, 206, 206); 
 }
 
-#pollSubmitButton{
+.pollSubmitButton{
   margin-top:  20px;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 5px 12px rgba(0,0,0,0.22);
 }
@@ -280,6 +280,10 @@ Railscasts-like style (c) Visoft, Inc. (Damien White)
 .poll .btn:not(.editButton), #pleaseLoginOrRegister{
   margin: 20px;
 }
+
+.pollsContainer{
+  margin-bottom: 50px;
+}
 /* Media Queries */
 
 @media screen and (max-width: 500px) {
@@ -294,6 +298,10 @@ Railscasts-like style (c) Visoft, Inc. (Damien White)
     margin-left: 0px;
     margin-top: 10px;
   }
+  #footerCredit{
+    display: none;
+  }
+
 }
 
 /*****/
