@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { Link } from 'react-router-dom';
-
+import { userActions } from '../../_actions/users.actions.js';
+import fire from "../../common/components/Fire.js";
+var auth = fire.auth();
 // Form for creating polls
 class Form extends Component {
 
     constructor(props) {
         super(props);
+        const { dispatch } = this.props;
+     //   dispatch(userActions.getCurrent());
         // initial state stores the questions, an array of answers the user will input, options the user will make true or false, linked represents if the user will be linked, and submitted checks if the poll has been submitted yet. 
         this.state = {
             question: '',
@@ -22,7 +26,9 @@ class Form extends Component {
                 SeeResults: false
             },
             linked: false,
-            submitted: false
+            submitted: false,
+            isLoggedIn: false, 
+            creator: null
         };
         // Bind action creators to the state
         this.handleChangeField = this.handleChangeField.bind(this);
@@ -37,11 +43,28 @@ class Form extends Component {
         this.props.history.push("polls/" + id);
     }
 
-    componentWillReceiveProps(newProps){
-        if(newProps.checkPolls.exists && this.props.checkPolls.isChecking){
+    componentWillReceiveProps(newProps) {
+        if (newProps.checkPolls.exists && this.props.checkPolls.isChecking) {
             alert("Your question already exists as a Poll.");
         }
     }
+
+    componentWillMount(){
+		auth.onAuthStateChanged((user)=>{
+			if (user) {
+				var email = user.email;
+				this.setState({
+                    isLoggedIn: true,
+                    creator: email
+				});
+			} else {
+				this.setState({
+					isLoggedIn: false
+				});
+			
+			}
+		});
+	}
     // componentWillReceiveProps() {
     //     if (!this.props.checkPolls.isChecking) {
     //         this.setState({ isChecking: false });
@@ -60,10 +83,6 @@ class Form extends Component {
         var { question, answers, options, linked } = this.state;
         const { dispatch } = this.props;
         let creator;
-
-    //    this.props.dispatch(pollActions.checkExistence(question));
-      //  console.log("Beanus", this.props);
-       // console.log("this", this.props.checkPolls)
 
         // Remove empty answers
         answers = answers.filter(function (el) {
@@ -89,15 +108,22 @@ class Form extends Component {
             this.setState({ submitted: true });
             // If the user wants this poll to be linked to their account, then send the user to the backend
             if (linked) {
-                creator = JSON.parse(localStorage.getItem('user')).id;
+                creator = this.state.creator;
             } else {
                 creator = "";
             }
-
+            
             let value = 0;
-
+            var tempAnswers = answers.map(function (el) {
+                var o = Object.assign({}, el);
+                o.Users = [];
+                return o;
+            })
+            answers = tempAnswers;
             // Dispatch to the create poll action in poll.actions.js
             dispatch(pollActions.checkExistence(question, { question, answers, options, creator, value }));
+      //      dispatch(pollActions.createPoll({ question, answers, options, creator, value }));
+          
         }
     }
 
@@ -148,18 +174,31 @@ class Form extends Component {
         const { question } = this.state;
         let linkPoll;
         // If there's no one logged in, suggest them to login so they can add this poll to their account
-        if (JSON.parse(localStorage.getItem('user')) === null) {
-            linkPoll = (
-                <div>
-                    <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to link this poll with your account and edit the poll after creation.
+      /*  if(!this.props.isFetchingCurrentUser){
+			if(this.props.currentUser.user === null){
+                linkPoll = (
+                    <div>
+                        <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to link this poll with your account and edit the poll after creation.
                 </div>
-            )
-            // If they are logged in, make a link this button to my account button
-        } else {
+                )
+                // If they are logged in, make a link this button to my account button
+            } else {
+                linkPoll = (
+                    <label><input type="checkbox" checked={this.state.linked} onChange={this.handleLinkedClick} name="user" value="LinkPoll" /> Link Poll to my user account </label>
+                )
+            }
+        } */
+        if(this.state.isLoggedIn){
             linkPoll = (
                 <label><input type="checkbox" checked={this.state.linked} onChange={this.handleLinkedClick} name="user" value="LinkPoll" /> Link Poll to my user account </label>
             )
-        }
+		} else{
+            linkPoll = (
+                <div>
+                    <Link to="/login" >Login</Link> or <Link to="/register">Register</Link> to link this poll with your account and edit the poll after creation.
+            </div>
+            )
+		}
         return (
             <div className="form">
                 <h1>Create Poll</h1>
@@ -205,10 +244,34 @@ class Form extends Component {
 
 // get the create poll actions for dispatching
 function mapStateToProps(state) {
+/*    var user;
+    if (state.home.authenticate.user) {
+        user = state.home.authenticate.user.email
+    } else {
+        user = null
+    }
     const checkPolls = state.home.checkPolls;
+    const { loggedIn } = state.home.authenticate;
+    const { isFetchingCurrentUser } = state.home.users || {
+        isFetchingCurrentUser: true
+    }
     return {
-        checkPolls
-    };
+        checkPolls,
+        user,
+        loggedIn,
+        isFetchingCurrentUser
+    }; */
+    const checkPolls = state.home.checkPolls;
+    const { users } = state.home;
+	const { isFetchingCurrentUser, currentUser } = users || {
+		isFetchingCurrentUser: true,
+		currentUser: {}
+		}
+	return {
+        checkPolls,
+		isFetchingCurrentUser,
+		currentUser
+	};
 }
 
 export default connect(mapStateToProps)(Form);

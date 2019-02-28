@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import { userActions } from '../../_actions/users.actions.js';
+import { history } from '../../store.js';
 
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import validator from 'validator';
+import fire from "../../common/components/Fire.js";
+var auth = fire.auth();
+
 
 class RegisterForm extends Component {
 
@@ -20,8 +24,8 @@ class RegisterForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillReceiveProps(newProps){
-        if(newProps.checkUsers.exists){
+    componentWillReceiveProps(newProps) {
+        if (newProps.checkUsers.exists) {
             alert("Your username is taken.");
         }
     }
@@ -31,7 +35,17 @@ class RegisterForm extends Component {
         var { email, password } = this.state;
         const { dispatch } = this.props;
         this.setState({ submitted: true });
-        dispatch(userActions.checkExistence(email, { email, password }));
+
+        auth.createUserWithEmailAndPassword(email, password).then(function () {
+            history.push("");
+            history.push("/login");
+        }, function (error) {
+        //    var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+        });
     }
 
     // For form control
@@ -45,16 +59,16 @@ class RegisterForm extends Component {
         const { email, password } = this.state;
         const required = (value) => {
             if (!value.toString().trim().length) {
-              // We can return string or jsx as the 'error' prop for the validated Component
-              return <p class="warning">This value is required.</p>
+                // We can return string or jsx as the 'error' prop for the validated Component
+                return <p class="warning">This value is required.</p>
             }
-          };
-           
-          const requireEmail = (value) => {
+        };
+
+        const requireEmail = (value) => {
             if (!validator.isEmail(value)) {
                 return <p class="warning">{value} is not a valid email.</p>
             }
-          };
+        };
         return (
             <Form className="form">
                 <Container>
@@ -71,7 +85,7 @@ class RegisterForm extends Component {
                         value={password}
                         className="form-control my-3"
                         placeholder="password"
-                        type="password" 
+                        type="password"
                         validations={[required]}
                     />
                     <button onClick={this.handleSubmit} className="btn btn-primary float-right">Submit</button>

@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "dependencies": {
-    "webpack-dev-server": "3.1.14",
     "@babel/core": "*",
     "axios": "*",
     "body-parser": "*",
@@ -14,7 +13,8 @@
     "errorhandler": "*",
     "express": "*",
     "express-session": "*",
-    "history":"*",
+    "firebase": "^5.8.4",
+    "history": "*",
     "jquery": "*",
     "moment": "*",
     "mongoose": "*",
@@ -26,7 +26,7 @@
     "react": "*",
     "react-dom": "*",
     "react-loadable": "*",
-    "react-redux":"*",
+    "react-redux": "*",
     "react-router-dom": "*",
     "react-router-redux": "*",
     "react-scripts": "*",
@@ -39,7 +39,8 @@
     "redux-thunk": "*",
     "rxjs": "*",
     "rxjs-compat": "*",
-    "validator": "*"
+    "validator": "*",
+    "webpack-dev-server": "3.1.14"
   },
   "devDependencies": {
     "redux-devtools": "*",
@@ -51,7 +52,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://us-central1-polling-269dc.cloudfunctions.net/",
   "browserslist": [
     ">0.2%",
     "not dead",

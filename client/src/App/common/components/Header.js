@@ -9,6 +9,9 @@ import {
 	NavLink
 } from 'reactstrap';
 import { connect } from 'react-redux';
+import { userActions } from '../../_actions/users.actions.js';
+import fire from "./Fire.js";
+var auth = fire.auth();
 //import PropTypes from 'prop-types';
 
 // Header hosts navigation info at the top of the screen. It appears on all pages.
@@ -17,9 +20,12 @@ class Header extends Component {
 
 	constructor(props) {
 		super(props);
+		const { dispatch } = this.props;
+	//	dispatch(userActions.getCurrent());
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			isOpen: false
+			isOpen: false,
+			isLoggedIn: ""
 			//		isLoggedIn: typeof localStorage["user"] !== 'undefined'
 		};
 	}
@@ -30,58 +36,97 @@ class Header extends Component {
 			isOpen: !this.state.isOpen
 		});
 	}
+	componentDidMount(){
+		auth.onAuthStateChanged((user)=>{
+			if (user) {
+				this.setState({
+					isLoggedIn: true
+				});
+			} else {
+				this.setState({
+					isLoggedIn: false
+				});
+			
+			}
+		});
+	}
 
 	render() {
-		const { isLoggedIn } = this.props
-		let userLinks;
-		//Conditional rendering
-		if (isLoggedIn) {
-			userLinks = 
+		let userLinks = "Authenticating...";
+		if(this.state.isLoggedIn){
+			userLinks =
 			<>
-				<NavItem> 
-					<NavLink href="#/profile">Profile</NavLink>
-				</NavItem>	
 				<NavItem>
-					<NavLink href="#/login">Logout</NavLink>	
+					<NavLink href="#/profile">Profile</NavLink>
+				</NavItem>
+				<NavItem>
+					<NavLink href="#/login">Logout</NavLink>
 				</NavItem>
 			</>
-		} else {
-			userLinks = 
+		} else{
+			userLinks =
 			<>
-				<NavItem> 
-					<NavLink href="#/login">Login</NavLink>		
+				<NavItem>
+					<NavLink href="#/login">Login</NavLink>
 				</NavItem>
-				<NavItem>	
-					<NavLink href="#/register">Register</NavLink>	
+				<NavItem>
+					<NavLink href="#/register">Register</NavLink>
 				</NavItem>
 			</>
 		}
+	
+		/*	if(!this.props.isFetchingCurrentUser){
+				if(this.props.currentUser.user === null){
+					userLinks =
+						<>
+							<NavItem>
+								<NavLink href="#/login">Login</NavLink>
+							</NavItem>
+							<NavItem>
+								<NavLink href="#/register">Register</NavLink>
+							</NavItem>
+						</>
+				} else {
+					userLinks =
+						<>
+							<NavItem>
+								<NavLink href="#/profile">Profile</NavLink>
+							</NavItem>
+							<NavItem>
+								<NavLink href="#/login">Logout</NavLink>
+							</NavItem>
+						</>
+				}
+			} */
 		return (
 			<header>
-					<Navbar color="faded" light expand="md">
-						<NavbarBrand href="/">Polling</NavbarBrand>
-						<NavbarToggler onClick={this.toggle} />
-						<Collapse isOpen={this.state.isOpen} navbar>
-							<Nav className="ml-auto" navbar>
-								<NavItem>
-									<NavLink href="#/">Home</NavLink>
-								</NavItem>
-								{userLinks}
-							</Nav>
-						</Collapse>
-					</Navbar>
+				<Navbar color="faded" light expand="md">
+					<NavbarBrand href="/">Polling</NavbarBrand>
+					<NavbarToggler onClick={this.toggle} />
+					<Collapse isOpen={this.state.isOpen} navbar>
+						<Nav className="ml-auto" navbar>
+							<NavItem>
+								<NavLink href="#/">Home</NavLink>
+							</NavItem>
+							{userLinks}
+						</Nav>
+					</Collapse>
+				</Navbar>
 			</header>
 		)
 	}
 }
 
-Header.propTypes = {
-//	isLoggedIn: PropTypes.bool.isRequired,
-}
-
 function mapStateToProps(state) {
-	const isLoggedIn = state.home.authenticate.loggedIn;
-	return { isLoggedIn };
+	const { users } = state.home;
+	const { isFetchingCurrentUser, currentUser } = users || {
+		isFetchingCurrentUser: true,
+		currentUser: {}
+	}
+	return {
+		isFetchingCurrentUser,
+		currentUser
+	};
 }
 
 export default connect(mapStateToProps)(Header);

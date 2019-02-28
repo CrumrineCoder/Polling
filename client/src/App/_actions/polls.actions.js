@@ -26,10 +26,9 @@ function checkExistence(question, poll) {
                      dispatch(createPoll(poll)) 
                 }
                  else { 
-                     dispatch(pollExists(exists))
+                    dispatch(pollExists(exists))
                 }
             })
-        //console.log("Repsonse!" + response))
     }
     function requestCheck(question) { return { type: pollConstants.CHECK_POLL_REQUEST, question } }
     function pollExists(exists) { return { type: pollConstants.CHECK_POLL_SUCCESS, exists } }
@@ -43,9 +42,9 @@ function createPoll(poll) {
         dispatch(request(poll));
         pollService.createPoll(poll)
             .then(
-                poll => {
+                newPostKey => {
                     dispatch(success());
-                    history.push(poll.poll._id + "/vote");
+                    history.push(newPostKey + "/vote");
                     dispatch(alertActions.success('Create Poll Successful'));
                 },
                 error => {
@@ -68,7 +67,7 @@ function editPoll(poll) {
                 poll => {
                     dispatch(success());
                     history.push("");
-                    history.push(poll._id + "/vote");
+                    history.push(poll + "/vote");
                     dispatch(alertActions.success('Edit Poll Successful'));
                 },
                 error => {
@@ -112,10 +111,10 @@ function votePollAnswer(poll) {
         dispatch(request(poll));
         pollService.votePollAnswer(poll)
             .then(
-                poll => {
+                id => {
                     dispatch(success());
                     history.push("");
-                    history.push(poll._id + "/results/");
+                    history.push(id + "/results/");
                     dispatch(alertActions.success('Vote Poll Successful'));
                 },
                 error => {
@@ -137,10 +136,10 @@ function votePollUserAnswer(poll) {
         dispatch(request(poll));
         pollService.votePollUserAnswer(poll)
             .then(
-                poll => {
+                id => {
                     dispatch(success());
                     history.push("");
-                    history.push(poll._id + "/results/");
+                    history.push(id + "/results/");
                     dispatch(alertActions.success('Vote Poll Successful'));
                 },
                 error => {
@@ -240,9 +239,9 @@ function selectPoll(poll) {
 }
 
 function receiveVotes(poll, json) {
-    if (poll === "All") {
-        json = json.polls;
-    }
+    // if (poll === "All") {
+    //     json = json.polls;
+    // }
     return {
         type: pollConstants.GET_SUCCESS,
         poll,

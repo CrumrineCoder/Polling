@@ -35,8 +35,8 @@ class Home extends Component {
 	// Upon updating, tell the back end to get all polls (if there's been any change)
 	componentDidUpdate(prevProps) {
 		if (this.props.selectedPoll !== prevProps.selectedPoll) {
-			this.props.dispatch(pollActions.selectPoll("All"));
-			this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
+	//		this.props.dispatch(pollActions.selectPoll("All"));
+	//		this.props.dispatch(pollActions.fetchVotesIfNeeded("All"));
 		}
 	}
 
@@ -69,13 +69,11 @@ class Home extends Component {
 			});
 		}
 
-	
-
 		// If we're fetching polls, tell the user why
 		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
-					The content is loading, but because this site uses a free Heroku server it has to warm up before it can get the data. This will take only 10 seconds to a minute, so please be patient! Once the servers are warmed up, the site will load content like normal.
+					The content is loading, but because this site uses a free Firebase server it has to warm up before it can get the data. This will take only 10 seconds to a minute, so please be patient! Once the servers are warmed up, the site will load content like normal.
       		    </div>
 			)
 		} // Show all polls as poll links 

@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import Poll from '../components/Poll';
 import { pollActions } from '../../_actions/polls.actions.js';
 import { history } from '../../store.js';
+import fire from "../../common/components/Fire.js";
+var auth = fire.auth();
+
 
 class Polls extends Component {
 
@@ -13,6 +16,28 @@ class Polls extends Component {
 		isFetching: PropTypes.bool.isRequired,
 		lastUpdated: PropTypes.number,
 		dispatch: PropTypes.func.isRequired
+	}
+
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
+
+	componentWillMount() {
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				var email = user.email;
+				this.setState({
+					isLoggedIn: true,
+					user: email
+				});
+			} else {
+				this.setState({
+					isLoggedIn: false
+				});
+
+			}
+		});
 	}
 
 	// Upon first render,  tell the back end to get the poll on this page
@@ -32,12 +57,11 @@ class Polls extends Component {
 	render() {
 		let { votes } = this.props;
 		let pageContent = '';
-
 		// If we're still fetching the data, tell the user
 		if (this.props.isFetching) {
 			pageContent = (
 				<div className="pollsLoader">
-					The content is loading, but because this site uses a free Heroku server it has to warm up before it can get the data. This will take only 10 seconds to a minute, so please be patient! Once the servers are warmed up, the site will load content like normal.
+					The content is loading, but because this site uses a free Firebase server it has to warm up before it can get the data. This will take only 10 seconds to a minute, so please be patient! Once the servers are warmed up, the site will load content like normal.
       		    </div>
 			)
 		} // Once the data is fetched... 
@@ -45,23 +69,26 @@ class Polls extends Component {
 			// Get all of the users 
 			let id = [];
 			for (var i = 0; i < this.props.votes.answers.length; i++) {
-				for (var j = 0; j < this.props.votes.answers[i].Users.length; j++) {
-					id.push(this.props.votes.answers[i].Users[j]);
+				if (this.props.votes.answers[i].users) {
+					for (var j = 0; j < Object.values(this.props.votes.answers[i].users).length; j++) {
+						id.push(Object.values(this.props.votes.answers[i].users)[j]);
+					}
 				}
 			}
-			for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
-				for (var l = 0; l < this.props.votes.userAnswers[k].Users.length; l++) {
-					id.push(this.props.votes.userAnswers[k].Users[l]);
+			if (this.props.votes.userAnswers) {
+				for (var k = 0; k < this.props.votes.userAnswers.length; k++) {
+					if (this.props.votes.userAnswers[k].users) {
+						for (var l = 0; l < Object.values(this.props.votes.userAnswers[k].users).length; l++) {
+							id.push(Object.values(this.props.votes.userAnswers[k].users)[l]);
+						}
+					}
 				}
 			}
 			// If the current user matches ANY of the votes, redirect them to the results
-			if (localStorage.getItem('user')) {
-				if (id.indexOf(JSON.parse(localStorage.getItem('user')).id) !== -1) {
-					history.push("");
-					history.push(votes._id + "/results");
-				}
-			} 
-
+			if (id.indexOf(this.state.user) !== -1 && this.state.user != null) {
+				history.push("");
+				history.push(votes.id + "/results");
+			}
 			// Redirect all poll data to the Poll component. 
 			pageContent = (
 				<ul className="polls">

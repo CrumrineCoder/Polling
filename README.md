@@ -6,19 +6,13 @@ This is a remake of an old project I had built without AngularJS or React.js, so
 
 ## To Do
 
-* Edit Polls
-* Search for Polls
 * Display what I voted for on the Results page
-* Delete Polls
 * Open/Close Polls
-* Indicate User Answers in Results
-* Delete user answers 
 * Confirm User via Email
 * Comment on Polls
 * Graph Colors
 * Hide user answers button
 * Validate user doesn't already exist when registering.
-* Profile page
 * Validate created user answers
 * Alert messaging
 * Admin accounts
@@ -39,11 +33,13 @@ Job Story 6: I can login and register with links in the Nav. I can also access m
 
 ## Built With
 
-* [Heroku](https://dashboard.heroku.com/) - Hosting the website online
-* [MongoDB](https://www.mongodb.com/) & [Mongoose](https://mongoosejs.com/) - Database interaction.
-* [mLabs](https://mlab.com/home) - Database storage.
+* [Firebase](https://firebase.google.com/) - Hosting and Database
 * [Express](https://expressjs.com/) - Running server.
 * [React.JS](https://reactjs.org/) - Single-page application UI rendering pages, Redux.JS for uniflow data storage, and react-router for navigationg and routing.
+
+* [Heroku](https://dashboard.heroku.com/) - Previous Hosting the website online
+* [MongoDB](https://www.mongodb.com/) & [Mongoose](https://mongoosejs.com/) - Previous Database interaction.
+* [mLabs](https://mlab.com/home) - Previous Database storage.
 
 ## Authors
 

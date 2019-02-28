@@ -16,15 +16,38 @@ import PageNotFound from "./common/components/PageNotFound";
 import Login from "./home/login/LoginForm";
 import Register from "./home/login/RegisterForm";
 import { userActions } from '../App/_actions/users.actions.js';
+import fire from "./common/components/Fire.js";
+var auth = fire.auth();
 
 // Private route that redirects the user if they're not logged in to the login page
 class PrivateRoute extends React.Component {
 
+  constructor(props) {
+		super(props);
+    this.state = {};
+  }
   // Upon the first render, check if the user is logged in 
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(userActions.getCurrent());
   }
+
+  componentWillMount() {
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				var email = user.email;
+				this.setState({
+					isLoggedIn: true,
+					user: email
+				});
+			} else {
+				this.setState({
+					isLoggedIn: false
+				});
+
+			}
+		});
+	}
 
   render() {
     const { component: Component, ...rest } = this.props;
@@ -37,7 +60,7 @@ class PrivateRoute extends React.Component {
       pageContent = (
         (
           <Route {...rest} render={props => (
-            localStorage.getItem('user')
+            this.state.user
                 ? <Component {...props} />
                 : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
         )} />
@@ -91,7 +114,7 @@ export default (
     <Route path="/:id/vote/" component={PollShow} />
     <PrivateRoute path="/:id/results/" component={Result} />
     <PrivateRoute path="/profile" component={Profile} />
-    <Route path="/:id/edit/" component={Edit} />
+    <PrivateRoute path="/:id/edit/" component={Edit} />
     <Route component={PageNotFound} />
   </Switch>
 );
