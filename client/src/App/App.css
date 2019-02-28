@@ -131,14 +131,17 @@ li{
 #leftPoll{
   overflow: hidden;
     min-height: 50px;
+    float: left;
+    width: 68%;
     background: white;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
-.pollsContainer h1{
+#allPollsListingHeader{
   margin-top: 80px;
+  clear: both; 
 }
 
 #rightPollWrapper{
@@ -206,7 +209,7 @@ li{
   background: rgb(206, 206, 206); 
 }
 
-.pollSubmitButton{
+#pollSubmitButton{
   margin-top:  20px;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 5px 12px rgba(0,0,0,0.22);
 }
@@ -277,6 +280,23 @@ Railscasts-like style (c) Visoft, Inc. (Damien White)
 .poll .btn:not(.editButton), #pleaseLoginOrRegister{
   margin: 20px;
 }
+/* Media Queries */
+
+@media screen and (max-width: 500px) {
+
+  #leftPoll{
+    width: 100%;
+    float: none;
+  }
+  #rightPollWrapper{
+    width: 100%;
+    float: none;
+    margin-left: 0px;
+    margin-top: 10px;
+  }
+}
+
+/*****/
 
 .hljs {
   display: block;

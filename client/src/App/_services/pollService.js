@@ -20,7 +20,7 @@ function createPoll(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-    return fetch(`https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/createPoll`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/createPoll`, requestOptions).then(handleResponse);
 }
 
 function editPoll(poll) {
@@ -30,7 +30,7 @@ function editPoll(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-    return fetch(`https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/editPoll`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/editPoll`, requestOptions).then(handleResponse);
 }
 
 function deletePoll(id) {
@@ -38,7 +38,7 @@ function deletePoll(id) {
     const requestOptions = {
         method: 'POST'
     };
-    return fetch(`https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/deletePoll/` + id, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/deletePoll/` + id, requestOptions).then(handleResponse);
 }
 
 // make a post request with a single vote on a poll creator answer
@@ -48,7 +48,7 @@ function votePollAnswer(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-    return fetch(`https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/votePollAnswer/`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/votePollAnswer/`, requestOptions).then(handleResponse);
 }
 
 // make a post request with a single vote on a user answer
@@ -58,7 +58,7 @@ function votePollUserAnswer(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-    return fetch(`https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/voteUserAnswer`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/voteUserAnswer`, requestOptions).then(handleResponse);
 }
 
 // make a post request with a single created user answer
@@ -68,7 +68,7 @@ function votePollCreateUserAnswer(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-    return fetch(`https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/userVote`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/userVote`, requestOptions).then(handleResponse);
 }
 
 // make a post request with multiple votes
@@ -78,7 +78,7 @@ function votePollMultiple(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-    return fetch(`https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/voteMultiple`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/voteMultiple`, requestOptions).then(handleResponse);
 }
 
 // make a post request rescinding the user's votes
@@ -88,7 +88,7 @@ function rescind(poll) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(poll)
     };
-    return fetch(`https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/rescind`, requestOptions).then(handleResponse);
+    return fetch(`http://localhost:5001/polling-269dc/us-central1/app/api/polls/rescind`, requestOptions).then(handleResponse);
 }
 
 // make a GET request to get poll(s) data
@@ -96,14 +96,15 @@ function get(poll) {
     const requestOptions = {
         method: 'GET'
     };
+
     // if the incoming Poll id is set to "All", that means get all polls
     if (poll === "All") {
-        return fetch("https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/get", requestOptions).then(handleResponse);
+        return fetch("http://localhost:5001/polling-269dc/us-central1/app/api/polls/get", requestOptions).then(handleResponse);
     }
     // Or if we have just one ID, get one poll
     else {
       //  var id = mongoose.Types.ObjectId(poll);
-       return fetch("https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/get/" + poll, requestOptions).then(handleResponse);
+       return fetch("http://localhost:5001/polling-269dc/us-central1/app/api/polls/get/" + poll, requestOptions).then(handleResponse);
     }
 }
 
@@ -112,7 +113,7 @@ function checkExistence(question) {
     const requestOptions = {
         method: 'GET'
     };
-    return fetch("https://us-central1-polling-269dc.cloudfunctions.net/app/api/polls/checkExistence/" + question, requestOptions).then(handleResponse);
+    return fetch("http://localhost:5001/polling-269dc/us-central1/app/api/polls/checkExistence/" + question, requestOptions).then(handleResponse);
 }
 
 // error handling if there is one and returning data to the front end after getting it from the backend

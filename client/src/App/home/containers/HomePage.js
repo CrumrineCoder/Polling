@@ -96,7 +96,7 @@ class Home extends Component {
 		return (
 			<div className="pollsContainer">	
 				<Form></Form>
-				<h1>All Polls Listing</h1>
+				<h1 id="allPollsListingHeader">All Polls Listing</h1>
 				<Search onSearch={this.handleSearchBar} />
 				{pageContent}
 			</div>

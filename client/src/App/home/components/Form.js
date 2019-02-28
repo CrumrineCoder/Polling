@@ -202,18 +202,7 @@ class Form extends Component {
         return (
             <div className="form">
                 <h1>Create Poll</h1>
-                <div id="rightPollWrapper">
-                    <div id="rightPoll">
-                        <h4>Options</h4>
-                        {linkPoll}
-                        <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Allow users to select more than one poll answer </label>
-                        <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> Allow users to create poll answers </label>
-                        <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Allow users to rescind their vote </label>
-                        <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> Allow users to see the results before voting </label>
-                    </div>
-                    <button onClick={this.handleSubmit} className="btn btn-primary float-right" id="pollSubmitButton">Submit</button>
-                </div>
-
+                
                 <div id="leftPoll">
                     <input
                         onChange={(ev) => this.handleChangeField('question', ev)}
@@ -235,6 +224,18 @@ class Form extends Component {
                         </div>
                     ))}
                     <button type="button" onClick={this.handleAddAnswer} className="small btn btn-secondary float-right" id="addAnswer">Add Answer</button>
+                </div>
+
+                <div id="rightPollWrapper">
+                    <div id="rightPoll">
+                        <h4>Options</h4>
+                        {linkPoll}
+                        <label><input type="checkbox" checked={this.state.options.MultipleAnswers} onChange={this.handleOptionChange} name="options" value="MultipleAnswers" /> Allow users to select more than one poll answer </label>
+                        <label><input type="checkbox" checked={this.state.options.UserAnswers} onChange={this.handleOptionChange} name="options" value="UserAnswers" /> Allow users to create poll answers </label>
+                        <label><input type="checkbox" checked={this.state.options.Rescind} onChange={this.handleOptionChange} name="options" value="Rescind" /> Allow users to rescind their vote </label>
+                        <label><input type="checkbox" checked={this.state.options.SeeResults} onChange={this.handleOptionChange} name="options" value="SeeResults" /> Allow users to see the results before voting </label>
+                    </div>
+                    <button onClick={this.handleSubmit} className="btn btn-primary float-right" id="pollSubmitButton">Submit</button>
                 </div>
 
             </div>
